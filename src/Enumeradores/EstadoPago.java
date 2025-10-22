@@ -1,5 +1,6 @@
 package Enumeradores;
 
-public enum EstadoPago
-{
+public enum EstadoPago{
+    PENDIENTE,
+    REALIZADO
 }
