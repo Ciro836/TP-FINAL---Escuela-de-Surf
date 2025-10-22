@@ -31,6 +31,35 @@ public class ClaseDeSurf{
         this.alumnosInscriptos = alumnosInscriptos;
         this.cupoMax = cupoMax;
     }
+    /// METODOS
+
+    public boolean tieneCupo(){
+
+        if (alumnosInscriptos.size() < cupoMax) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+//con este metodo verifico:
+    public boolean inscribirAlumno(Alumno alumno){
+        //si es nulo devuelvo false
+        if(alumno == null){
+            return false;
+        }
+        //si ya tiene hecha una reserva devuelvo false
+        if(alumnosInscriptos.contains(alumno)){
+            return false;
+        }
+        //si no hay cupo devuelvo false
+        if(!tieneCupo()){
+            return false;
+        }
+        //si cumple con todas las verificaciones, agrego al alumno en alumnos incriptos
+        alumnosInscriptos.add(alumno);
+        return true;
+    }
+
 
     /// GETTERS Y SETTERS
     public int getIdClase() {
