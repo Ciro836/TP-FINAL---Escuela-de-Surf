@@ -22,6 +22,13 @@ public class Reserva{
         this.pago = pago;
     }
 
+    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago) {
+        this.idReserva = -1;
+        this.alumno = alumno;
+        this.claseDeSurf = claseDeSurf;
+        this.pago = pago;
+    }
+
 //retorna si una reserva esta completa
     public boolean esValida(){
         if(alumno != null && claseDeSurf != null && pago != null){
