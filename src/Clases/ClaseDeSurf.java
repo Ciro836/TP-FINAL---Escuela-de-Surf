@@ -11,6 +11,7 @@ public class ClaseDeSurf{
     private LocalDateTime fechaHora;
     private Set<Alumno> alumnosInscriptos;
     private int cupoMax;
+    private double valorClase;
 
     /// CONSTRUCTORES
     public ClaseDeSurf(){
