@@ -1,5 +1,7 @@
 package Enumeradores;
 
-public enum NivelDeSurf
-{
+public enum NivelDeSurf{
+    PRINCIPIANTE,
+    INTERMEDIO,
+    AVANZADO
 }
