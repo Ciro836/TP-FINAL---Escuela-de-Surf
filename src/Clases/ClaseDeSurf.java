@@ -66,6 +66,11 @@ public class ClaseDeSurf{
         return idClase;
     }
 
+    public void setIdClase(int idClase)
+    {
+        this.idClase = idClase;
+    }
+
     public Instructor getInstructor() {
         return instructor;
     }
@@ -106,5 +111,13 @@ public void setCupoMax(int cupoMax) {
     this.cupoMax = cupoMax;
 }
 
+    public double getValorClase()
+    {
+        return valorClase;
+    }
 
+    public void setValorClase(double valorClase)
+    {
+        this.valorClase = valorClase;
+    }
 }
