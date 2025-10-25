@@ -64,6 +64,16 @@ public class Alumno extends Persona{
     }
 
 
+    public boolean esMoroso() {
+        for (Pago pago : pagos) {
+            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     /// GETTERS Y SETTERS
 
