@@ -73,8 +73,6 @@ public class Alumno extends Persona{
         return false;
     }
 
-
-
     /// GETTERS Y SETTERS
 
     public int getIdAlumno() {
