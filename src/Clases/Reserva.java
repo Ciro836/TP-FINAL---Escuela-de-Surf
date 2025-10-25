@@ -38,23 +38,14 @@ public class Reserva{
         }
     }
 
-    //chequeo si esta moroso
-    public boolean esMoroso(){
-        if(pago != null && pago.esMoroso()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     @Override
     public String toString() {
         return "Reserva [" +
                 " IDReserva=" + idReserva +
-                ", Alumno=" + (alumno != null ? alumno.getAlumno : "No asignado") + //esta en rojo pq no hice nada en alumno todavia
+                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
                 ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
                 ", Pago=" + pago +
-                ", Estado=" + (esMoroso() ? "Moroso" : pago.estaPagado() ? "Pagado" : "Pendiente") +
+                ", Estado=" + (pago.estaPagado() ? "Pagado" : "Pendiente") +
                 ']';
     }
 
@@ -62,6 +53,11 @@ public class Reserva{
 
     public int getIdReserva() {
         return idReserva;
+    }
+
+    public void setIdReserva(int idReserva)
+    {
+        this.idReserva = idReserva;
     }
 
     public Alumno getAlumno() {

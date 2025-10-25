@@ -9,7 +9,7 @@ public class ClaseDeSurf{
     private Instructor instructor;
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
-    private Set<Alumno> alumnosInscriptos;
+    private final Set<Alumno> alumnosInscriptos;
     private int cupoMax;
     private double valorClase;
 
@@ -66,6 +66,11 @@ public class ClaseDeSurf{
         return idClase;
     }
 
+    public void setIdClase(int idClase)
+    {
+        this.idClase = idClase;
+    }
+
     public Instructor getInstructor() {
         return instructor;
     }
@@ -94,10 +99,6 @@ public Set<Alumno> getAlumnosInscriptos() {
     return alumnosInscriptos;
 }
 
-public void setAlumnosInscriptos(Set<Alumno> alumnosInscriptos) {
-    this.alumnosInscriptos = alumnosInscriptos;
-}
-
 public int getCupoMax() {
     return cupoMax;
 }
@@ -106,5 +107,13 @@ public void setCupoMax(int cupoMax) {
     this.cupoMax = cupoMax;
 }
 
+    public double getValorClase()
+    {
+        return valorClase;
+    }
 
+    public void setValorClase(double valorClase)
+    {
+        this.valorClase = valorClase;
+    }
 }
