@@ -9,7 +9,7 @@ public class ClaseDeSurf{
     private Instructor instructor;
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
-    private Set<Alumno> alumnosInscriptos;
+    private final Set<Alumno> alumnosInscriptos;
     private int cupoMax;
     private double valorClase;
 
@@ -97,10 +97,6 @@ public void setFechaHora(LocalDateTime fechaHora) {
 
 public Set<Alumno> getAlumnosInscriptos() {
     return alumnosInscriptos;
-}
-
-public void setAlumnosInscriptos(Set<Alumno> alumnosInscriptos) {
-    this.alumnosInscriptos = alumnosInscriptos;
 }
 
 public int getCupoMax() {

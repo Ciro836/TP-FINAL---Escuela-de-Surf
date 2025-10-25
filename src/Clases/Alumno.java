@@ -93,6 +93,18 @@ public class Alumno extends Persona implements Pagos
         return false;
     }
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "Alumno{" +
+                "idAlumno=" + idAlumno +
+                ", nivel=" + nivel +
+                ", cantClasesTomadas=" + cantClasesTomadas +
+                ", reservas=" + reservas +
+                ", pagos=" + pagos +
+                '}';
+    }
+
     /// GETTERS Y SETTERS
 
     public int getIdAlumno()

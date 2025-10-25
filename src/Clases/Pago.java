@@ -42,14 +42,6 @@ public class Pago{
         this.estadoPago = EstadoPago.REALIZADO;
     }
 
-    //determino si el pago esta moroso
-    public boolean esMoroso() {
-        if (estadoPago == EstadoPago.PENDIENTE && LocalDate.now().isAfter(fechaLimite)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     //determino si el pago esta pendiente
     public boolean estaPendiente() {
         if (estadoPago == EstadoPago.PENDIENTE && !LocalDate.now().isAfter(fechaLimite)) {
@@ -71,9 +63,7 @@ public class Pago{
     public String toString() {
         String estadoActual;
 
-        if (esMoroso()){
-            estadoActual ="Moroso";
-        }else if(estaPendiente()){
+        if(estaPendiente()){
             estadoActual ="Pendiente";
         }else{
             estadoActual ="Pagado";
@@ -92,6 +82,11 @@ public class Pago{
     /// GETTERS Y SETTERS
     public int getIdPago() {
         return idPago;
+    }
+
+    public void setIdPago(int idPago)
+    {
+        this.idPago = idPago;
     }
 
     public MetodoPago getMetodoPago() {
