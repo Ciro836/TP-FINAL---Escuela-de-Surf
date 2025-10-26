@@ -5,6 +5,7 @@ import Enumeradores.MetodoPago;
 import java.time.LocalDate;
 
 public class Pago{
+    private static int contador = 0;
     private int idPago;
     private MetodoPago metodoPago;
     private double monto;
@@ -15,7 +16,7 @@ public class Pago{
     /// CONSTRUCTORES
 
     public Pago(){
-        this.idPago = -1;
+        this.idPago = ++contador;
         this.metodoPago = null;
         this.monto = 0.0;
         this.fechaLimite = LocalDate.now().plusDays(7);
@@ -23,8 +24,8 @@ public class Pago{
         this.estadoPago = EstadoPago.PENDIENTE;
     }
 
-    public Pago(int idPago, MetodoPago metodoPago, double monto,  LocalDate fechaLimite, LocalDate fechaPago, EstadoPago estadoPago){
-        this.idPago = idPago;
+    public Pago(MetodoPago metodoPago, double monto,  LocalDate fechaLimite, LocalDate fechaPago, EstadoPago estadoPago){
+        this.idPago = ++contador;
         this.metodoPago = metodoPago;
         this.monto = monto;
         this.fechaLimite = fechaLimite;

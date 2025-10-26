@@ -1,6 +1,7 @@
 package Clases;
 
 public class Reserva{
+    private static int contador = 0;
     private int idReserva;
     private Alumno alumno;
     private ClaseDeSurf claseDeSurf;
@@ -9,21 +10,14 @@ public class Reserva{
     /// CONSTRUCTORES
 
     public Reserva(){
-        this.idReserva = -1;
+        this.idReserva = ++contador;
         this.alumno = null; //todavía no se le asigno un alumno, con esto podemos detectar si la reserva tiene o no un alumno o clase ya asignado
         this.claseDeSurf = null; //todavía no se le asigno una clase
         this.pago = new Pago(); //se inicializa vacío
     }
 
-    public Reserva(int idReserva, Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago) {
-        this.idReserva = idReserva;
-        this.alumno = alumno;
-        this.claseDeSurf = claseDeSurf;
-        this.pago = pago;
-    }
-
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago) {
-        this.idReserva = -1;
+        this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
         this.pago = pago;

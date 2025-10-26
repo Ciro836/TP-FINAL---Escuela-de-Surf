@@ -2,9 +2,11 @@ package Clases;
 
 import Enumeradores.TipoClase;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ClaseDeSurf{
+    private static int contador = 0;
     private int idClase;
     private Instructor instructor;
     private TipoClase tipoDeClase;
@@ -15,7 +17,7 @@ public class ClaseDeSurf{
 
     /// CONSTRUCTORES
     public ClaseDeSurf(){
-        this.idClase = -1;
+        this.idClase = ++contador;
         this.instructor = null;
         this.tipoDeClase = null;
         this.fechaHora = null;
@@ -23,12 +25,12 @@ public class ClaseDeSurf{
         this.cupoMax = 0;
     }
 
-    public ClaseDeSurf(int idClase, Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, Set<Alumno> alumnosInscriptos, int cupoMax) {
-        this.idClase = idClase;
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) {
+        this.idClase = ++contador;
         this.instructor = instructor;
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
-        this.alumnosInscriptos = alumnosInscriptos;
+        this.alumnosInscriptos = new HashSet<>();
         this.cupoMax = cupoMax;
     }
     /// METODOS
