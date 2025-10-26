@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Alumno extends Persona implements Pagos
 {
+    private static int contador = 0;
     private int idAlumno;
     private NivelDeSurf nivel;
     private int cantClasesTomadas;
@@ -21,30 +22,21 @@ public class Alumno extends Persona implements Pagos
 
     public Alumno()
     {
-        this.idAlumno = -1;
+        this.idAlumno = ++contador;
         this.nivel = null;
         this.cantClasesTomadas = 0;
         this.reservas = new ArrayList<>(); //incializa vacía, para que no tire una excepcion si luego quiero agregar una reserva al alumno
         this.pagos = new ArrayList<>();
     }
 
-    public Alumno(int idAlumno, NivelDeSurf nivel, int cantClasesTomadas, List<Reserva> reservas, List<Pago> pagos)
-    {
-        this.idAlumno = idAlumno;
-        this.nivel = nivel;
-        this.cantClasesTomadas = cantClasesTomadas;
-        this.reservas = reservas;
-        this.pagos = pagos;
-    }
-
-    public Alumno(String dni, String nombre, String apellido, int edad, String numeroTel, int idAlumno, NivelDeSurf nivel, int cantClasesTomadas, List<Reserva> reservas, List<Pago> pagos)
+    public Alumno(String dni, String nombre, String apellido, int edad, String numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
         super(dni, nombre, apellido, edad, numeroTel);
-        this.idAlumno = idAlumno;
+        this.idAlumno = ++contador;
         this.nivel = nivel;
         this.cantClasesTomadas = cantClasesTomadas;
-        this.reservas = reservas;
-        this.pagos = pagos;
+        this.reservas = new ArrayList<>();
+        this.pagos = new ArrayList<>();
     }
 
     /// METODOS
