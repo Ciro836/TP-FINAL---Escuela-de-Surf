@@ -2,9 +2,11 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
+
 import java.time.LocalDate;
 
-public class Pago{
+public class Pago
+{
     private static int contador = 0;
     private int idPago;
     private MetodoPago metodoPago;
@@ -15,7 +17,8 @@ public class Pago{
 
     /// CONSTRUCTORES
 
-    public Pago(){
+    public Pago()
+    {
         this.idPago = ++contador;
         this.metodoPago = null;
         this.monto = 0.0;
@@ -24,7 +27,8 @@ public class Pago{
         this.estadoPago = EstadoPago.PENDIENTE;
     }
 
-    public Pago(MetodoPago metodoPago, double monto,  LocalDate fechaLimite, LocalDate fechaPago, EstadoPago estadoPago){
+    public Pago(MetodoPago metodoPago, double monto, LocalDate fechaLimite, LocalDate fechaPago, EstadoPago estadoPago)
+    {
         this.idPago = ++contador;
         this.metodoPago = metodoPago;
         this.monto = monto;
@@ -34,40 +38,116 @@ public class Pago{
 
     }
 
-    ///METODOS
+    /// GETTERS Y SETTERS
+
+    public int getIdPago()
+    {
+        return idPago;
+    }
+
+    public void setIdPago(int idPago)
+    {
+        this.idPago = idPago;
+    }
+
+    public MetodoPago getMetodoPago()
+    {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(MetodoPago metodoPago)
+    {
+        this.metodoPago = metodoPago;
+    }
+
+    public double getMonto()
+    {
+        return monto;
+    }
+
+    public void setMonto(double monto)
+    {
+        this.monto = monto;
+    }
+
+    public LocalDate getFechaLimite()
+    {
+        return fechaLimite;
+    }
+
+    public void setFechaLimite(LocalDate fechaLimite)
+    {
+        this.fechaLimite = fechaLimite;
+    }
+
+    public LocalDate getFechaPago()
+    {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDate fechaPago)
+    {
+        this.fechaPago = fechaPago;
+    }
+
+    public EstadoPago getEstadoPago()
+    {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(EstadoPago estadoPago)
+    {
+        this.estadoPago = estadoPago;
+    }
+
+    /// METODOS
 
     //cambio el estado a pagado, asigno la fecha en se pago y el monto
-    public void pagar(double monto){
+    public void pagar(double monto)
+    {
         this.monto = monto;
         this.fechaPago = LocalDate.now();
         this.estadoPago = EstadoPago.REALIZADO;
     }
 
     //determino si el pago esta pendiente
-    public boolean estaPendiente() {
-        if (estadoPago == EstadoPago.PENDIENTE && !LocalDate.now().isAfter(fechaLimite)) {
+    public boolean estaPendiente()
+    {
+        if (estadoPago == EstadoPago.PENDIENTE && !LocalDate.now().isAfter(fechaLimite))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
+
     //determino si el pago esta pagado
-    public boolean estaPagado() {
-        if (estadoPago == EstadoPago.REALIZADO) {
+    public boolean estaPagado()
+    {
+        if (estadoPago == EstadoPago.REALIZADO)
+        {
             return true;
-        }else{
+        }
+        else
+        {
             return false;
         }
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         String estadoActual;
 
-        if(estaPendiente()){
-            estadoActual ="Pendiente";
-        }else{
-            estadoActual ="Pagado";
+        if (estaPendiente())
+        {
+            estadoActual = "Pendiente";
+        }
+        else
+        {
+            estadoActual = "Pagado";
         }
 
         return "Pago [" +
@@ -78,55 +158,5 @@ public class Pago{
                 ", Fecha de Pago=" + fechaPago +
                 ", Estado del Pago=" + estadoActual +
                 ']';
-    }
-
-    /// GETTERS Y SETTERS
-    public int getIdPago() {
-        return idPago;
-    }
-
-    public void setIdPago(int idPago)
-    {
-        this.idPago = idPago;
-    }
-
-    public MetodoPago getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(MetodoPago metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-
-    public double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(double monto) {
-        this.monto = monto;
-    }
-
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public void setFechaLimite(LocalDate fechaLimite) {
-        this.fechaLimite = fechaLimite;
-    }
-
-    public LocalDate getFechaPago() {
-        return fechaPago;
-    }
-
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
-    public EstadoPago getEstadoPago() {
-        return estadoPago;
-    }
-
-    public void setEstadoPago(EstadoPago estadoPago) {
-        this.estadoPago = estadoPago;
     }
 }

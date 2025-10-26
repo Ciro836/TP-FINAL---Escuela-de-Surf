@@ -39,6 +39,49 @@ public class Alumno extends Persona implements Pagos
         this.pagos = new ArrayList<>();
     }
 
+
+    /// GETTERS Y SETTERS
+
+    public int getIdAlumno()
+    {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(int idAlumno)
+    {
+        this.idAlumno = idAlumno;
+    }
+
+    public NivelDeSurf getNivel()
+    {
+        return nivel;
+    }
+
+    public void setNivel(NivelDeSurf nivel)
+    {
+        this.nivel = nivel;
+    }
+
+    public int getCantClasesTomadas()
+    {
+        return cantClasesTomadas;
+    }
+
+    public void setCantClasesTomadas(int cantClasesTomadas)
+    {
+        this.cantClasesTomadas = cantClasesTomadas;
+    }
+
+    public List<Reserva> getReservas()
+    {
+        return reservas;
+    }
+
+    public List<Pago> getPagos()
+    {
+        return pagos;
+    }
+
     /// METODOS
 
     public boolean reservar(ClaseDeSurf clase)
@@ -95,48 +138,6 @@ public class Alumno extends Persona implements Pagos
                 ", reservas=" + reservas +
                 ", pagos=" + pagos +
                 '}';
-    }
-
-    /// GETTERS Y SETTERS
-
-    public int getIdAlumno()
-    {
-        return idAlumno;
-    }
-
-    public void setIdAlumno(int idAlumno)
-    {
-        this.idAlumno = idAlumno;
-    }
-
-    public NivelDeSurf getNivel()
-    {
-        return nivel;
-    }
-
-    public void setNivel(NivelDeSurf nivel)
-    {
-        this.nivel = nivel;
-    }
-
-    public int getCantClasesTomadas()
-    {
-        return cantClasesTomadas;
-    }
-
-    public void setCantClasesTomadas(int cantClasesTomadas)
-    {
-        this.cantClasesTomadas = cantClasesTomadas;
-    }
-
-    public List<Reserva> getReservas()
-    {
-        return reservas;
-    }
-
-    public List<Pago> getPagos()
-    {
-        return pagos;
     }
 
 }

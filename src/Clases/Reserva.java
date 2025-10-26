@@ -1,6 +1,7 @@
 package Clases;
 
-public class Reserva{
+public class Reserva
+{
     private static int contador = 0;
     private int idReserva;
     private Alumno alumno;
@@ -9,43 +10,26 @@ public class Reserva{
 
     /// CONSTRUCTORES
 
-    public Reserva(){
+    public Reserva()
+    {
         this.idReserva = ++contador;
         this.alumno = null; //todavía no se le asigno un alumno, con esto podemos detectar si la reserva tiene o no un alumno o clase ya asignado
         this.claseDeSurf = null; //todavía no se le asigno una clase
         this.pago = new Pago(); //se inicializa vacío
     }
 
-    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago) {
+    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
+    {
         this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
         this.pago = pago;
     }
 
-//retorna si una reserva esta completa
-    public boolean esValida(){
-        if(alumno != null && claseDeSurf != null && pago != null){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Reserva [" +
-                " IDReserva=" + idReserva +
-                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
-                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
-                ", Pago=" + pago +
-                ", Estado=" + (pago.estaPagado() ? "Pagado" : "Pendiente") +
-                ']';
-    }
-
     /// GETTERS Y SETTERS
 
-    public int getIdReserva() {
+    public int getIdReserva()
+    {
         return idReserva;
     }
 
@@ -54,27 +38,60 @@ public class Reserva{
         this.idReserva = idReserva;
     }
 
-    public Alumno getAlumno() {
+    public Alumno getAlumno()
+    {
         return alumno;
     }
 
-    public void setAlumno(Alumno alumno) {
+    public void setAlumno(Alumno alumno)
+    {
         this.alumno = alumno;
     }
 
-    public ClaseDeSurf getClaseDeSurf() {
+    public ClaseDeSurf getClaseDeSurf()
+    {
         return claseDeSurf;
     }
 
-    public void setClaseDeSurf(ClaseDeSurf claseDeSurf) {
+    public void setClaseDeSurf(ClaseDeSurf claseDeSurf)
+    {
         this.claseDeSurf = claseDeSurf;
     }
 
-    public Pago getPago() {
+    public Pago getPago()
+    {
         return pago;
     }
 
-    public void setPago(Pago pago) {
+    public void setPago(Pago pago)
+    {
         this.pago = pago;
+    }
+
+    /// METODOS
+
+    //retorna si una reserva esta completa
+    public boolean esValida()
+    {
+        if (alumno != null && claseDeSurf != null && pago != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Reserva [" +
+                " IDReserva=" + idReserva +
+                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
+                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
+                ", Pago=" + pago +
+                ", Estado=" + (pago.estaPagado() ? "Pagado" : "Pendiente") +
+                ']';
     }
 }
