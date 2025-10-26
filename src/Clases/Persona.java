@@ -1,6 +1,7 @@
 package Clases;
 
-public abstract class Persona{
+public abstract class Persona
+{
     private String dni;
     private String nombre;
     private String apellido;
@@ -9,7 +10,8 @@ public abstract class Persona{
 
     /// CONSTRUCTORES
 
-    public Persona(){
+    public Persona()
+    {
         this.dni = "";
         this.nombre = "";
         this.apellido = "";
@@ -17,7 +19,8 @@ public abstract class Persona{
         this.numeroTel = "";
     }
 
-    public Persona(String dni, String nombre, String apellido, int edad, String numeroTel) {
+    public Persona(String dni, String nombre, String apellido, int edad, String numeroTel)
+    {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -25,21 +28,10 @@ public abstract class Persona{
         this.numeroTel = numeroTel;
     }
 
-    /// MOSTRAR UNA PERSONA
-    @Override
-    public String toString() {
-        return "Persona{" +
-                "dni='" + dni + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", edad=" + edad +
-                ", numeroTel='" + numeroTel + '\'' +
-                '}';
-    }
-
     /// GETTERS Y SETTERS
 
-    public String getDni() {
+    public String getDni()
+    {
         return dni;
     }
 
@@ -48,35 +40,57 @@ public abstract class Persona{
         this.dni = dni;
     }
 
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
+    public String getApellido()
+    {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
+    public void setApellido(String apellido)
+    {
         this.apellido = apellido;
     }
 
-    public int getEdad() {
+    public int getEdad()
+    {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(int edad)
+    {
         this.edad = edad;
     }
 
-    public String getNumeroTel() {
+    public String getNumeroTel()
+    {
         return numeroTel;
     }
 
-    public void setNumeroTel(String numeroTel) {
+    public void setNumeroTel(String numeroTel)
+    {
         this.numeroTel = numeroTel;
+    }
+
+    /// METODOS
+
+    @Override
+    public String toString()
+    {
+        return "Persona{" +
+                "dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", edad=" + edad +
+                ", numeroTel='" + numeroTel + '\'' +
+                '}';
     }
 }
