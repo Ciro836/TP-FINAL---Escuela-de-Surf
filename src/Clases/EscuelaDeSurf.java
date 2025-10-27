@@ -13,7 +13,7 @@ public class EscuelaDeSurf
     {
         this.repoInstructores = new Repositorio<>();
         this.repoClases = new Repositorio<>();
-        this.repoAlumnos = new  Repositorio<>();
+        this.repoAlumnos = new Repositorio<>();
         this.repoClientes = new Repositorio<>();
     }
 
@@ -37,5 +37,29 @@ public class EscuelaDeSurf
     public Repositorio<Cliente> getRepoClientes()
     {
         return repoClientes;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "EscuelaDeSurf{" +
+                "repoInstructores=" + repoInstructores +
+                ", repoClases=" + repoClases +
+                ", repoAlumnos=" + repoAlumnos +
+                ", repoClientes=" + repoClientes +
+                '}';
+    }
+
+    public void mostrarEscuelaDeSurf()
+    {
+        System.out.println("--------------------------------------------------\n");
+        System.out.println("REPOSITORIO DE ALUMNOS: " + repoAlumnos);
+        System.out.println("\n--------------------------------------------------\n");
+        System.out.println("REPOSITORIO DE INSTRUCTORES: " + repoInstructores);
+        System.out.println("\n--------------------------------------------------\n");
+        System.out.println("REPOSITORIO DE CLIENTES: " + repoClientes);
+        System.out.println("\n--------------------------------------------------\n");
+        System.out.println("REPOSITORIO DE CLASES: " + repoClases);
+        System.out.println("\n--------------------------------------------------");
     }
 }

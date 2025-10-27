@@ -21,7 +21,7 @@ public class Instructor extends Persona
         this.clases = new ArrayList<>();
     }
 
-    public Instructor(String dni, String nombre, String apellido, int edad, String numeroTel, int aniosExperiencia, double sueldoBase)
+    public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia, double sueldoBase)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idInstructor = ++contador;
@@ -79,4 +79,9 @@ public class Instructor extends Persona
         return false;
     }
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + " idInstructor: " + idInstructor + "| aniosExperiencia: " + aniosExperiencia + "| sueldoBase: " + sueldoBase;
+    }
 }

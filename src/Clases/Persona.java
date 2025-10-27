@@ -2,24 +2,24 @@ package Clases;
 
 public abstract class Persona
 {
-    private String dni;
+    private int dni;
     private String nombre;
     private String apellido;
     private int edad;
-    private String numeroTel;
+    private int numeroTel;
 
     /// CONSTRUCTORES
 
     public Persona()
     {
-        this.dni = "";
+        this.dni = 0;
         this.nombre = "";
         this.apellido = "";
         this.edad = 0;
-        this.numeroTel = "";
+        this.numeroTel = 0;
     }
 
-    public Persona(String dni, String nombre, String apellido, int edad, String numeroTel)
+    public Persona(int dni, String nombre, String apellido, int edad, int numeroTel)
     {
         this.dni = dni;
         this.nombre = nombre;
@@ -30,12 +30,12 @@ public abstract class Persona
 
     /// GETTERS Y SETTERS
 
-    public String getDni()
+    public int getDni()
     {
         return dni;
     }
 
-    public void setDni(String dni)
+    public void setDni(int dni)
     {
         this.dni = dni;
     }
@@ -70,12 +70,12 @@ public abstract class Persona
         this.edad = edad;
     }
 
-    public String getNumeroTel()
+    public int getNumeroTel()
     {
         return numeroTel;
     }
 
-    public void setNumeroTel(String numeroTel)
+    public void setNumeroTel(int numeroTel)
     {
         this.numeroTel = numeroTel;
     }
@@ -85,12 +85,7 @@ public abstract class Persona
     @Override
     public String toString()
     {
-        return "Persona{" +
-                "dni='" + dni + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", edad=" + edad +
-                ", numeroTel='" + numeroTel + '\'' +
-                '}';
+        return " PERSONA: " + "Dni: " + dni + "| Nombre: " + nombre + "| Apellido:" + apellido
+                + "| Edad: " + edad + "| Numero de Telefono: " + numeroTel;
     }
 }

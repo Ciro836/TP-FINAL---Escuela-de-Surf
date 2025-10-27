@@ -23,20 +23,24 @@ public class Repositorio<T>
 
     /// METODOS
 
-    public void agregar(int clave, T valor)
+    public boolean agregar(int clave, T valor)
     {
-        if(datos.containsKey(clave)){ //si ya contiene la clase, devuelvo falso. Lo verifico porque sino el put sobreescribe sobre una clave ya existente.
+        if (datos.containsKey(clave))
+        { //si ya contiene la clase, devuelvo falso. Lo verifico porque sino el put sobreescribe sobre una clave ya existente.
             return false;
         }
         datos.put(clave, valor); //sino lo agrego y devuelvo true.
         return true;
     }
 
-    public void eliminar(int clave)
+    public boolean eliminar(int clave)
     {
-        if(!datos.containsKey(clave)){
+        if (!datos.containsKey(clave))
+        {
             return false;
-        }else{
+        }
+        else
+        {
             datos.remove(clave);
             return true;
         }
@@ -44,7 +48,7 @@ public class Repositorio<T>
 
     public void mostrarTodos()
     {
-        for(Map.Entry<Integer, T> entry : datos.entrySet())
+        for (Map.Entry<Integer, T> entry : datos.entrySet())
         {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
@@ -55,4 +59,9 @@ public class Repositorio<T>
         return datos.get(clave);
     }
 
+    @Override
+    public String toString()
+    {
+        return datos.toString();
+    }
 }

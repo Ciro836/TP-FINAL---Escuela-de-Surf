@@ -29,7 +29,7 @@ public class Alumno extends Persona implements Pagos
         this.pagos = new ArrayList<>();
     }
 
-    public Alumno(String dni, String nombre, String apellido, int edad, String numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
+    public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idAlumno = ++contador;
@@ -87,13 +87,15 @@ public class Alumno extends Persona implements Pagos
     public boolean reservar(ClaseDeSurf clase)
     {
         if (clase.inscribirAlumno(this))
-        { //llamo a metodo inscribir alumno q esta en case de surf, con las verificaciones necesarias
+        { //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
 
             //si dio true, creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
             Pago pago = new Pago();
             pago.setMonto(clase.getValorClase());
             //creo una reserva y paso los valores
             Reserva nueva = new Reserva(this, clase, pago);
+            //el alumno paga la reserva
+            this.pagar(pago);
             //agrego la reserva a la list
             reservas.add(nueva);
             //agrego el pago a la list
@@ -103,14 +105,17 @@ public class Alumno extends Persona implements Pagos
         return false; //directamente retorna false, porque el if dio false
     }
 
-    public boolean cancelarReserva(Reserva reserva) {
-        if (reserva == null) {
+    public boolean cancelarReserva(Reserva reserva)
+    {
+        if (reserva == null)
+        {
             return false;
         }
         //guardo en clase, la clase reservada por el alumno
         ClaseDeSurf clase = reserva.getClaseDeSurf();
         //si no es nula, elimo el alumno de esa clase
-        if(clase != null) {
+        if (clase != null)
+        {
             clase.eliminarAlumno(this);
         }
         //ahora elimino la reserva y su pago
@@ -125,13 +130,13 @@ public class Alumno extends Persona implements Pagos
     public boolean esMoroso()
     {
         for (Pago pago : pagos)
+        {
+            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
             {
-                if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
-                    {
-                        return true;
-                    }
+                return true;
             }
-                return false;
+        }
+        return false;
     }
 
     @Override
@@ -143,13 +148,7 @@ public class Alumno extends Persona implements Pagos
     @Override
     public String toString()
     {
-        return super.toString() + "Alumno{" +
-                "idAlumno=" + idAlumno +
-                ", nivel=" + nivel +
-                ", cantClasesTomadas=" + cantClasesTomadas +
-                ", reservas=" + reservas +
-                ", pagos=" + pagos +
-                '}';
+        return super.toString() + " IdAlumno: " + idAlumno + "| Nivel de surf: " + nivel + "| cantClasesTomadas: " + cantClasesTomadas;
     }
 
 }
