@@ -103,8 +103,20 @@ public class Alumno extends Persona implements Pagos
         return false; //directamente retorna false, porque el if dio false
     }
 
-    public boolean cancelarReserva()
-    {
+    public boolean cancelarReserva(Reserva reserva) {
+        if (reserva == null) {
+            return false;
+        }
+        //guardo en clase, la clase reservada por el alumno
+        ClaseDeSurf clase = reserva.getClaseDeSurf();
+        //si no es nula, elimo el alumno de esa clase
+        if(clase != null) {
+            clase.eliminarAlumno(this);
+        }
+        //ahora elimino la reserva y su pago
+        reservas.remove(reserva);
+        pagos.remove(reserva.getPago());
+
         return true;
     }
 

@@ -143,4 +143,14 @@ public class ClaseDeSurf
         alumnosInscriptos.add(alumno);
         return true;
     }
+
+    public boolean eliminarAlumno(Alumno alumno) {
+        if (alumno == null) {
+            return false;
+        }
+        return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
+        }
+
+
+
 }
