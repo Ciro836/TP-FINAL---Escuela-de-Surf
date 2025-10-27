@@ -34,7 +34,12 @@ public class Repositorio<T>
 
     public void eliminar(int clave)
     {
-        datos.remove(clave);
+        if(!datos.containsKey(clave)){
+            return false;
+        }else{
+            datos.remove(clave);
+            return true;
+        }
     }
 
     public void mostrarTodos()
