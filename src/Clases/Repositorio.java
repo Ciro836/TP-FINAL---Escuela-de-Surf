@@ -25,7 +25,11 @@ public class Repositorio<T>
 
     public void agregar(int clave, T valor)
     {
-        datos.put(clave, valor);
+        if(datos.containsKey(clave)){ //si ya contiene la clase, devuelvo falso. Lo verifico porque sino el put sobreescribe sobre una clave ya existente.
+            return false;
+        }
+        datos.put(clave, valor); //sino lo agrego y devuelvo true.
+        return true;
     }
 
     public void eliminar(int clave)
