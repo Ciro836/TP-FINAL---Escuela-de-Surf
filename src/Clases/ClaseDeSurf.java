@@ -27,6 +27,7 @@ public class ClaseDeSurf
         this.fechaHora = null;
         this.alumnosInscriptos = null;
         this.cupoMax = 0;
+        valorClase = 0.0;
     }
 
     public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
@@ -37,6 +38,15 @@ public class ClaseDeSurf
         this.fechaHora = fechaHora;
         this.alumnosInscriptos = new HashSet<>();
         this.cupoMax = cupoMax;
+
+        if (tipoDeClase == TipoClase.GRUPAL)
+        {
+            this.valorClase = 100;
+        }
+        else
+        {
+            this.valorClase = 200; //Valor de la clase particular
+        }
     }
 
     /// GETTERS Y SETTERS
@@ -144,13 +154,18 @@ public class ClaseDeSurf
         return true;
     }
 
-    public boolean eliminarAlumno(Alumno alumno) {
-        if (alumno == null) {
+    public boolean eliminarAlumno(Alumno alumno)
+    {
+        if (alumno == null)
+        {
             return false;
         }
         return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
-        }
+    }
 
-
-
+    @Override
+    public String toString()
+    {
+        return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase;
+    }
 }

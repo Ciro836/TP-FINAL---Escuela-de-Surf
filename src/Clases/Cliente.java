@@ -21,7 +21,7 @@ public class Cliente extends Persona implements Pagos
         this.alquileres = new ArrayList<>();
     }
 
-    public Cliente(String dni, String nombre, String apellido, int edad, String numeroTel)
+    public Cliente(int dni, String nombre, String apellido, int edad, int numeroTel)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idCliente = ++contador;
@@ -68,5 +68,11 @@ public class Cliente extends Persona implements Pagos
     public boolean pagar(Pago pago)
     {
         return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + " idCliente: " + idCliente;
     }
 }
