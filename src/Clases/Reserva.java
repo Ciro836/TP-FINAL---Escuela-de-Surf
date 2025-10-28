@@ -68,14 +68,7 @@ public class Reserva
     //retorna si una reserva esta completa
     public boolean esValida()
     {
-        if (alumno != null && claseDeSurf != null && pago != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return alumno != null && claseDeSurf != null && pago != null;
     }
 
     @Override

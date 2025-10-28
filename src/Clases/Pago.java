@@ -97,14 +97,6 @@ public class Pago
 
     /// METODOS
 
-    //cambio el estado a pagado, asigno la fecha en se pago y el monto
-    public void pagar(double monto)
-    {
-        this.monto = monto;
-        this.fechaPago = LocalDate.now();
-        this.estadoPago = EstadoPago.REALIZADO;
-    }
-
     //determino si el pago esta pendiente
     public boolean estaPendiente()
     {

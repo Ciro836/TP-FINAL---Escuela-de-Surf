@@ -70,4 +70,9 @@ public class Cliente extends Persona implements Pagos
     {
         return super.toString() + " idCliente: " + idCliente;
     }
+
+    public void agregarAlquiler(Alquiler alquiler)
+    {
+        this.alquileres.add(alquiler);
+    }
 }

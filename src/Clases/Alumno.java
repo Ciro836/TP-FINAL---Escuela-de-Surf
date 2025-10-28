@@ -122,7 +122,7 @@ public class Alumno extends Persona implements Pagos
     {
         if (reserva == null)
         {
-            return false;
+            throw new IllegalArgumentException("La reserva no puede ser nula.");
         }
         //guardo en clase, la clase reservada por el alumno
         ClaseDeSurf clase = reserva.getClaseDeSurf();
@@ -155,7 +155,10 @@ public class Alumno extends Persona implements Pagos
     @Override
     public boolean pagar(Pago pago)
     {
-        return false;
+        pagos.add(pago);
+        pago.setFechaPago(LocalDate.now());
+        pago.setEstadoPago(EstadoPago.REALIZADO);
+        return true;
     }
 
     @Override

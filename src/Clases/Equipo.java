@@ -20,11 +20,11 @@ public class Equipo
         this.disponible = false;
     }
 
-    public Equipo(NombreEquipo nombre, double precioPorDia, boolean disponible)
+    public Equipo(NombreEquipo nombre, boolean disponible)
     {
         this.idEquipo = ++contador;
         this.nombre = nombre;
-        this.precioPorDia = precioPorDia;
+        this.precioPorDia = nombre.getValorDelEquipoPorDia();
         this.disponible = disponible;
     }
 
