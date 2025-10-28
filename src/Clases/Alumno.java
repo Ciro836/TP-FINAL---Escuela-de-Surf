@@ -6,12 +6,13 @@ import Interfaces.Pagos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Alumno extends Persona implements Pagos
 {
     private static int contador = 0;
-    private int idAlumno;
+    private final int idAlumno;
     private NivelDeSurf nivel;
     private int cantClasesTomadas;
     private final List<Reserva> reservas;
@@ -31,6 +32,16 @@ public class Alumno extends Persona implements Pagos
 
     public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
+        if (nivel == null)
+        {
+            throw new IllegalArgumentException("El nivel de surf del alumno no puede ser nulo.");
+        }
+
+        if (cantClasesTomadas < 0)
+        {
+            throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
+        }
+
         super(dni, nombre, apellido, edad, numeroTel);
         this.idAlumno = ++contador;
         this.nivel = nivel;
@@ -47,11 +58,6 @@ public class Alumno extends Persona implements Pagos
         return idAlumno;
     }
 
-    public void setIdAlumno(int idAlumno)
-    {
-        this.idAlumno = idAlumno;
-    }
-
     public NivelDeSurf getNivel()
     {
         return nivel;
@@ -59,6 +65,10 @@ public class Alumno extends Persona implements Pagos
 
     public void setNivel(NivelDeSurf nivel)
     {
+        if (nivel == null)
+        {
+            throw new IllegalArgumentException("El nivel de surf del alumno no puede ser nulo.");
+        }
         this.nivel = nivel;
     }
 
@@ -69,17 +79,21 @@ public class Alumno extends Persona implements Pagos
 
     public void setCantClasesTomadas(int cantClasesTomadas)
     {
+        if (cantClasesTomadas < 0)
+        {
+            throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
+        }
         this.cantClasesTomadas = cantClasesTomadas;
     }
 
     public List<Reserva> getReservas()
     {
-        return reservas;
+        return Collections.unmodifiableList(reservas);
     }
 
     public List<Pago> getPagos()
     {
-        return pagos;
+        return Collections.unmodifiableList(pagos);
     }
 
     /// METODOS
@@ -94,8 +108,6 @@ public class Alumno extends Persona implements Pagos
             pago.setMonto(clase.getValorClase());
             //creo una reserva y paso los valores
             Reserva nueva = new Reserva(this, clase, pago);
-            //el alumno paga la reserva
-            this.pagar(pago);
             //agrego la reserva a la list
             reservas.add(nueva);
             //agrego el pago a la list
@@ -109,7 +121,7 @@ public class Alumno extends Persona implements Pagos
     {
         if (reserva == null)
         {
-            return false;
+            throw new IllegalArgumentException("La reserva no puede ser nula.");
         }
         //guardo en clase, la clase reservada por el alumno
         ClaseDeSurf clase = reserva.getClaseDeSurf();
@@ -142,7 +154,10 @@ public class Alumno extends Persona implements Pagos
     @Override
     public boolean pagar(Pago pago)
     {
-        return false;
+        pagos.add(pago);
+        pago.setFechaPago(LocalDate.now());
+        pago.setEstadoPago(EstadoPago.REALIZADO);
+        return true;
     }
 
     @Override
@@ -150,5 +165,4 @@ public class Alumno extends Persona implements Pagos
     {
         return super.toString() + " IdAlumno: " + idAlumno + "| Nivel de surf: " + nivel + "| cantClasesTomadas: " + cantClasesTomadas;
     }
-
 }

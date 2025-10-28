@@ -3,12 +3,13 @@ package Clases;
 import Interfaces.Pagos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cliente extends Persona implements Pagos
 {
     private static int contador = 0;
-    private int idCliente;
+    private final int idCliente;
     private final List<Pago> pagos;
     private final List<Alquiler> alquileres;
 
@@ -41,19 +42,14 @@ public class Cliente extends Persona implements Pagos
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente)
-    {
-        this.idCliente = idCliente;
-    }
-
     public List<Pago> getPagos()
     {
-        return pagos;
+        return Collections.unmodifiableList(pagos);
     }
 
     public List<Alquiler> getAlquileres()
     {
-        return alquileres;
+        return Collections.unmodifiableList(alquileres);
     }
 
     /// METODOS
@@ -74,5 +70,10 @@ public class Cliente extends Persona implements Pagos
     public String toString()
     {
         return super.toString() + " idCliente: " + idCliente;
+    }
+
+    public void agregarAlquiler(Alquiler alquiler)
+    {
+        this.alquileres.add(alquiler);
     }
 }

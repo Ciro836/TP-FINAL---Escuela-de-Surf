@@ -21,6 +21,27 @@ public abstract class Persona
 
     public Persona(int dni, String nombre, String apellido, int edad, int numeroTel)
     {
+        if (dni <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: El DNI debe ser un número positivo.");
+        }
+        if (nombre == null || nombre.isEmpty())
+        {
+            throw new IllegalArgumentException("⚠️: El nombre no puede estar vacío.");
+        }
+        if (apellido == null || apellido.isEmpty())
+        {
+            throw new IllegalArgumentException("⚠️: El apellido no puede estar vacío.");
+        }
+        if (edad <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: La edad debe ser un número positivo.");
+        }
+        if (numeroTel <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: El telefono debe ser un número positivo.");
+        }
+
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -37,6 +58,10 @@ public abstract class Persona
 
     public void setDni(int dni)
     {
+        if (dni <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: El DNI debe ser un número positivo.");
+        }
         this.dni = dni;
     }
 
@@ -47,6 +72,10 @@ public abstract class Persona
 
     public void setNombre(String nombre)
     {
+        if (nombre == null || nombre.isEmpty())
+        {
+            throw new IllegalArgumentException("⚠️: El nombre no puede estar vacío.");
+        }
         this.nombre = nombre;
     }
 
@@ -57,6 +86,10 @@ public abstract class Persona
 
     public void setApellido(String apellido)
     {
+        if (apellido == null || apellido.isEmpty())
+        {
+            throw new IllegalArgumentException("⚠️: El apellido no puede estar vacío.");
+        }
         this.apellido = apellido;
     }
 
@@ -67,6 +100,10 @@ public abstract class Persona
 
     public void setEdad(int edad)
     {
+        if (edad <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: La edad debe ser un número positivo.");
+        }
         this.edad = edad;
     }
 
@@ -77,6 +114,10 @@ public abstract class Persona
 
     public void setNumeroTel(int numeroTel)
     {
+        if (numeroTel <= 0)
+        {
+            throw new IllegalArgumentException("⚠️: El telefono debe ser un número positivo.");
+        }
         this.numeroTel = numeroTel;
     }
 

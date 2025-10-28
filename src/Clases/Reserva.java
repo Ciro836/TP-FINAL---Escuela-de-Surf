@@ -3,7 +3,7 @@ package Clases;
 public class Reserva
 {
     private static int contador = 0;
-    private int idReserva;
+    private final int idReserva;
     private Alumno alumno;
     private ClaseDeSurf claseDeSurf;
     private Pago pago;
@@ -20,6 +20,19 @@ public class Reserva
 
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
     {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
+        }
+
         this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
@@ -33,11 +46,6 @@ public class Reserva
         return idReserva;
     }
 
-    public void setIdReserva(int idReserva)
-    {
-        this.idReserva = idReserva;
-    }
-
     public Alumno getAlumno()
     {
         return alumno;
@@ -45,6 +53,10 @@ public class Reserva
 
     public void setAlumno(Alumno alumno)
     {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
         this.alumno = alumno;
     }
 
@@ -55,6 +67,10 @@ public class Reserva
 
     public void setClaseDeSurf(ClaseDeSurf claseDeSurf)
     {
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
         this.claseDeSurf = claseDeSurf;
     }
 
@@ -65,6 +81,10 @@ public class Reserva
 
     public void setPago(Pago pago)
     {
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
+        }
         this.pago = pago;
     }
 
@@ -73,14 +93,7 @@ public class Reserva
     //retorna si una reserva esta completa
     public boolean esValida()
     {
-        if (alumno != null && claseDeSurf != null && pago != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return alumno != null && claseDeSurf != null && pago != null;
     }
 
     @Override

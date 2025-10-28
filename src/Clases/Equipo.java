@@ -5,7 +5,7 @@ import Enumeradores.NombreEquipo;
 public class Equipo
 {
     private static int contador = 0;
-    private int idEquipo;
+    private final int idEquipo;
     private NombreEquipo nombre;
     private double precioPorDia;
     private boolean disponible;
@@ -17,15 +17,20 @@ public class Equipo
         this.idEquipo = ++contador;
         this.nombre = null;
         this.precioPorDia = 0;
-        this.disponible = false;
+        this.disponible = true;
     }
 
-    public Equipo(NombreEquipo nombre, double precioPorDia, boolean disponible)
+    public Equipo(NombreEquipo nombre)
     {
+        if (nombre == null)
+        {
+            throw new IllegalArgumentException("⚠️: El nombre no puede ser nulo");
+        }
+
         this.idEquipo = ++contador;
         this.nombre = nombre;
-        this.precioPorDia = precioPorDia;
-        this.disponible = disponible;
+        this.precioPorDia = nombre.getValorDelEquipoPorDia();
+        this.disponible = true;
     }
 
     /// GETTERS Y SETTERS
@@ -40,11 +45,6 @@ public class Equipo
         return idEquipo;
     }
 
-    public void setIdEquipo(int idEquipo)
-    {
-        this.idEquipo = idEquipo;
-    }
-
     public NombreEquipo getNombre()
     {
         return nombre;
@@ -52,6 +52,10 @@ public class Equipo
 
     public void setNombre(NombreEquipo nombre)
     {
+        if (nombre == null)
+        {
+            throw new IllegalArgumentException("⚠️: El nombre no puede ser nulo");
+        }
         this.nombre = nombre;
     }
 
