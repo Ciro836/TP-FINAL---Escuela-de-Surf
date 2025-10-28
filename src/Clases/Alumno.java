@@ -11,7 +11,7 @@ import java.util.List;
 public class Alumno extends Persona implements Pagos
 {
     private static int contador = 0;
-    private int idAlumno;
+    private final int idAlumno;
     private NivelDeSurf nivel;
     private int cantClasesTomadas;
     private final List<Reserva> reservas;
@@ -31,6 +31,16 @@ public class Alumno extends Persona implements Pagos
 
     public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
+        if (nivel == null)
+        {
+            throw new IllegalArgumentException("El nivel de surf del alumno no puede ser nulo.");
+        }
+
+        if (cantClasesTomadas < 0)
+        {
+            throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
+        }
+
         super(dni, nombre, apellido, edad, numeroTel);
         this.idAlumno = ++contador;
         this.nivel = nivel;
@@ -47,11 +57,6 @@ public class Alumno extends Persona implements Pagos
         return idAlumno;
     }
 
-    public void setIdAlumno(int idAlumno)
-    {
-        this.idAlumno = idAlumno;
-    }
-
     public NivelDeSurf getNivel()
     {
         return nivel;
@@ -59,6 +64,10 @@ public class Alumno extends Persona implements Pagos
 
     public void setNivel(NivelDeSurf nivel)
     {
+        if (nivel == null)
+        {
+            throw new IllegalArgumentException("El nivel de surf del alumno no puede ser nulo.");
+        }
         this.nivel = nivel;
     }
 
@@ -69,6 +78,10 @@ public class Alumno extends Persona implements Pagos
 
     public void setCantClasesTomadas(int cantClasesTomadas)
     {
+        if (cantClasesTomadas < 0)
+        {
+            throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
+        }
         this.cantClasesTomadas = cantClasesTomadas;
     }
 

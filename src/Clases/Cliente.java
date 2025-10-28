@@ -8,7 +8,7 @@ import java.util.List;
 public class Cliente extends Persona implements Pagos
 {
     private static int contador = 0;
-    private int idCliente;
+    private final int idCliente;
     private final List<Pago> pagos;
     private final List<Alquiler> alquileres;
 
@@ -39,11 +39,6 @@ public class Cliente extends Persona implements Pagos
     public int getIdCliente()
     {
         return idCliente;
-    }
-
-    public void setIdCliente(int idCliente)
-    {
-        this.idCliente = idCliente;
     }
 
     public List<Pago> getPagos()

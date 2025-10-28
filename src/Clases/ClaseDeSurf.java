@@ -13,7 +13,7 @@ import java.util.Set;
 public class ClaseDeSurf
 {
     private static int contador = 0;
-    private int idClase;
+    private final int idClase;
     private Instructor instructor;
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
@@ -36,26 +36,17 @@ public class ClaseDeSurf
 
     public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
     {
-        this.idClase = ++contador;
-        this.instructor = instructor;
-        this.tipoDeClase = tipoDeClase;
-        this.alumnosInscriptos = new HashSet<>();
-
-        if (tipoDeClase == TipoClase.GRUPAL)
+        if (instructor == null)
         {
-            this.valorClase = 100;
+            throw new IllegalArgumentException("El instructor no puede ser nulo.");
         }
-        else
+        if (tipoDeClase == null)
         {
-            this.valorClase = 200; //Valor de la clase particular
+            throw new IllegalArgumentException("El tipo de clase no puede ser nulo.");
         }
-
 
         try
         {
-            this.fechaHora = fechaHora;
-            this.cupoMax = cupoMax;
-
             if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
             {
                 throw new FechaInvalidaException();
@@ -75,6 +66,24 @@ public class ClaseDeSurf
         {
             System.out.println("⚠️ Error inesperado: " + e.getMessage());
         }
+
+
+        this.alumnosInscriptos = new HashSet<>();
+        this.idClase = ++contador;
+        this.instructor = instructor;
+        this.tipoDeClase = tipoDeClase;
+        this.fechaHora = fechaHora;
+        this.cupoMax = cupoMax;
+
+        //AGREGO LOS VALORES
+        if (tipoDeClase == TipoClase.GRUPAL)
+        {
+            this.valorClase = 100;
+        }
+        else
+        {
+            this.valorClase = 200; //Valor de la clase particular
+        }
     }
 
     /// GETTERS Y SETTERS
@@ -82,11 +91,6 @@ public class ClaseDeSurf
     public int getIdClase()
     {
         return idClase;
-    }
-
-    public void setIdClase(int idClase)
-    {
-        this.idClase = idClase;
     }
 
     public Instructor getInstructor()
