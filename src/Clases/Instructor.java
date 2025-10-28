@@ -18,16 +18,21 @@ public class Instructor extends Persona
     {
         this.idInstructor = ++contador;
         this.aniosExperiencia = 0;
-        this.sueldoBase = 0;
+        this.sueldoBase = 10000;
         this.clases = new ArrayList<>();
     }
 
-    public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia, double sueldoBase)
+    public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia)
     {
+        if (aniosExperiencia < 0)
+        {
+            throw new IllegalArgumentException("⚠️: Los años de experiencia no puede ser negativos");
+        }
+
         super(dni, nombre, apellido, edad, numeroTel);
         this.idInstructor = ++contador;
         this.aniosExperiencia = aniosExperiencia;
-        this.sueldoBase = sueldoBase;
+        this.sueldoBase = 10000;
         this.clases = new ArrayList<>();
     }
 
@@ -50,6 +55,10 @@ public class Instructor extends Persona
 
     public void setAniosExperiencia(int aniosExperiencia)
     {
+        if (aniosExperiencia < 0)
+        {
+            throw new IllegalArgumentException("⚠️: Los años de experiencia no puede ser negativos");
+        }
         this.aniosExperiencia = aniosExperiencia;
     }
 
@@ -70,9 +79,27 @@ public class Instructor extends Persona
 
     /// METODOS
 
-    public boolean asignarClase(ClaseDeSurf clase)
+    public void asignarClase(ClaseDeSurf clase)
     {
-        return false;
+        if (clase == null)
+        {
+            throw new IllegalArgumentException("⚠️: No se puede asignar una clase nula.");
+        }
+
+        this.clases.add(clase);
+    }
+
+    public double calcularSueldo()
+    {
+        final double TARIFA_POR_CLASE = 50.0;
+
+        double sueldoPorClases = 0.0;
+
+        int cantidadDeClases = this.clases.size();
+
+        sueldoPorClases = cantidadDeClases * TARIFA_POR_CLASE;
+
+        return this.sueldoBase + sueldoPorClases;
     }
 
     @Override

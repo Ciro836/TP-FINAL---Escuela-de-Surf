@@ -72,6 +72,7 @@ public class ClaseDeSurf
         this.alumnosInscriptos = new HashSet<>();
         this.idClase = ++contador;
         this.instructor = instructor;
+        instructor.asignarClase(this);
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
         this.cupoMax = cupoMax;

@@ -20,6 +20,19 @@ public class Reserva
 
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
     {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
+        }
+
         this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
@@ -40,6 +53,10 @@ public class Reserva
 
     public void setAlumno(Alumno alumno)
     {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
         this.alumno = alumno;
     }
 
@@ -50,6 +67,10 @@ public class Reserva
 
     public void setClaseDeSurf(ClaseDeSurf claseDeSurf)
     {
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
         this.claseDeSurf = claseDeSurf;
     }
 
@@ -60,6 +81,10 @@ public class Reserva
 
     public void setPago(Pago pago)
     {
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
+        }
         this.pago = pago;
     }
 
