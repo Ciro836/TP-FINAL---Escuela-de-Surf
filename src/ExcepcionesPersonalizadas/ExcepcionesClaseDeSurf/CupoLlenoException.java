@@ -1,6 +1,6 @@
 package ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf;
 
-public class CupoLlenoException extends Exception
+public class CupoLlenoException extends RuntimeException
 {
     //CONSTRUCTORES
 

@@ -47,7 +47,7 @@ public static void caso3() //agregar instructor
     else
     {
         //Hardcodeado
-        instructor = new Instructor(47279633, "Balta", "Llorca", 18, 22329625, 2, 0);
+        instructor = new Instructor(47279633, "Balta", "Llorca", 18, 22329625, 2);
         escuela.getRepoInstructores().agregar(1, instructor);
         System.out.println("Instructor creado y agregado al repositorio de instructores correctamente...");
     }

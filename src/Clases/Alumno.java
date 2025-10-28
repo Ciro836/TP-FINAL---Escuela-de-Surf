@@ -108,8 +108,6 @@ public class Alumno extends Persona implements Pagos
             pago.setMonto(clase.getValorClase());
             //creo una reserva y paso los valores
             Reserva nueva = new Reserva(this, clase, pago);
-            //el alumno paga la reserva
-            this.pagar(pago);
             //agrego la reserva a la list
             reservas.add(nueva);
             //agrego el pago a la list

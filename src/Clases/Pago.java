@@ -122,44 +122,22 @@ public class Pago
 
     /// METODOS
 
-    //determino si el pago esta pendiente
-    public boolean estaPendiente()
-    {
-        if (estadoPago == EstadoPago.PENDIENTE && !LocalDate.now().isAfter(fechaLimite))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    //determino si el pago esta pagado
-    public boolean estaPagado()
-    {
-        if (estadoPago == EstadoPago.REALIZADO)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     @Override
     public String toString()
     {
         String estadoActual;
 
-        if (estaPendiente())
+        if (estadoPago == EstadoPago.REALIZADO)
         {
-            estadoActual = "Pendiente";
+            estadoActual = "Pagado";
+        }
+        else if (LocalDate.now().isAfter(fechaLimite)) // Si está PENDIENTE y venció la fecha
+        {
+            estadoActual = "Pendiente (Vencido)";
         }
         else
         {
-            estadoActual = "Pagado";
+            estadoActual = "Pendiente (Vigente)";
         }
 
         return "Pago [" +

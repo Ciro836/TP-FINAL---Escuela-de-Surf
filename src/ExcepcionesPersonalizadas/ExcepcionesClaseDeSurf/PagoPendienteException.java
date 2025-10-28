@@ -1,6 +1,6 @@
 package ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf;
 
-public class PagoPendienteException extends Exception
+public class PagoPendienteException extends RuntimeException
 {
     //CONSTRUCORES
 
