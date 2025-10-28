@@ -150,5 +150,4 @@ public class Alumno extends Persona implements Pagos
     {
         return super.toString() + " IdAlumno: " + idAlumno + "| Nivel de surf: " + nivel + "| cantClasesTomadas: " + cantClasesTomadas;
     }
-
 }

@@ -1,6 +1,10 @@
 package Clases;
 
 import Enumeradores.TipoClase;
+import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
+import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
+import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
+import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -25,8 +29,8 @@ public class ClaseDeSurf
         this.instructor = null;
         this.tipoDeClase = null;
         this.fechaHora = null;
-        this.alumnosInscriptos = null;
-        this.cupoMax = 0;
+        this.alumnosInscriptos = new HashSet<>();
+        this.cupoMax = 1;
         valorClase = 0.0;
     }
 
@@ -35,9 +39,7 @@ public class ClaseDeSurf
         this.idClase = ++contador;
         this.instructor = instructor;
         this.tipoDeClase = tipoDeClase;
-        this.fechaHora = fechaHora;
         this.alumnosInscriptos = new HashSet<>();
-        this.cupoMax = cupoMax;
 
         if (tipoDeClase == TipoClase.GRUPAL)
         {
@@ -46,6 +48,32 @@ public class ClaseDeSurf
         else
         {
             this.valorClase = 200; //Valor de la clase particular
+        }
+
+
+        try
+        {
+            this.fechaHora = fechaHora;
+            this.cupoMax = cupoMax;
+
+            if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
+            {
+                throw new FechaInvalidaException();
+            }
+
+            if (cupoMax <= 0)
+            {
+                throw new CupoInvalidoException();
+            }
+
+        }
+        catch (CupoInvalidoException | FechaInvalidaException e)
+        {
+            System.out.println("⚠️ Error: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
         }
     }
 
@@ -120,47 +148,73 @@ public class ClaseDeSurf
 
     public boolean tieneCupo()
     {
-
-        if (alumnosInscriptos.size() < cupoMax)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return alumnosInscriptos.size() < cupoMax;
     }
 
-    //con este metodo verifico:
     public boolean inscribirAlumno(Alumno alumno)
     {
-        //si es nulo devuelvo false
-        if (alumno == null)
+        try
         {
-            return false;
+            if (alumno == null)
+            {
+                throw new IllegalArgumentException("El alumno no puede ser nulo.");
+            }
+
+            if (alumnosInscriptos.contains(alumno))
+            {
+                throw new IllegalStateException("El alumno ya está inscripto en esta clase.");
+            }
+
+            if (!tieneCupo())
+            {
+                throw new CupoLlenoException();
+            }
+
+            if (alumno.esMoroso())
+            {
+                throw new PagoPendienteException();
+            }
+
+            alumnosInscriptos.add(alumno);
+            System.out.println("✅ Alumno inscripto correctamente: " + alumno.getNombre());
+            return true;
+
         }
-        //si ya tiene hecha una reserva devuelvo false
-        if (alumnosInscriptos.contains(alumno))
+        catch (CupoLlenoException | PagoPendienteException e)
         {
-            return false;
+            System.out.println("❌ No se pudo inscribir el alumno: " + e.getMessage());
         }
-        //si no hay cupo devuelvo false
-        if (!tieneCupo())
+        catch (IllegalArgumentException | IllegalStateException e)
         {
-            return false;
+            System.out.println("⚠️ Error de datos: " + e.getMessage());
         }
-        //si cumple con todas las verificaciones, agrego al alumno en alumnos incriptos
-        alumnosInscriptos.add(alumno);
-        return true;
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+        }
+
+        return false;
     }
 
     public boolean eliminarAlumno(Alumno alumno)
     {
-        if (alumno == null)
+        try
         {
-            return false;
+            if (alumno == null)
+            {
+                throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
+            }
+            return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
         }
-        return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("⚠️ Error de datos: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+        }
+        return false;
     }
 
     @Override

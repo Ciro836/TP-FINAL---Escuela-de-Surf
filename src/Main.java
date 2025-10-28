@@ -68,7 +68,7 @@ public static void caso4() //agregar cliente
     }
 }
 
-public static void caso5() //Crear clase de surf
+public static void caso5() //crear clase de surf
 {
     if (instructor == null)
     {
