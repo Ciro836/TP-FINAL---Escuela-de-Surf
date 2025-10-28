@@ -81,16 +81,6 @@ public class Equipo
 
     /// METODOS
 
-    public void marcarComoOcupado()
-    {
-
-    }
-
-    public void marcarComoDisponible()
-    {
-
-    }
-
     public double calcularCosto(int cantDias, NombreEquipo nombreEquipo)
     {
         return 0;

@@ -1,6 +1,6 @@
 package ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf;
 
-public class CupoInvalidoException extends Exception
+public class CupoInvalidoException extends RuntimeException
 {
     public CupoInvalidoException()
     {

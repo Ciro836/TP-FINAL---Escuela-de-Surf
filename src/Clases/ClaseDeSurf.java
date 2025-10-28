@@ -35,7 +35,7 @@ public class ClaseDeSurf
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
     {
         if (instructor == null)
         {
@@ -45,29 +45,14 @@ public class ClaseDeSurf
         {
             throw new IllegalArgumentException("El tipo de clase no puede ser nulo.");
         }
-
-        try
+        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
         {
-            if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
-            {
-                throw new FechaInvalidaException();
-            }
-
-            if (cupoMax <= 0)
-            {
-                throw new CupoInvalidoException();
-            }
-
+            throw new FechaInvalidaException();
         }
-        catch (CupoInvalidoException | FechaInvalidaException e)
+        if (cupoMax <= 0)
         {
-            System.out.println("⚠️ Error: " + e.getMessage());
+            throw new CupoInvalidoException();
         }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado: " + e.getMessage());
-        }
-
 
         this.alumnosInscriptos = new HashSet<>();
         this.idClase = ++contador;
