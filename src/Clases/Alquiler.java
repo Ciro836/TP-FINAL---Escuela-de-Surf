@@ -7,7 +7,7 @@ import java.util.List;
 public class Alquiler
 {
     private static int contador = 0;
-    private int idAlquiler;
+    private final int idAlquiler;
     private Cliente cliente;
     private final List<Equipo> equiposAlquilados;
     private LocalDate fechaInicio;
@@ -49,11 +49,6 @@ public class Alquiler
     public int getIdAlquiler()
     {
         return idAlquiler;
-    }
-
-    public void setIdAlquiler(int idAlquiler)
-    {
-        this.idAlquiler = idAlquiler;
     }
 
     public Cliente getCliente()

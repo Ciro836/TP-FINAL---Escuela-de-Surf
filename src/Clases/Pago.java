@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Pago
 {
     private static int contador = 0;
-    private int idPago;
+    private final int idPago;
     private MetodoPago metodoPago;
     private double monto;
     private LocalDate fechaLimite;
@@ -43,11 +43,6 @@ public class Pago
     public int getIdPago()
     {
         return idPago;
-    }
-
-    public void setIdPago(int idPago)
-    {
-        this.idPago = idPago;
     }
 
     public MetodoPago getMetodoPago()

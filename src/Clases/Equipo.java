@@ -5,7 +5,7 @@ import Enumeradores.NombreEquipo;
 public class Equipo
 {
     private static int contador = 0;
-    private int idEquipo;
+    private final int idEquipo;
     private NombreEquipo nombre;
     private double precioPorDia;
     private boolean disponible;
@@ -38,11 +38,6 @@ public class Equipo
     public int getIdEquipo()
     {
         return idEquipo;
-    }
-
-    public void setIdEquipo(int idEquipo)
-    {
-        this.idEquipo = idEquipo;
     }
 
     public NombreEquipo getNombre()

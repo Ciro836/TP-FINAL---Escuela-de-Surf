@@ -3,7 +3,7 @@ package Clases;
 public class Reserva
 {
     private static int contador = 0;
-    private int idReserva;
+    private final int idReserva;
     private Alumno alumno;
     private ClaseDeSurf claseDeSurf;
     private Pago pago;
@@ -31,11 +31,6 @@ public class Reserva
     public int getIdReserva()
     {
         return idReserva;
-    }
-
-    public void setIdReserva(int idReserva)
-    {
-        this.idReserva = idReserva;
     }
 
     public Alumno getAlumno()

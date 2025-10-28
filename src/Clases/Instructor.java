@@ -6,7 +6,7 @@ import java.util.List;
 public class Instructor extends Persona
 {
     private static int contador = 0;
-    private int idInstructor;
+    private final int idInstructor;
     private int aniosExperiencia;
     private double sueldoBase;
     private final List<ClaseDeSurf> clases;
@@ -40,11 +40,6 @@ public class Instructor extends Persona
     public int getIdInstructor()
     {
         return idInstructor;
-    }
-
-    public void setIdInstructor(int idInstructor)
-    {
-        this.idInstructor = idInstructor;
     }
 
     public int getAniosExperiencia()
