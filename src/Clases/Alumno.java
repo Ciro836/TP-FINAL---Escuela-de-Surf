@@ -6,6 +6,7 @@ import Interfaces.Pagos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Alumno extends Persona implements Pagos
@@ -87,12 +88,12 @@ public class Alumno extends Persona implements Pagos
 
     public List<Reserva> getReservas()
     {
-        return reservas;
+        return Collections.unmodifiableList(reservas);
     }
 
     public List<Pago> getPagos()
     {
-        return pagos;
+        return Collections.unmodifiableList(pagos);
     }
 
     /// METODOS
@@ -122,7 +123,7 @@ public class Alumno extends Persona implements Pagos
     {
         if (reserva == null)
         {
-            return false;
+            throw new IllegalArgumentException("La reserva no puede ser nula.");
         }
         //guardo en clase, la clase reservada por el alumno
         ClaseDeSurf clase = reserva.getClaseDeSurf();
@@ -155,7 +156,10 @@ public class Alumno extends Persona implements Pagos
     @Override
     public boolean pagar(Pago pago)
     {
-        return false;
+        pagos.add(pago);
+        pago.setFechaPago(LocalDate.now());
+        pago.setEstadoPago(EstadoPago.REALIZADO);
+        return true;
     }
 
     @Override

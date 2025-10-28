@@ -3,6 +3,7 @@ package Clases;
 import Interfaces.Pagos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cliente extends Persona implements Pagos
@@ -43,12 +44,12 @@ public class Cliente extends Persona implements Pagos
 
     public List<Pago> getPagos()
     {
-        return pagos;
+        return Collections.unmodifiableList(pagos);
     }
 
     public List<Alquiler> getAlquileres()
     {
-        return alquileres;
+        return Collections.unmodifiableList(alquileres);
     }
 
     /// METODOS
@@ -69,5 +70,10 @@ public class Cliente extends Persona implements Pagos
     public String toString()
     {
         return super.toString() + " idCliente: " + idCliente;
+    }
+
+    public void agregarAlquiler(Alquiler alquiler)
+    {
+        this.alquileres.add(alquiler);
     }
 }

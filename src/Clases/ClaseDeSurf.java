@@ -7,6 +7,7 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,6 +72,7 @@ public class ClaseDeSurf
         this.alumnosInscriptos = new HashSet<>();
         this.idClase = ++contador;
         this.instructor = instructor;
+        instructor.asignarClase(this);
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
         this.cupoMax = cupoMax;
@@ -125,7 +127,7 @@ public class ClaseDeSurf
 
     public Set<Alumno> getAlumnosInscriptos()
     {
-        return alumnosInscriptos;
+        return Collections.unmodifiableSet(alumnosInscriptos);
     }
 
     public int getCupoMax()

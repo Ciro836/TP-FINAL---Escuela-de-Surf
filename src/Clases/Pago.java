@@ -27,8 +27,21 @@ public class Pago
         this.estadoPago = EstadoPago.PENDIENTE;
     }
 
-    public Pago(MetodoPago metodoPago, double monto, LocalDate fechaLimite, LocalDate fechaPago, EstadoPago estadoPago)
+    public Pago(MetodoPago metodoPago, double monto, LocalDate fechaLimite)
     {
+        if (metodoPago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
+        }
+        if (monto < 0.0)
+        {
+            throw new IllegalArgumentException("⚠️: El monto no puede ser negativo.");
+        }
+        if (fechaLimite == null)
+        {
+            throw new IllegalArgumentException("⚠️: La fecha limite no puede ser nula.");
+        }
+
         this.idPago = ++contador;
         this.metodoPago = metodoPago;
         this.monto = monto;
@@ -52,6 +65,10 @@ public class Pago
 
     public void setMetodoPago(MetodoPago metodoPago)
     {
+        if (metodoPago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
+        }
         this.metodoPago = metodoPago;
     }
 
@@ -62,6 +79,10 @@ public class Pago
 
     public void setMonto(double monto)
     {
+        if (monto < 0.0)
+        {
+            throw new IllegalArgumentException("⚠️: El monto no puede ser negativo.");
+        }
         this.monto = monto;
     }
 
@@ -72,6 +93,10 @@ public class Pago
 
     public void setFechaLimite(LocalDate fechaLimite)
     {
+        if (fechaLimite == null)
+        {
+            throw new IllegalArgumentException("⚠️: La fecha limite no puede ser nula.");
+        }
         this.fechaLimite = fechaLimite;
     }
 
@@ -96,14 +121,6 @@ public class Pago
     }
 
     /// METODOS
-
-    //cambio el estado a pagado, asigno la fecha en se pago y el monto
-    public void pagar(double monto)
-    {
-        this.monto = monto;
-        this.fechaPago = LocalDate.now();
-        this.estadoPago = EstadoPago.REALIZADO;
-    }
 
     //determino si el pago esta pendiente
     public boolean estaPendiente()
