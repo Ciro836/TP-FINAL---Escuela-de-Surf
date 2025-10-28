@@ -6,6 +6,7 @@ import Interfaces.Pagos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Alumno extends Persona implements Pagos
@@ -87,12 +88,12 @@ public class Alumno extends Persona implements Pagos
 
     public List<Reserva> getReservas()
     {
-        return reservas;
+        return Collections.unmodifiableList(reservas);
     }
 
     public List<Pago> getPagos()
     {
-        return pagos;
+        return Collections.unmodifiableList(pagos);
     }
 
     /// METODOS

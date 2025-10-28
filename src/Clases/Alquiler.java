@@ -3,6 +3,7 @@ package Clases;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Alquiler
@@ -90,7 +91,7 @@ public class Alquiler
 
     public List<Equipo> getEquiposAlquilados()
     {
-        return equiposAlquilados;
+        return Collections.unmodifiableList(equiposAlquilados);
     }
 
     public LocalDate getFechaInicio()
@@ -166,11 +167,12 @@ public class Alquiler
 
     public void finalizarAlquiler()
     {
-    }
+        this.setEstaActivo(false);
 
-    public void mostrarDetalle()
-    {
-
+        for (Equipo equipo : equiposAlquilados)
+        {
+            equipo.setDisponible(true);
+        }
     }
 
     public void agregarEquipo(Equipo equipo)
@@ -196,5 +198,16 @@ public class Alquiler
             calcularMontoTotal();
         }
         return removido;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ALQUILER: ID=" + idAlquiler +
+                " | Cliente: " + cliente.getNombre() +
+                " | Periodo: " + fechaInicio + " a " + fechaFin +
+                " | Monto: $" + montoTotal +
+                " | Activo: " + estaActivo +
+                " | Equipos: " + equiposAlquilados.size();
     }
 }

@@ -1,6 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Instructor extends Persona
@@ -64,7 +65,7 @@ public class Instructor extends Persona
 
     public List<ClaseDeSurf> getClases()
     {
-        return clases;
+        return Collections.unmodifiableList(clases);
     }
 
     /// METODOS
