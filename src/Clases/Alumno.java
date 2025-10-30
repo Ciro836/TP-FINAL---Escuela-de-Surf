@@ -173,6 +173,9 @@ public class Alumno extends Persona implements Pagos
     @Override
     public String toString()
     {
-        return super.toString() + " IdAlumno: " + idAlumno + "| Nivel de surf: " + nivel + "| cantClasesTomadas: " + cantClasesTomadas;
+        return super.toString() + " IdAlumno: " + idAlumno +
+                "| Nivel de surf: " + nivel +
+                "| cantClasesTomadas: " + cantClasesTomadas +
+                "| Cantidad de reservas: " +  reservas.size();
     }
 }
