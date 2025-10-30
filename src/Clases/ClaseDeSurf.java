@@ -226,7 +226,7 @@ public class ClaseDeSurf
             System.out.println("Alumno: " + a.getNombre() + " " + a.getApellido() + "ID: " + a.getIdAlumno());
         }
 
-        System.out.println("----------------------------------------");
+        System.out.println("-------------------------------------");
         System.out.println("Cupo: " + alumnosInscriptos.size() + "/" + cupoMax);
         System.out.println("══════════════════════════════════════");
 
