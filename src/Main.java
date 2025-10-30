@@ -268,8 +268,9 @@ void main()
         System.out.println("6. Mostrar todos los repositorios.");
         System.out.println("7. Buscar alumno por su id.");
         System.out.println("8. Método: Reservar clase de Alumno.");
-        System.out.println("9. ");
-        System.out.println("10. ");
+        System.out.println("9. Mostrar reservas de un alumno");
+        System.out.println("10. Mostrar alumnos inscriptos en una clase");
+        System.out.println("11. Cancelar una reserva");
         System.out.println("999. Salir.");
 
         System.out.print("Ingrese una de las opciones: ");
@@ -288,6 +289,7 @@ void main()
             case 8 -> caso8();
             case 9 -> caso9();
             case 10 -> caso10();
+            case 11 -> caso11();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }
