@@ -216,10 +216,10 @@ public class ClaseDeSurf
 
         System.out.println("\n══════════════════════════════════════");
         System.out.println("Alumnos inscriptos:");
-        System.out.println("\n══════════════════════════════════════");
-        System.out.println("\nInstructor: " + instructor.getNombre() + " " + instructor.getApellido());
-        System.out.println("\nTipo de clase: " + tipoDeClase.toString());
-        System.out.println("\nFecha: " + fechaHora.toLocalDate() + fechaHora.toLocalTime());
+        System.out.println("══════════════════════════════════════");
+        System.out.println("Instructor: " + instructor.getNombre() + " " + instructor.getApellido());
+        System.out.println("Tipo de clase: " + tipoDeClase.toString());
+        System.out.println("Fecha: " + fechaHora.toLocalDate() + fechaHora.toLocalTime());
         System.out.println("----------------------------------------");
 
         for (Alumno a: alumnosInscriptos){
