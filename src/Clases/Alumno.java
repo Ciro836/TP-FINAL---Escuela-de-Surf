@@ -160,6 +160,16 @@ public class Alumno extends Persona implements Pagos
         return true;
     }
 
+    public void mostrarReservas(){
+        if (reservas.isEmpty()){
+            System.out.println("No tiene hecha ninguna reserva");
+        }else{
+            for (Reserva reserva : reservas){
+                System.out.println(reserva.mostrarReservaMejorada());
+            }
+        }
+    }
+
     @Override
     public String toString()
     {
