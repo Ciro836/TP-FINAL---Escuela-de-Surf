@@ -119,7 +119,8 @@ public class Reserva
                 "\nAlumno: " + alumnoNombre +
                 "\n" + claseInfo +
                 "\nEstado del pago: " + estadopago +
-                "\n\n PAGO" +
+                "--------------------------------" +
+                "\n\nPAGO" +
                 "\nMonto: $" + pago.getMonto() +
                 "\nFecha límite: " + fechaLimite +
                 "\nFecha del pago: " + fechaPago +
