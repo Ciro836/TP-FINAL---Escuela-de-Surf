@@ -134,6 +134,13 @@ public static void caso9()
 
 public static void caso10()
 {
+    if(clase == null)
+    {
+        System.out.println("⚠️: Primero debe crear una clase.");
+        return;
+    }
+
+    clase.mostrarAlumnosInscriptos();
 
 }
 
