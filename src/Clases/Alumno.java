@@ -100,21 +100,19 @@ public class Alumno extends Persona implements Pagos
 
     public boolean reservar(ClaseDeSurf clase)
     {
-        if (clase.inscribirAlumno(this))
-        { //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
+        //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
+        clase.inscribirAlumno(this);
 
-            //si dio true, creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
-            Pago pago = new Pago();
-            pago.setMonto(clase.getValorClase());
-            //creo una reserva y paso los valores
-            Reserva nueva = new Reserva(this, clase, pago);
-            //agrego la reserva a la list
-            reservas.add(nueva);
-            //agrego el pago a la list
-            pagos.add(pago);
-            return true; //retorto true, fue guardado con exito la reserva
-        }
-        return false; //directamente retorna false, porque el if dio false
+        //creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
+        Pago pago = new Pago();
+        pago.setMonto(clase.getValorClase());
+        //creo una reserva y paso los valores
+        Reserva nueva = new Reserva(this, clase, pago);
+        //agrego la reserva a la list
+        reservas.add(nueva);
+        //agrego el pago a la list
+        pagos.add(pago);
+        return true; //retorto true, fue guardado con exito la reserva
     }
 
     public boolean cancelarReserva(Reserva reserva)

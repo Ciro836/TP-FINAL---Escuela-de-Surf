@@ -11,6 +11,7 @@ public class Instructor extends Persona
     private int aniosExperiencia;
     private double sueldoBase;
     private final List<ClaseDeSurf> clases;
+    private static final double TARIFA_POR_CLASE = 50.0;
 
     /// CONSTRUCTORES
 
@@ -93,10 +94,18 @@ public class Instructor extends Persona
         this.clases.add(clase);
     }
 
+    public void eliminarClase(ClaseDeSurf clase)
+    {
+        if (clase == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase pasada por parametro es nula.");
+        }
+
+        this.clases.remove(clase);
+    }
+
     public double calcularSueldo()
     {
-        final double TARIFA_POR_CLASE = 50.0;
-
         int cantidadDeClases = this.clases.size();
 
         double sueldoPorClases = cantidadDeClases * TARIFA_POR_CLASE;
