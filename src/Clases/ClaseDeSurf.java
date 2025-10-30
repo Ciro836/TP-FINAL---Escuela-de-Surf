@@ -215,7 +215,7 @@ public class ClaseDeSurf
         }
 
         System.out.println("\n══════════════════════════════════════");
-        System.out.println(" \uD83C\uDFC4 Alumnos inscriptos:");
+        System.out.println("Alumnos inscriptos:");
         System.out.println("\n══════════════════════════════════════");
         System.out.println("\nInstructor: " + instructor.getNombre() + " " + instructor.getApellido());
         System.out.println("\nTipo de clase: " + tipoDeClase.toString());
