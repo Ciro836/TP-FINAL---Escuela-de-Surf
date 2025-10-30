@@ -289,6 +289,7 @@ void main()
             case 8 -> caso8();
             case 9 -> caso9();
             case 10 -> caso10();
+            case 11 -> caso11();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }
