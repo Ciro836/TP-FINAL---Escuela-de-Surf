@@ -126,11 +126,23 @@ public static void caso8() //metodo: reservar clase de alumno
 
 public static void caso9()
 {
-
+    if (alumno == null){
+        System.out.println("⚠️: Primero debe crear un alumno.");
+        return;
+    }
+    
+    alumno.mostrarReservas();
 }
 
 public static void caso10()
 {
+    if(clase == null)
+    {
+        System.out.println("⚠️: Primero debe crear una clase.");
+        return;
+    }
+
+    clase.mostrarAlumnosInscriptos();
 
 }
 
