@@ -208,6 +208,31 @@ public class ClaseDeSurf
         return false;
     }
 
+    public void mostrarAlumnosInscriptos(){
+        if (alumnosInscriptos.isEmpty()){
+            System.out.println("Todavía no hay alumnos inscriptos.");
+            return;
+        }
+
+        System.out.println("\n══════════════════════════════════════");
+        System.out.println(" \uD83C\uDFC4 Alumnos inscriptos:");
+        System.out.println("\n══════════════════════════════════════");
+        System.out.println("\nInstructor: " + instructor.getNombre() + " " + instructor.getApellido());
+        System.out.println("\nTipo de clase: " + tipoDeClase.toString());
+        System.out.println("\nFecha: " + fechaHora.toLocalDate() + fechaHora.toLocalTime());
+        System.out.println("----------------------------------------");
+
+        for (Alumno a: alumnosInscriptos){
+            System.out.println("Alumno: " + a.getNombre() + " " + a.getApellido() + "ID: " + a.getIdAlumno());
+        }
+
+        System.out.println("----------------------------------------");
+        System.out.println("Cupo: " + alumnosInscriptos.size() + "/" + cupoMax);
+        System.out.println("\n══════════════════════════════════════");
+
+    }
+
+    
     @Override
     public String toString()
     {
