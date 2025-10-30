@@ -33,8 +33,8 @@ public static void caso2() //agregar alumno
     {
         //Hardcodeado
         alumno = new Alumno(47559633, "Ciro", "Marzoni", 18, 22384625, NivelDeSurf.PRINCIPIANTE, 0);
-        escuela.getRepoAlumnos().agregar(1, alumno);
-        System.out.println("Alumno creado y agregado al repositorio de alumnos correctamente...");
+        String resultado = escuela.getRepoAlumnos().agregar(1, alumno) ? "Alumno creado y agregado al repositorio de alumnos correctamente." : "No se pudo agregar al alumno.";
+        System.out.println(resultado);
     }
 }
 
@@ -48,8 +48,8 @@ public static void caso3() //agregar instructor
     {
         //Hardcodeado
         instructor = new Instructor(47279633, "Balta", "Llorca", 18, 22329625, 2);
-        escuela.getRepoInstructores().agregar(1, instructor);
-        System.out.println("Instructor creado y agregado al repositorio de instructores correctamente...");
+        String resultado = escuela.getRepoInstructores().agregar(1, instructor) ? "Instructor creado y agregado al repositorio de instructores correctamente." : "No se pudo agregar al instructor.";
+        System.out.println(resultado);
     }
 }
 
@@ -63,8 +63,8 @@ public static void caso4() //agregar cliente
     {
         //Hardcodeado
         cliente = new Cliente(48239633, "Juan", "Ferreyra", 35, 223223854);
-        escuela.getRepoClientes().agregar(1, cliente);
-        System.out.println("Cliente creado y agregado al repositorio de clientes correctamente...");
+        String resultado = escuela.getRepoClientes().agregar(1, cliente) ? "Cliente creado y agregado al repositorio de clientes correctamente." : "No se a podido agregar al cliente.";
+        System.out.println(resultado);
     }
 }
 
@@ -81,8 +81,8 @@ public static void caso5() //crear clase de surf
     else
     {
         clase = new ClaseDeSurf(instructor, TipoClase.PARTICULAR, LocalDateTime.of(2025, 10, 27, 16, 30), 1);
-        escuela.getRepoClases().agregar(1, clase);
-        System.out.println("Clase de surf creada y agregada al repositorio de clases correctamente...");
+        String resultado = escuela.getRepoClases().agregar(1, clase) ? "Clase de surf creada y agregada al repositorio de clases correctamente." : "No se a podido crear la clase.";
+        System.out.println(resultado);
     }
 }
 
@@ -119,7 +119,8 @@ public static void caso8() //metodo: reservar clase de alumno
     }
     else
     {
-        alumno.reservar(clase);
+        String resultado = alumno.reservar(clase) ? "Se reservo correctamente la clase!" : "No se pudo reservar la clase.";
+        System.out.println(resultado);
     }
 }
 

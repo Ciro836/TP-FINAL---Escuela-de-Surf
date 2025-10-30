@@ -93,11 +93,9 @@ public class Instructor extends Persona
     {
         final double TARIFA_POR_CLASE = 50.0;
 
-        double sueldoPorClases = 0.0;
-
         int cantidadDeClases = this.clases.size();
 
-        sueldoPorClases = cantidadDeClases * TARIFA_POR_CLASE;
+        double sueldoPorClases = cantidadDeClases * TARIFA_POR_CLASE;
 
         return this.sueldoBase + sueldoPorClases;
     }

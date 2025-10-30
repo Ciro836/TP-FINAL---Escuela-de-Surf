@@ -30,36 +30,27 @@ public class Alquiler
         this.estaActivo = false;
     }
 
-    public Alquiler(Cliente cliente, LocalDate fechaInicio, LocalDate fechaFin)
+    public Alquiler(Cliente cliente, LocalDate fechaFin)
     {
         if (cliente == null)
         {
             throw new NullPointerException("El cliente no puede ser nulo.");
         }
-        if (fechaInicio == null)
-        {
-            throw new NullPointerException("⚠️: La Fecha de Inicio no puede ser nula.");
-        }
         if (fechaFin == null)
         {
             throw new NullPointerException("⚠️: La Fecha de Fin no puede ser nula.");
         }
-        if (fechaFin.isBefore(fechaInicio))
+        if (fechaFin.isBefore(LocalDate.now()))
         {
-            throw new IllegalArgumentException("⚠️: La fecha de fin (" + fechaFin + ") no puede ser anterior a la fecha de inicio (" + fechaInicio + ").");
-        }
-
-        if (fechaInicio.isBefore(LocalDate.now()))
-        {
-            throw new IllegalArgumentException("La fecha de inicio no puede ser anterior a la fecha actual.");
+            throw new IllegalArgumentException("⚠️: La fecha de fin (" + fechaFin + ") no puede ser anterior a la fecha de inicio (" + LocalDate.now() + ").");
         }
 
         this.idAlquiler = ++contador;
         this.cliente = cliente;
         this.equiposAlquilados = new ArrayList<>();
-        this.fechaInicio = fechaInicio;
+        this.fechaInicio = LocalDate.now();
         this.fechaFin = fechaFin;
-        this.estaActivo = false;
+        this.estaActivo = true;
         this.montoTotal = 0;
     }
 
@@ -183,6 +174,8 @@ public class Alquiler
         }
 
         this.equiposAlquilados.add(equipo);
+
+        equipo.setDisponible(false);
 
         //aca se recalcula el monto total
         calcularMontoTotal();

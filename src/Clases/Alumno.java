@@ -154,7 +154,16 @@ public class Alumno extends Persona implements Pagos
     @Override
     public boolean pagar(Pago pago)
     {
-        pagos.add(pago);
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("El pago no puede ser nulo.");
+        }
+        // Si el pago no está en la lista de pagos del cliente, lo agrega
+        if (!this.pagos.contains(pago))
+        {
+            this.pagos.add(pago);
+        }
+        // Marca el pago como realizado
         pago.setFechaPago(LocalDate.now());
         pago.setEstadoPago(EstadoPago.REALIZADO);
         return true;
