@@ -228,7 +228,7 @@ public class ClaseDeSurf
 
         System.out.println("----------------------------------------");
         System.out.println("Cupo: " + alumnosInscriptos.size() + "/" + cupoMax);
-        System.out.println("\n══════════════════════════════════════");
+        System.out.println("══════════════════════════════════════");
 
     }
 
