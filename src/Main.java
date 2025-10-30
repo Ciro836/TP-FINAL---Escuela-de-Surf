@@ -129,7 +129,8 @@ public static void caso9()
         System.out.println("⚠️: Primero debe crear un alumno.");
         return;
     }
-
+    
+    alumno.mostrarReservas();
 }
 
 public static void caso10()
