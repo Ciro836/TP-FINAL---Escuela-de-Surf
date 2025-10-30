@@ -7,7 +7,7 @@ public class Equipo
     private static int contador = 0;
     private final int idEquipo;
     private NombreEquipo nombre;
-    private double precioPorDia;
+    private final double precioPorDia;
     private boolean disponible;
 
     /// CONSTRUCTORES
@@ -62,11 +62,6 @@ public class Equipo
     public double getPrecioPorDia()
     {
         return precioPorDia;
-    }
-
-    public void setPrecioPorDia(double precioPorDia)
-    {
-        this.precioPorDia = precioPorDia;
     }
 
     public boolean isDisponible()

@@ -20,7 +20,7 @@ public class ClaseDeSurf
     private LocalDateTime fechaHora;
     private final Set<Alumno> alumnosInscriptos;
     private int cupoMax;
-    private double valorClase;
+    private final double valorClase;
 
     /// CONSTRUCTORES
 
@@ -39,11 +39,11 @@ public class ClaseDeSurf
     {
         if (instructor == null)
         {
-            throw new IllegalArgumentException("El instructor no puede ser nulo.");
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
         }
         if (tipoDeClase == null)
         {
-            throw new IllegalArgumentException("El tipo de clase no puede ser nulo.");
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
         }
         if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
         {
@@ -78,6 +78,10 @@ public class ClaseDeSurf
 
     public void setInstructor(Instructor instructor)
     {
+        if (instructor == null)
+        {
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
+        }
         this.instructor = instructor;
     }
 
@@ -88,6 +92,10 @@ public class ClaseDeSurf
 
     public void setTipoDeClase(TipoClase tipoDeClase)
     {
+        if (tipoDeClase == null)
+        {
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
+        }
         this.tipoDeClase = tipoDeClase;
     }
 
@@ -98,6 +106,10 @@ public class ClaseDeSurf
 
     public void setFechaHora(LocalDateTime fechaHora)
     {
+        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
+        {
+            throw new FechaInvalidaException();
+        }
         this.fechaHora = fechaHora;
     }
 
@@ -113,17 +125,16 @@ public class ClaseDeSurf
 
     public void setCupoMax(int cupoMax)
     {
+        if (cupoMax <= 0)
+        {
+            throw new CupoInvalidoException();
+        }
         this.cupoMax = cupoMax;
     }
 
     public double getValorClase()
     {
         return valorClase;
-    }
-
-    public void setValorClase(double valorClase)
-    {
-        this.valorClase = valorClase;
     }
 
     /// METODOS

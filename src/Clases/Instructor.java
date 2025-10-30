@@ -69,6 +69,10 @@ public class Instructor extends Persona
 
     public void setSueldoBase(double sueldoBase)
     {
+        if (sueldoBase < 0)
+        {
+            throw new IllegalArgumentException("⚠️: El sueldo no puede ser negativo.");
+        }
         this.sueldoBase = sueldoBase;
     }
 
