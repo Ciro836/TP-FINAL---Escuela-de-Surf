@@ -104,7 +104,7 @@ public class Reserva
                 ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
                 ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
                 ", Pago=" + pago +
-                ", Estado=" + (pago.estaPagado() ? "Pagado" : "Pendiente") +
+                ", Estado=" + pago.getEstadoPago() +
                 ']';
     }
 
