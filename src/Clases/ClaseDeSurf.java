@@ -20,7 +20,7 @@ public class ClaseDeSurf
     private LocalDateTime fechaHora;
     private final Set<Alumno> alumnosInscriptos;
     private int cupoMax;
-    private double valorClase;
+    private final double valorClase;
 
     /// CONSTRUCTORES
 
@@ -35,15 +35,15 @@ public class ClaseDeSurf
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
     {
         if (instructor == null)
         {
-            throw new IllegalArgumentException("El instructor no puede ser nulo.");
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
         }
         if (tipoDeClase == null)
         {
-            throw new IllegalArgumentException("El tipo de clase no puede ser nulo.");
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
         }
         if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
         {
@@ -61,16 +61,7 @@ public class ClaseDeSurf
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
         this.cupoMax = cupoMax;
-
-        //AGREGO LOS VALORES
-        if (tipoDeClase == TipoClase.GRUPAL)
-        {
-            this.valorClase = 100;
-        }
-        else
-        {
-            this.valorClase = 200; //Valor de la clase particular
-        }
+        this.valorClase = tipoDeClase.getValorClase();
     }
 
     /// GETTERS Y SETTERS
@@ -87,7 +78,18 @@ public class ClaseDeSurf
 
     public void setInstructor(Instructor instructor)
     {
+        if (instructor == null)
+        {
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
+        }
+        // se elimina la clase del instructor actual
+        this.instructor.eliminarClase(this);
+
+        // asigno el nuevo instructor
         this.instructor = instructor;
+
+        // asigno la clase al nuevo instructor
+        this.instructor.asignarClase(this);
     }
 
     public TipoClase getTipoDeClase()
@@ -97,6 +99,10 @@ public class ClaseDeSurf
 
     public void setTipoDeClase(TipoClase tipoDeClase)
     {
+        if (tipoDeClase == null)
+        {
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
+        }
         this.tipoDeClase = tipoDeClase;
     }
 
@@ -107,6 +113,10 @@ public class ClaseDeSurf
 
     public void setFechaHora(LocalDateTime fechaHora)
     {
+        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
+        {
+            throw new FechaInvalidaException();
+        }
         this.fechaHora = fechaHora;
     }
 
@@ -122,17 +132,16 @@ public class ClaseDeSurf
 
     public void setCupoMax(int cupoMax)
     {
+        if (cupoMax <= 0)
+        {
+            throw new CupoInvalidoException();
+        }
         this.cupoMax = cupoMax;
     }
 
     public double getValorClase()
     {
         return valorClase;
-    }
-
-    public void setValorClase(double valorClase)
-    {
-        this.valorClase = valorClase;
     }
 
     /// METODOS
@@ -144,68 +153,34 @@ public class ClaseDeSurf
 
     public boolean inscribirAlumno(Alumno alumno)
     {
-        try
+        if (alumno == null)
         {
-            if (alumno == null)
-            {
-                throw new IllegalArgumentException("El alumno no puede ser nulo.");
-            }
-
-            if (alumnosInscriptos.contains(alumno))
-            {
-                throw new IllegalStateException("El alumno ya está inscripto en esta clase.");
-            }
-
-            if (!tieneCupo())
-            {
-                throw new CupoLlenoException();
-            }
-
-            if (alumno.esMoroso())
-            {
-                throw new PagoPendienteException();
-            }
-
-            alumnosInscriptos.add(alumno);
-            System.out.println("✅ Alumno inscripto correctamente: " + alumno.getNombre());
-            return true;
-
+            throw new IllegalArgumentException("El alumno no puede ser nulo.");
         }
-        catch (CupoLlenoException | PagoPendienteException e)
+        if (alumnosInscriptos.contains(alumno))
         {
-            System.out.println("❌ No se pudo inscribir el alumno: " + e.getMessage());
+            throw new IllegalStateException("El alumno ya está inscripto en esta clase.");
         }
-        catch (IllegalArgumentException | IllegalStateException e)
+        if (!tieneCupo())
         {
-            System.out.println("⚠️ Error de datos: " + e.getMessage());
+            throw new CupoLlenoException();
         }
-        catch (Exception e)
+        if (alumno.esMoroso())
         {
-            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            throw new PagoPendienteException();
         }
 
-        return false;
+        alumnosInscriptos.add(alumno);
+        return true;
     }
 
     public boolean eliminarAlumno(Alumno alumno)
     {
-        try
+        if (alumno == null)
         {
-            if (alumno == null)
-            {
-                throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
-            }
-            return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
+            throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
         }
-        catch (IllegalArgumentException e)
-        {
-            System.out.println("⚠️ Error de datos: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado: " + e.getMessage());
-        }
-        return false;
+        return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
     }
 
     public void mostrarAlumnosInscriptos(){

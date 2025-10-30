@@ -149,4 +149,21 @@ public class Pago
                 ", Estado del Pago=" + estadoActual +
                 ']';
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pago pago = (Pago) o;
+
+        return idPago == pago.idPago;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return idPago;
+    }
 }
