@@ -214,7 +214,7 @@ public class ClaseDeSurf
             return;
         }
 
-        System.out.println("\n══════════════════════════════════════");
+        System.out.println("\n════════════════════════════════════");
         System.out.println("Alumnos inscriptos:");
         System.out.println("══════════════════════════════════════");
         System.out.println("Instructor: " + instructor.getNombre() + " " + instructor.getApellido());
