@@ -78,12 +78,4 @@ public class Equipo
     {
         this.disponible = disponible;
     }
-
-    /// METODOS
-
-    public double calcularCosto(int cantDias, NombreEquipo nombreEquipo)
-    {
-        return 0;
-    }
-
 }

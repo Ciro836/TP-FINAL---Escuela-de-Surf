@@ -1,7 +1,9 @@
 package Clases;
 
+import Enumeradores.EstadoPago;
 import Interfaces.Pagos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,13 +59,32 @@ public class Cliente extends Persona implements Pagos
     @Override
     public boolean esMoroso()
     {
+        for (Pago pago : pagos)
+        {
+            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
+            {
+                return true;// es moroso.
+            }
+        }
         return false;
     }
 
     @Override
     public boolean pagar(Pago pago)
     {
-        return false;
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
+        }
+        // Si el pago no está en la lista de pagos del cliente, lo agrega
+        if (!this.pagos.contains(pago))
+        {
+            this.pagos.add(pago);
+        }
+        // Marca el pago como realizado
+        pago.setFechaPago(LocalDate.now());
+        pago.setEstadoPago(EstadoPago.REALIZADO);
+        return true;
     }
 
     @Override
@@ -74,6 +95,11 @@ public class Cliente extends Persona implements Pagos
 
     public void agregarAlquiler(Alquiler alquiler)
     {
+        if (alquiler == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alquiler no puede ser nulo.");
+        }
         this.alquileres.add(alquiler);
     }
+
 }

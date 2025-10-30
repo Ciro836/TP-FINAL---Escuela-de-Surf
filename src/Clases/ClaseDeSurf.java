@@ -35,7 +35,7 @@ public class ClaseDeSurf
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
     {
         if (instructor == null)
         {
@@ -61,16 +61,7 @@ public class ClaseDeSurf
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
         this.cupoMax = cupoMax;
-
-        //AGREGO LOS VALORES
-        if (tipoDeClase == TipoClase.GRUPAL)
-        {
-            this.valorClase = 100;
-        }
-        else
-        {
-            this.valorClase = 200; //Valor de la clase particular
-        }
+        this.valorClase = tipoDeClase.getValorClase();
     }
 
     /// GETTERS Y SETTERS
@@ -167,7 +158,6 @@ public class ClaseDeSurf
             }
 
             alumnosInscriptos.add(alumno);
-            System.out.println("✅ Alumno inscripto correctamente: " + alumno.getNombre());
             return true;
 
         }
@@ -189,23 +179,11 @@ public class ClaseDeSurf
 
     public boolean eliminarAlumno(Alumno alumno)
     {
-        try
+        if (alumno == null)
         {
-            if (alumno == null)
-            {
-                throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
-            }
-            return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
+            throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
         }
-        catch (IllegalArgumentException e)
-        {
-            System.out.println("⚠️ Error de datos: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado: " + e.getMessage());
-        }
-        return false;
+        return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
     }
 
     @Override
