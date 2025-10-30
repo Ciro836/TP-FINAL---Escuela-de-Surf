@@ -183,6 +183,31 @@ public class ClaseDeSurf
         return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
     }
 
+    public void mostrarAlumnosInscriptos(){
+        if (alumnosInscriptos.isEmpty()){
+            System.out.println("Todavía no hay alumnos inscriptos.");
+            return;
+        }
+
+        System.out.println("\n════════════════════════════════════");
+        System.out.println("Alumnos inscriptos:");
+        System.out.println("══════════════════════════════════════");
+        System.out.println("Instructor: " + instructor.getNombre() + " " + instructor.getApellido());
+        System.out.println("Tipo de clase: " + tipoDeClase.toString());
+        System.out.println("Fecha: " + fechaHora.toLocalDate() + fechaHora.toLocalTime());
+        System.out.println("-------------------------------------");
+
+        for (Alumno a: alumnosInscriptos){
+            System.out.println("Alumno: " + a.getNombre() + " " + a.getApellido() + "ID: " + a.getIdAlumno());
+        }
+
+        System.out.println("-------------------------------------");
+        System.out.println("Cupo: " + alumnosInscriptos.size() + "/" + cupoMax);
+        System.out.println("══════════════════════════════════════");
+
+    }
+
+    
     @Override
     public String toString()
     {

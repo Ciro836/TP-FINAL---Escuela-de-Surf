@@ -107,4 +107,24 @@ public class Reserva
                 ", Estado=" + pago.getEstadoPago() +
                 ']';
     }
+
+    public String mostrarReservaMejorada() {
+        String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
+        String claseInfo = "Clase ID: " + claseDeSurf.getIdClase();
+        String estadopago = pago.getEstadoPago().toString();
+        String fechaLimite = pago.getFechaLimite().toString();
+        String fechaPago = (pago.getFechaPago() == null) ? "No pagó aún" : pago.getFechaPago().toString();
+
+        return "\n──────── RESERVA #" + idReserva + " ────────" +
+                "\nAlumno: " + alumnoNombre +
+                "\n" + claseInfo +
+                "\nEstado del pago: " + estadopago +
+                "\n--------------------------------" +
+                "\n\nPAGO" +
+                "\nMonto: $" + pago.getMonto() +
+                "\nFecha límite: " + fechaLimite +
+                "\nFecha del pago: " + fechaPago +
+                "\n─────────────────────────────\n";
+
+    }
 }
