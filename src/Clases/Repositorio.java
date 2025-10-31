@@ -22,6 +22,11 @@ public class Repositorio<T>
         return Collections.unmodifiableMap(datos);
     }
 
+    //para obtener la coleccion de valores de los repositorios, sin el map completo. Lo utilizo en el Json.
+    public Collection<T> getTodos() {
+        return datos.values();
+    }
+
     /// METODOS
 
     public boolean agregar(int clave, T valor)
