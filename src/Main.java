@@ -231,7 +231,7 @@ public static void caso11() //cancelar una reserva
 
     if (alumno.getReservas().isEmpty())
     {
-        System.out.println("El alumno no tiene reservas realizadas. Elija la (opción 8).");
+        System.out.println("⚠️: El alumno no tiene reservas realizadas. Elija la (opción 8).");
     }
 
     System.out.println("Ingrese el ID de la reserva a cancelar: ");
@@ -256,6 +256,16 @@ public static void caso11() //cancelar una reserva
     }
 }
 
+public static void caso12() //grabar repositorios a json
+{
+
+}
+
+public static void caso13() //leer el archivo json de repositorios
+{
+
+}
+
 void main()
 {
     int opcion;
@@ -274,6 +284,9 @@ void main()
         System.out.println("9. Mostrar reservas de un alumno");
         System.out.println("10. Mostrar alumnos inscriptos en una clase");
         System.out.println("11. Cancelar una reserva");
+        System.out.println("12. Grabar repositorios a json");
+        System.out.println("13. Leer el archivo json de repositorios");
+
         System.out.println("999. Salir.");
 
         System.out.print("Ingrese una de las opciones: ");

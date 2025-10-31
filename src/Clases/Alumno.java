@@ -4,13 +4,15 @@ import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Interfaces.Pagos;
+import Interfaces.ToJson;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alumno extends Persona implements Pagos
+public class Alumno extends Persona implements Pagos, ToJson
 {
     private static int contador = 0;
     private final int idAlumno;
@@ -106,7 +108,7 @@ public class Alumno extends Persona implements Pagos
 
         //creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
         Pago pago = new Pago(metodo, clase.getValorClase());
-        
+
         //creo una reserva y paso los valores
         Reserva nueva = new Reserva(this, clase, pago);
         //agrego la reserva a la list
@@ -169,11 +171,16 @@ public class Alumno extends Persona implements Pagos
         return true;
     }
 
-    public void mostrarReservas(){
-        if (reservas.isEmpty()){
+    public void mostrarReservas()
+    {
+        if (reservas.isEmpty())
+        {
             System.out.println("No tiene hecha ninguna reserva");
-        }else{
-            for (Reserva reserva : reservas){
+        }
+        else
+        {
+            for (Reserva reserva : reservas)
+            {
                 System.out.println(reserva.mostrarReservaMejorada());
             }
         }
@@ -185,6 +192,12 @@ public class Alumno extends Persona implements Pagos
         return super.toString() + " IdAlumno: " + idAlumno +
                 "| Nivel de surf: " + nivel +
                 "| cantClasesTomadas: " + cantClasesTomadas +
-                "| Cantidad de reservas: " +  reservas.size();
+                "| Cantidad de reservas: " + reservas.size();
+    }
+
+    @Override
+    public JSONObject toJSON()
+    {
+        return null;
     }
 }
