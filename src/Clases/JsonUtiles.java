@@ -30,6 +30,32 @@ public class JsonUtiles
         }
     }
 
+    public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
+                                               Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente, String archivo)
+    {
+
+        try{
+            JSONObject json =  new JSONObject();
+
+            json.put("alumnos", coleccion_a_JsonArray(repoAlumno.getTodos()));
+            json.put("instructor", coleccion_a_JsonArray(repoInstructor.getTodos()));
+            json.put("clases", coleccion_a_JsonArray(repoClase.getTodos()));
+            json.put("cliente", coleccion_a_JsonArray(repoCliente.getTodos()));
+
+            try(FileWriter file = new FileWriter(archivo)){
+                file.write(json.toString(4));
+            }
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
+    }
+
+
+
+
     public static JSONTokener leerUnJson(String archivo)
     {
         JSONTokener tokener = null;
