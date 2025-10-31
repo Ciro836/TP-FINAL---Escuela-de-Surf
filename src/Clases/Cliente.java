@@ -1,6 +1,7 @@
 package Clases;
 
 import Enumeradores.EstadoPago;
+import Enumeradores.MetodoPago;
 import Interfaces.Pagos;
 
 import java.time.LocalDate;
@@ -70,7 +71,7 @@ public class Cliente extends Persona implements Pagos
     }
 
     @Override
-    public boolean pagar(Pago pago)
+    public boolean pagar(Pago pago, MetodoPago metodo)
     {
         if (pago == null)
         {
@@ -82,6 +83,7 @@ public class Cliente extends Persona implements Pagos
             this.pagos.add(pago);
         }
         // Marca el pago como realizado
+        pago.setMetodoPago(metodo);
         pago.setFechaPago(LocalDate.now());
         pago.setEstadoPago(EstadoPago.REALIZADO);
         return true;

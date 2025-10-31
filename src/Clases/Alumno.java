@@ -1,6 +1,7 @@
 package Clases;
 
 import Enumeradores.EstadoPago;
+import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Interfaces.Pagos;
 
@@ -98,14 +99,14 @@ public class Alumno extends Persona implements Pagos
 
     /// METODOS
 
-    public boolean reservar(ClaseDeSurf clase)
+    public boolean reservar(ClaseDeSurf clase, MetodoPago metodo)
     {
         //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
         clase.inscribirAlumno(this);
 
         //creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
-        Pago pago = new Pago();
-        pago.setMonto(clase.getValorClase());
+        Pago pago = new Pago(metodo, clase.getValorClase());
+        
         //creo una reserva y paso los valores
         Reserva nueva = new Reserva(this, clase, pago);
         //agrego la reserva a la list
@@ -150,7 +151,7 @@ public class Alumno extends Persona implements Pagos
     }
 
     @Override
-    public boolean pagar(Pago pago)
+    public boolean pagar(Pago pago, MetodoPago metodo)
     {
         if (pago == null)
         {
@@ -162,6 +163,7 @@ public class Alumno extends Persona implements Pagos
             this.pagos.add(pago);
         }
         // Marca el pago como realizado
+        pago.setMetodoPago(metodo);
         pago.setFechaPago(LocalDate.now());
         pago.setEstadoPago(EstadoPago.REALIZADO);
         return true;
