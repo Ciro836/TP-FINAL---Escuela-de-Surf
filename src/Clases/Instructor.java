@@ -1,10 +1,13 @@
 package Clases;
 
+import Interfaces.ToJson;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Instructor extends Persona
+public class Instructor extends Persona implements ToJson
 {
     private static int contador = 0;
     private final int idInstructor;
@@ -117,5 +120,11 @@ public class Instructor extends Persona
     public String toString()
     {
         return super.toString() + " idInstructor: " + idInstructor + "| aniosExperiencia: " + aniosExperiencia + "| sueldoBase: " + sueldoBase;
+    }
+
+    @Override
+    public JSONObject toJSON()
+    {
+        return null;
     }
 }

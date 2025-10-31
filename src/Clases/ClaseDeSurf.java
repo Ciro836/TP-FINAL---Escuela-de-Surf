@@ -5,13 +5,15 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
+import Interfaces.ToJson;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClaseDeSurf
+public class ClaseDeSurf implements ToJson
 {
     private static int contador = 0;
     private final int idClase;
@@ -183,8 +185,10 @@ public class ClaseDeSurf
         return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
     }
 
-    public void mostrarAlumnosInscriptos(){
-        if (alumnosInscriptos.isEmpty()){
+    public void mostrarAlumnosInscriptos()
+    {
+        if (alumnosInscriptos.isEmpty())
+        {
             System.out.println("Todavía no hay alumnos inscriptos.");
             return;
         }
@@ -197,7 +201,8 @@ public class ClaseDeSurf
         System.out.println("Fecha: " + fechaHora.toLocalDate() + fechaHora.toLocalTime());
         System.out.println("-------------------------------------");
 
-        for (Alumno a: alumnosInscriptos){
+        for (Alumno a : alumnosInscriptos)
+        {
             System.out.println("Alumno: " + a.getNombre() + " " + a.getApellido() + "ID: " + a.getIdAlumno());
         }
 
@@ -207,10 +212,16 @@ public class ClaseDeSurf
 
     }
 
-    
+
     @Override
     public String toString()
     {
         return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase;
+    }
+
+    @Override
+    public JSONObject toJSON()
+    {
+        return null;
     }
 }

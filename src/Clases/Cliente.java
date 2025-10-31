@@ -3,13 +3,15 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Interfaces.Pagos;
+import Interfaces.ToJson;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cliente extends Persona implements Pagos
+public class Cliente extends Persona implements Pagos, ToJson
 {
     private static int contador = 0;
     private final int idCliente;
@@ -104,4 +106,9 @@ public class Cliente extends Persona implements Pagos
         this.alquileres.add(alquiler);
     }
 
+    @Override
+    public JSONObject toJSON()
+    {
+        return null;
+    }
 }

@@ -111,7 +111,7 @@ public static void caso5() //crear clase de surf
 {
     if (instructor == null)
     {
-        System.out.println("⚠️: Primero debe crear un instructor.");
+        System.out.println("⚠️: Primero debe crear un instructor. Elija la (opción 3).");
     }
     else if (escuela == null)
     {
@@ -165,7 +165,7 @@ public static void caso7() //buscar alumno por su id
     }
     else
     {
-        System.out.println("⚠️: No existe el alumno");
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2)");
     }
 }
 
@@ -173,7 +173,7 @@ public static void caso8() //metodo: reservar clase de alumno
 {
     if (alumno == null)
     {
-        System.out.println("⚠️: Primero debe crear un alumno.");
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2)");
     }
     else
     {
@@ -201,56 +201,69 @@ public static void caso8() //metodo: reservar clase de alumno
     }
 }
 
-public static void caso9()
+public static void caso9() //mostrar reservas de un alumno
 {
     if (alumno == null)
     {
-        System.out.println("⚠️: Primero debe crear un alumno.");
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 3)");
     }
 
     //alumno.mostrarReservas();
 }
 
-public static void caso10()
+public static void caso10() //mostrar alumnos inscriptos en una clase
 {
     if (clase == null)
     {
-        System.out.println("⚠️: Primero debe crear una clase.");
+        System.out.println("⚠️: Primero debe crear una clase. Elija la (opción 5)");
     }
 
     //clase.mostrarAlumnosInscriptos();
 
 }
 
-public static void caso11(){
-    if(alumno == null){
-        System.out.println("⚠️: Primero debe crear un alumno.");
+public static void caso11() //cancelar una reserva
+{
+    if (alumno == null)
+    {
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2).");
     }
 
-    if (alumno.getReservas().isEmpty()){
-        System.out.println("El alumno no tiene reservas realizadas.");
-        return;
+    if (alumno.getReservas().isEmpty())
+    {
+        System.out.println("⚠️: El alumno no tiene reservas realizadas. Elija la (opción 8).");
     }
 
     System.out.println("Ingrese el ID de la reserva a cancelar: ");
     int idReserva = scanner.nextInt();
     scanner.nextLine();
 
-    Reserva reservaAeliminar = null;
+    boolean flag = false;
 
-    for (Reserva reserva : alumno.getReservas()){
-        if(reserva.getIdReserva() == idReserva){
-            reservaAeliminar = reserva;
+    for (Reserva reserva : alumno.getReservas())
+    {
+        if (reserva.getIdReserva() == idReserva)
+        {
+            alumno.cancelarReserva(reserva);
+            System.out.println("Reserva cancelada con éxito");
+            flag = true;
             break;
         }
     }
-
-    if(reservaAeliminar != null){
-        alumno.cancelarReserva(reservaAeliminar);
-        System.out.println("Reserva cancelada con éxito");
-    }else{
+    if (!flag)
+    {
         System.out.println("No se econtro una reserva con ese ID.");
     }
+}
+
+public static void caso12() //grabar repositorios a json
+{
+
+}
+
+public static void caso13() //leer el archivo json de repositorios
+{
+
 }
 
 void main()
@@ -271,6 +284,9 @@ void main()
         System.out.println("9. Mostrar reservas de un alumno");
         System.out.println("10. Mostrar alumnos inscriptos en una clase");
         System.out.println("11. Cancelar una reserva");
+        System.out.println("12. Grabar repositorios a json");
+        System.out.println("13. Leer el archivo json de repositorios");
+
         System.out.println("999. Salir.");
 
         System.out.print("Ingrese una de las opciones: ");
