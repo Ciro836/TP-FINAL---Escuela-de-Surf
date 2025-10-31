@@ -34,11 +34,11 @@ public class Alquiler
     {
         if (cliente == null)
         {
-            throw new NullPointerException("El cliente no puede ser nulo.");
+            throw new IllegalArgumentException("⚠️: El cliente no puede ser nulo.");
         }
         if (fechaFin == null)
         {
-            throw new NullPointerException("⚠️: La Fecha de Fin no puede ser nula.");
+            throw new IllegalArgumentException("⚠️: La Fecha de Fin no puede ser nula.");
         }
         if (fechaFin.isBefore(LocalDate.now()))
         {
@@ -75,7 +75,7 @@ public class Alquiler
     {
         if (cliente == null)
         {
-            throw new NullPointerException("El cliente no puede ser nulo.");
+            throw new IllegalArgumentException("El cliente no puede ser nulo.");
         }
         this.cliente = cliente;
     }
@@ -94,7 +94,7 @@ public class Alquiler
     {
         if (fechaInicio == null)
         {
-            throw new NullPointerException("⚠️: La Fecha de Inicio no puede ser nula.");
+            throw new IllegalArgumentException("⚠️: La Fecha de Inicio no puede ser nula.");
         }
         if (fechaInicio.isBefore(LocalDate.now()))
         {
@@ -112,7 +112,7 @@ public class Alquiler
     {
         if (fechaFin == null)
         {
-            throw new NullPointerException("⚠️: La Fecha de Fin no puede ser nula.");
+            throw new IllegalArgumentException("⚠️: La Fecha de Fin no puede ser nula.");
         }
         if (fechaFin.isBefore(fechaInicio))
         {
@@ -158,6 +158,11 @@ public class Alquiler
 
     public void finalizarAlquiler()
     {
+        if (!this.estaActivo)
+        {
+            throw new IllegalStateException("El alquiler ya está inactivo.");
+        }
+
         this.setEstaActivo(false);
 
         for (Equipo equipo : equiposAlquilados)

@@ -11,7 +11,7 @@ public class Pago
     private final int idPago;
     private MetodoPago metodoPago;
     private double monto;
-    private LocalDate fechaLimite;
+    private final LocalDate fechaLimite;
     private LocalDate fechaPago;
     private EstadoPago estadoPago;
 
@@ -22,12 +22,12 @@ public class Pago
         this.idPago = ++contador;
         this.metodoPago = null;
         this.monto = 0.0;
-        this.fechaLimite = LocalDate.now().plusDays(7);
+        this.fechaLimite = LocalDate.now().plusDays(30);
         this.fechaPago = null;
         this.estadoPago = EstadoPago.PENDIENTE;
     }
 
-    public Pago(MetodoPago metodoPago, double monto, LocalDate fechaLimite)
+    public Pago(MetodoPago metodoPago, double monto)
     {
         if (metodoPago == null)
         {
@@ -37,15 +37,11 @@ public class Pago
         {
             throw new IllegalArgumentException("⚠️: El monto no puede ser negativo.");
         }
-        if (fechaLimite == null)
-        {
-            throw new IllegalArgumentException("⚠️: La fecha limite no puede ser nula.");
-        }
 
         this.idPago = ++contador;
         this.metodoPago = metodoPago;
         this.monto = monto;
-        this.fechaLimite = fechaLimite;
+        this.fechaLimite = LocalDate.now().plusDays(30);
         this.fechaPago = null;
         this.estadoPago = EstadoPago.PENDIENTE;
 
@@ -89,15 +85,6 @@ public class Pago
     public LocalDate getFechaLimite()
     {
         return fechaLimite;
-    }
-
-    public void setFechaLimite(LocalDate fechaLimite)
-    {
-        if (fechaLimite == null)
-        {
-            throw new IllegalArgumentException("⚠️: La fecha limite no puede ser nula.");
-        }
-        this.fechaLimite = fechaLimite;
     }
 
     public LocalDate getFechaPago()

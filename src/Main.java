@@ -1,4 +1,5 @@
 import Clases.*;
+import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
@@ -178,7 +179,7 @@ public static void caso8() //metodo: reservar clase de alumno
     {
         try
         {
-            alumno.reservar(clase);
+            alumno.reservar(clase, MetodoPago.EFECTIVO);
             System.out.println("Se reservó correctamente la clase.");
         }
         catch (CupoLlenoException e) // la clase no tiene más espacio
@@ -202,23 +203,22 @@ public static void caso8() //metodo: reservar clase de alumno
 
 public static void caso9()
 {
-    if (alumno == null){
+    if (alumno == null)
+    {
         System.out.println("⚠️: Primero debe crear un alumno.");
-        return;
     }
-    
-    alumno.mostrarReservas();
+
+    //alumno.mostrarReservas();
 }
 
 public static void caso10()
 {
-    if(clase == null)
+    if (clase == null)
     {
         System.out.println("⚠️: Primero debe crear una clase.");
-        return;
     }
 
-    clase.mostrarAlumnosInscriptos();
+    //clase.mostrarAlumnosInscriptos();
 
 }
 
