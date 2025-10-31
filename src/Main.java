@@ -226,36 +226,31 @@ public static void caso11() //cancelar una reserva
 {
     if (alumno == null)
     {
-        System.out.println("⚠️: Primero debe crear un alumno.");
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2).");
     }
 
     if (alumno.getReservas().isEmpty())
     {
-        System.out.println("El alumno no tiene reservas realizadas.");
-        return;
+        System.out.println("El alumno no tiene reservas realizadas. Elija la (opción 8).");
     }
 
     System.out.println("Ingrese el ID de la reserva a cancelar: ");
     int idReserva = scanner.nextInt();
     scanner.nextLine();
 
-    Reserva reservaAeliminar = null;
+    boolean flag = false;
 
     for (Reserva reserva : alumno.getReservas())
     {
         if (reserva.getIdReserva() == idReserva)
         {
-            reservaAeliminar = reserva;
+            alumno.cancelarReserva(reserva);
+            System.out.println("Reserva cancelada con éxito");
+            flag = true;
             break;
         }
     }
-
-    if (reservaAeliminar != null)
-    {
-        alumno.cancelarReserva(reservaAeliminar);
-        System.out.println("Reserva cancelada con éxito");
-    }
-    else
+    if (!flag)
     {
         System.out.println("No se econtro una reserva con ese ID.");
     }
