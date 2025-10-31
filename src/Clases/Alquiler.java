@@ -158,6 +158,11 @@ public class Alquiler
 
     public void finalizarAlquiler()
     {
+        if (!this.estaActivo)
+        {
+            throw new IllegalStateException("El alquiler ya está inactivo.");
+        }
+
         this.setEstaActivo(false);
 
         for (Equipo equipo : equiposAlquilados)
