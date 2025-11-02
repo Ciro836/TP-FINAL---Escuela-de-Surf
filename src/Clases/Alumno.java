@@ -199,9 +199,9 @@ public class Alumno extends Persona implements Pagos, ToJson
     public JSONObject toJSON() {
         JSONObject jsonObj = super.toJSON();
         try{
-            jsonObject.put("idAlumno", idAlumno);
-            jsonObject.put("nivel", nivel);
-            jsonObject.put("cantClasesTomadas", cantClasesTomadas);
+            jsonObj.put("idAlumno", idAlumno);
+            jsonObj.put("nivel", nivel);
+            jsonObj.put("cantClasesTomadas", cantClasesTomadas);
 
             JSONArray jsonArray = new JSONArray();
             for (Reserva r : reservas) {
