@@ -205,7 +205,7 @@ public class Alumno extends Persona implements Pagos, ToJson
 
             JSONArray jsonArray = new JSONArray();
             for (Reserva r : reservas) {
-                jsonArray.put(r.toJson());
+                jsonArray.put(r.toJSON());
             }
             jsonObject.put("reservas", jsonArray);
 
