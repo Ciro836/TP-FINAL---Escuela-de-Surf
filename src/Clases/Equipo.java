@@ -77,7 +77,7 @@ public class Equipo
     @Override
     public JSONObject toJSON() {
 
-        JSONObject jsonObj = new JSONObject();
+        JSONObject jObj = new JSONObject();
 
         try {
             jObj.put("idEquipo", idEquipo);
