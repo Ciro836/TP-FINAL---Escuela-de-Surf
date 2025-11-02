@@ -219,6 +219,6 @@ public class Alumno extends Persona implements Pagos, ToJson
             e.printStackTrace();
         }
 
-        return jsonObject;
+        return jsonObj;
     }
 }
