@@ -165,7 +165,7 @@ public class Pago
             jsonObj.put("fechaLimite", fechaLimite.toString());
             jsonObj.put("fechaPago", fechaPago != null ? fechaPago.toString() : JSONObject.NULL);
             jsonObj.put("estadoPago", estadoPago.toString());
-        }catch (Exception e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonObj;
