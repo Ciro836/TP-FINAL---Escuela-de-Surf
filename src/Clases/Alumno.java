@@ -197,7 +197,7 @@ public class Alumno extends Persona implements Pagos, ToJson
 
     @Override
     public JSONObject toJSON() {
-        JSONObject jsonObject = super.toJSON();
+        JSONObject jsonObj = super.toJSON();
         try{
             jsonObject.put("idAlumno", idAlumno);
             jsonObject.put("nivel", nivel);
