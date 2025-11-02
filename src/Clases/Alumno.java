@@ -215,7 +215,7 @@ public class Alumno extends Persona implements Pagos, ToJson
             }
             jsonObject.put("pagos", jsonArrayPagos);
 
-        }catch (Exception e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
 
