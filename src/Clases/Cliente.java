@@ -109,6 +109,26 @@ public class Cliente extends Persona implements Pagos, ToJson
     @Override
     public JSONObject toJSON()
     {
-        return null;
+        JSONObject jsonObject = super.toJSON();
+
+        try {
+
+            jsonObject.put("idCliente", idCliente);
+
+            JSONArray jArray = new JSONArray();
+            for (Pago p : pagos) {
+                jArray.put(p.toJSON());
+            }
+            jsonObject.put("pagos", jArray);
+
+            JSONArray jArrayAlquileres = new JSONArray();
+            for (Alquiler a : alquileres) {
+                jArrayAlquileres.put(a.toJSON());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }
