@@ -221,7 +221,7 @@ public class Alquiler
 
             JSONArray jArray = new JSONArray();
             for (Equipo e:  equiposAlquilados) {
-                jArray.put("equipo", e.toJSON());
+                jArray.put(e.toJSON());
             }
             jObj.put("equipoAlquilados", jArray);
 
