@@ -89,6 +89,6 @@ public class Equipo
             e.printStackTrace();
         }
 
-        return jsonObj;
+        return jObj;
     }
 }
