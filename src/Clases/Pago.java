@@ -153,4 +153,21 @@ public class Pago
     {
         return idPago;
     }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObj = new JSONObject();
+        try {
+
+            jsonObj.put("idPago", idPago);
+            jsonObj.put("metodoPago", metodoPago != null ? metodoPago.toString() : JSONObject.NULL);
+            jsonObj.put("monto", monto);
+            jsonObj.put("fechaLimite", fechaLimite.toString());
+            jsonObj.put("fechaPago", fechaPago != null ? fechaPago.toString() : JSONObject.NULL);
+            jsonObj.put("estadoPago", estadoPago.toString());
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObj;
+    }
 }

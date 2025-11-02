@@ -127,4 +127,22 @@ public class Reserva
                 "\n─────────────────────────────\n";
 
     }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObj = new JSONObject();
+
+        try {
+
+            jsonObj.put("idReserva", idReserva);
+            jsonObj.put("alumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
+            jsonObj.put("clase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
+            jsonObj.put("pago", pago != null ? pago.getIdPago() : JSONObject.NULL);
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return  jsonObj;
+    }
 }

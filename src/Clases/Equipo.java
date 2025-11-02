@@ -2,7 +2,7 @@ package Clases;
 
 import Enumeradores.NombreEquipo;
 
-public class Equipo
+public class Equipo implements ToJson
 {
     private static int contador = 0;
     private final int idEquipo;
@@ -72,5 +72,23 @@ public class Equipo
     public void setDisponible(boolean disponible)
     {
         this.disponible = disponible;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+
+        JSONObject jObj = new JSONObject();
+
+        try {
+            jObj.put("idEquipo", idEquipo);
+            jObj.put("nombre", nombre != null ? nombre.toString() : JSONObject.NULL);
+            jObj.put("precioPorDia", precioPorDia);
+            jObj.put("disponible", disponible);
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jObj;
     }
 }

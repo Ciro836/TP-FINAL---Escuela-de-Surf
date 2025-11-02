@@ -222,6 +222,28 @@ public class ClaseDeSurf implements ToJson
     @Override
     public JSONObject toJSON()
     {
-        return null;
+        JSONObject jObj = new JSONObject();
+
+        try {
+
+            jObj.put("idClase", idClase);
+            jObj.put("Instructor", instructor != null ? instructor.getIdInstructor() : JSONObject.NULL);
+            jObj.put("Tipo de Clase", tipoDeClase != null ? tipoDeClase.toString() : JSONObject.NULL);
+            jObj.put("fecha y hora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
+
+            JSONArray jArrayAlumnosInscriptos = new JSONArray();
+            for (Alumno alumno : alumnosInscriptos) {
+                jArrayAlumnosInscriptos.put(alumno.getIdAlumno()); // solo tomo el id haciendo referencia a ese alumno, sino voya tomar todos los valores de alumnos y guardarlo en clase de surf, y repetir valores q ya estan en otras clases.
+            }
+            jObj.put("alumnosInscriptos", jArrayAlumnosInscriptos);
+
+            jObj.put("cupoMax", cupoMax);
+            jObj.put("valorClase", valorClase);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return jObj;
     }
 }
