@@ -233,7 +233,7 @@ public class ClaseDeSurf implements ToJson
 
             JSONArray jArrayAlumnosInscriptos = new JSONArray();
             for (Alumno alumno : alumnosInscriptos) {
-                jArrayAlumnosInscriptos.put(alumno.toJSON());
+                jArrayAlumnosInscriptos.put(alumno.getIdAlumno()); // solo tomo el id haciendo referencia a ese alumno, sino voya tomar todos los valores de alumnos y guardarlo en clase de surf, y repetir valores q ya estan en otras clases.
             }
             jObj.put("alumnosInscriptos", jArrayAlumnosInscriptos);
 
