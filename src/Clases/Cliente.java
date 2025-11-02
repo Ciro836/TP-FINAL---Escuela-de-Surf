@@ -125,6 +125,9 @@ public class Cliente extends Persona implements Pagos, ToJson
             for (Alquiler a : alquileres) {
                 jArrayAlquileres.put(a.toJSON());
             }
+
+            jsonObject.put("alquileres", jArrayAlquileres);
+
         }catch (Exception e){
             e.printStackTrace();
         }
