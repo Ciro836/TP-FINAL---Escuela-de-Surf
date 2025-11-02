@@ -139,7 +139,7 @@ public class Reserva
             jsonObj.put("clase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
             jsonObj.put("pago", pago != null ? pago.getIdPago() : JSONObject.NULL);
 
-        }catch (Exception e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
 
