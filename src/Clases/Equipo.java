@@ -85,7 +85,7 @@ public class Equipo
             jObj.put("precioPorDia", precioPorDia);
             jObj.put("disponible", disponible);
 
-        }catch (Exception e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
 
