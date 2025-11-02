@@ -230,7 +230,7 @@ public class Alquiler
             jObj.put("montoTotal", montoTotal);
             jObj.put("estaActivo", estaActivo);
 
-        }catch (Exception e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
 
