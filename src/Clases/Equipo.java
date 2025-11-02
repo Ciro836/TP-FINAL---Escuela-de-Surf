@@ -2,7 +2,7 @@ package Clases;
 
 import Enumeradores.NombreEquipo;
 
-public class Equipo
+public class Equipo implements ToJson
 {
     private static int contador = 0;
     private final int idEquipo;
