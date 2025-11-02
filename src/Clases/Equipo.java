@@ -80,10 +80,10 @@ public class Equipo
         JSONObject jsonObj = new JSONObject();
 
         try {
-            jsonObj.put("idEquipo", idEquipo);
-            jsonObj.put("nombre", nombre != null ? nombre.toString() : JSONObject.NULL);
-            jsonObj.put("precioPorDia", precioPorDia);
-            jsonObj.put("disponible", disponible);
+            jObj.put("idEquipo", idEquipo);
+            jObj.put("nombre", nombre != null ? nombre.toString() : JSONObject.NULL);
+            jObj.put("precioPorDia", precioPorDia);
+            jObj.put("disponible", disponible);
 
         }catch (Exception e) {
             e.printStackTrace();
