@@ -123,7 +123,7 @@ public class Cliente extends Persona implements Pagos, ToJson
 
             JSONArray jArrayAlquileres = new JSONArray();
             for (Alquiler a : alquileres) {
-                jArrayAlquileres.put(a.toJSON());
+                jArrayAlquileres.put(a.getIdAlquiler());
             }
 
             jsonObject.put("alquileres", jArrayAlquileres);
