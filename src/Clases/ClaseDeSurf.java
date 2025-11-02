@@ -240,7 +240,7 @@ public class ClaseDeSurf implements ToJson
             jObj.put("cupoMax", cupoMax);
             jObj.put("valorClase", valorClase);
 
-        }catch (Exception e){
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
