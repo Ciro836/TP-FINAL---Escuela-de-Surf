@@ -208,4 +208,32 @@ public class Alquiler
                 " | Activo: " + estaActivo +
                 " | Equipos: " + equiposAlquilados.size();
     }
+
+    @Override
+    public JSONObject toJSON() {
+
+        JSONObject jObj = new JSONObject();
+
+        try {
+
+            jObj.put("idAlquiler", idAlquiler);
+            jObj.put("cliente", cliente != null ? cliente.getIdCliente() : JSONObject.NULL);
+
+            JSONArray jArray = new JSONArray();
+            for (Equipo e:  equiposAlquilados) {
+                jArray.put("equipo", e.toJSON());
+            }
+            jObj.put("equipoAlquilados", jArray);
+
+            jObj.put("fechaInicio", fechaInicio != null ? fechaInicio.toString() : JSONObject.NULL);
+            jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);
+            jObj.put("montoTotal", montoTotal);
+            jObj.put("estaActivo", estaActivo);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jObj;
+    }
 }
