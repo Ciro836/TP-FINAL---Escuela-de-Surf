@@ -73,4 +73,22 @@ public class Equipo
     {
         this.disponible = disponible;
     }
+
+    @Override
+    public JSONObject toJSON() {
+
+        JSONObject jsonObj = new JSONObject();
+
+        try {
+            jsonObj.put("idEquipo", idEquipo);
+            jsonObj.put("nombre", nombre != null ? nombre.toString() : JSONObject.NULL);
+            jsonObj.put("precioPorDia", precioPorDia);
+            jsonObj.put("disponible", disponible);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonObj;
+    }
 }
