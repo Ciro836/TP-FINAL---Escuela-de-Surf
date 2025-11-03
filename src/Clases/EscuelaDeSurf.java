@@ -6,6 +6,9 @@ public class EscuelaDeSurf
     private final Repositorio<ClaseDeSurf> repoClases;
     private final Repositorio<Alumno> repoAlumnos;
     private final Repositorio<Cliente> repoClientes;
+    private final Repositorio<Reserva> repoReservas;
+    private final Repositorio<Equipo> repoEquipos;
+    private final Repositorio<Alquiler> repoAlquileres;
 
     /// CONSTRUCTOR
 
@@ -15,6 +18,9 @@ public class EscuelaDeSurf
         this.repoClases = new Repositorio<>();
         this.repoAlumnos = new Repositorio<>();
         this.repoClientes = new Repositorio<>();
+        this.repoReservas = new Repositorio<>();
+        this.repoEquipos = new Repositorio<>();
+        this.repoAlquileres = new Repositorio<>();
     }
 
     /// GETTERS
@@ -39,6 +45,21 @@ public class EscuelaDeSurf
         return repoClientes;
     }
 
+    public Repositorio<Reserva> getRepoReservas()
+    {
+        return repoReservas;
+    }
+
+    public Repositorio<Equipo> getRepoEquipos()
+    {
+        return repoEquipos;
+    }
+
+    public Repositorio<Alquiler> getRepoAlquileres()
+    {
+        return repoAlquileres;
+    }
+
     @Override
     public String toString()
     {
@@ -47,6 +68,9 @@ public class EscuelaDeSurf
                 ", repoClases=" + repoClases +
                 ", repoAlumnos=" + repoAlumnos +
                 ", repoClientes=" + repoClientes +
+                ", repoReservas=" + repoReservas +
+                ", repoEquipos=" + repoEquipos +
+                ", repoAlquileres=" + repoAlquileres +
                 '}';
     }
 
@@ -60,6 +84,12 @@ public class EscuelaDeSurf
         System.out.println("REPOSITORIO DE CLIENTES: " + repoClientes);
         System.out.println("\n--------------------------------------------------\n");
         System.out.println("REPOSITORIO DE CLASES: " + repoClases);
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("REPOSITORIO DE RESERVAS: " + repoReservas);
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("REPOSITORIO DE EQUIPOS: " + repoEquipos);
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("REPOSITORIO DE ALQUILERES: " + repoAlquileres);
         System.out.println("\n--------------------------------------------------");
     }
 }

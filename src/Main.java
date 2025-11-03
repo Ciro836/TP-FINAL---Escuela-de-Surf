@@ -1,18 +1,19 @@
 import Clases.*;
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
+import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
-import org.json.JSONArray;
 
 static EscuelaDeSurf escuela = null;
 static Instructor instructor = null;
 static Cliente cliente = null;
 static Alumno alumno = null;
 static ClaseDeSurf clase = null;
+static Alquiler alquiler = null;
 
 static Scanner scanner = new Scanner(System.in);
 
@@ -145,16 +146,21 @@ public static void caso5() //crear clase de surf
     }
 }
 
-public static void caso6() //mostrar todos los repositorios
+public static void caso6() //Agregar alquiler con varios equipos para un cliente
 {
-    if (escuela == null)
-    {
-        System.out.println("⚠️: Primero debe crear la escuela. Elija la (opción 1).");
-    }
-    else
-    {
-        escuela.mostrarEscuelaDeSurf();
-    }
+    alquiler = new Alquiler(cliente, LocalDate.of(2026, 10, 27));
+
+    cliente.agregarAlquiler(alquiler);
+
+
+    Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
+    Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
+    alquiler.agregarEquipo(equipo);
+    alquiler.agregarEquipo(equipo2);
+
+    escuela.getRepoEquipos().agregar(1, equipo);
+    escuela.getRepoEquipos().agregar(2, equipo2);
+    escuela.getRepoAlquileres().agregar(1, alquiler);
 }
 
 public static void caso7() //buscar alumno por su id
@@ -181,6 +187,12 @@ public static void caso8() //metodo: reservar clase de alumno
         try
         {
             alumno.reservar(clase, MetodoPago.EFECTIVO);
+
+            for (int i = 0; i < alumno.getReservas().size(); i++)
+            {
+                escuela.getRepoReservas().agregar(i, alumno.getReservas().get(i));
+            }
+
             System.out.println("Se reservó correctamente la clase.");
         }
         catch (CupoLlenoException e) // la clase no tiene más espacio
@@ -259,43 +271,33 @@ public static void caso11() //cancelar una reserva
 
 public static void caso12() //grabar repositorios a json
 {
-    JSONArray arregloJson = new JSONArray();
+    JsonUtiles.gabrarRepositorioEnJson(escuela.getRepoAlumnos(),
+            escuela.getRepoInstructores(),
+            escuela.getRepoClases(),
+            escuela.getRepoClientes(),
+            escuela.getRepoReservas(),
+            escuela.getRepoEquipos(),
+            escuela.getRepoAlquileres(),
+            "escuelaDeSurf.json");
 
-    JSONArray arregloAlumnos = new JSONArray();
-    for (Alumno a : escuela.getRepoAlumnos().getTodos())
-    {
-        arregloAlumnos.put(a.toJSON());
-    }
-
-    JSONArray arregloClientes = new JSONArray();
-    for (Cliente c : escuela.getRepoClientes().getTodos())
-    {
-        arregloClientes.put(c.toJSON());
-    }
-
-    JSONArray arregloClases = new JSONArray();
-    for (ClaseDeSurf clase : escuela.getRepoClases().getTodos())
-    {
-        arregloClases.put(clase.toJSON());
-    }
-
-    JSONArray arregloInstructores = new JSONArray();
-    for (Instructor i : escuela.getRepoInstructores().getTodos())
-    {
-        arregloInstructores.put(i.toJSON());
-    }
-
-    arregloJson.put(arregloAlumnos);
-    arregloJson.put(arregloClientes);
-    arregloJson.put(arregloClases);
-    arregloJson.put(arregloInstructores);
-
-    JsonUtiles.grabarUnJson(arregloJson, "escuelaDeSurf.json");
+    System.out.println("Repositorios grabados en escuelaDeSurf.json");
 }
 
 public static void caso13() //leer y cargar el archivo json de repositorios
 {
 
+}
+
+public static void caso14() //mostrar todos los repositorios
+{
+    if (escuela == null)
+    {
+        System.out.println("⚠️: Primero debe crear la escuela. Elija la (opción 1).");
+    }
+    else
+    {
+        escuela.mostrarEscuelaDeSurf();
+    }
 }
 
 void main()
@@ -310,7 +312,7 @@ void main()
         System.out.println("3. Agregar Instructor.");
         System.out.println("4. Agregar Cliente.");
         System.out.println("5. Agregar Clase de Surf.");
-        System.out.println("6. Mostrar todos los repositorios.");
+        System.out.println("6. Agregar alquiler con varios equipos para un cliente.");
         System.out.println("7. Buscar alumno por su id.");
         System.out.println("8. Método: Reservar clase de Alumno.");
         System.out.println("9. Mostrar reservas de un alumno");
@@ -318,6 +320,7 @@ void main()
         System.out.println("11. Cancelar una reserva");
         System.out.println("12. Grabar repositorios a json");
         System.out.println("13. Leer el archivo json de repositorios");
+        System.out.println("14. Mostrar todos los repositorios.");
 
         System.out.println("999. Salir.");
 
@@ -340,6 +343,7 @@ void main()
             case 11 -> caso11();
             case 12 -> caso12();
             case 13 -> caso13();
+            case 14 -> caso14();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }

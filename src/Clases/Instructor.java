@@ -138,7 +138,7 @@ public class Instructor extends Persona implements ToJson
             JSONArray arrClases = new JSONArray();
             for (ClaseDeSurf clase : this.clases)
             {
-                arrClases.put(clase.toJSON());
+                arrClases.put(clase.getIdClase());
             }
 
             objeto.put("clases", arrClases);
