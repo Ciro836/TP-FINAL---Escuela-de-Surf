@@ -149,6 +149,10 @@ public static void caso5() //crear clase de surf
 public static void caso6() //Agregar alquiler con varios equipos para un cliente
 {
     alquiler = new Alquiler(cliente, LocalDate.of(2026, 10, 27));
+    Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
+    Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
+    alquiler.agregarEquipo(equipo);
+    alquiler.agregarEquipo(equipo2);
 
     cliente.agregarAlquiler(alquiler);
 
@@ -156,11 +160,6 @@ public static void caso6() //Agregar alquiler con varios equipos para un cliente
     pagoAlquiler.setMonto(alquiler.getMontoTotal());
     cliente.pagar(pagoAlquiler, MetodoPago.TRANSFERENCIA);
 
-
-    Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
-    Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
-    alquiler.agregarEquipo(equipo);
-    alquiler.agregarEquipo(equipo2);
 
     escuela.getRepoEquipos().agregar(1, equipo);
     escuela.getRepoEquipos().agregar(2, equipo2);
