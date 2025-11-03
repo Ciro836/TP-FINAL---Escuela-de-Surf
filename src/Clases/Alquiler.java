@@ -228,9 +228,9 @@ public class Alquiler implements ToJson
             JSONArray jArray = new JSONArray();
             for (Equipo e : equiposAlquilados)
             {
-                jArray.put(e.toJSON());
+                jArray.put(e.getIdEquipo());
             }
-            jObj.put("equipoAlquilados", jArray);
+            jObj.put("equiposAlquilados", jArray);
 
             jObj.put("fechaInicio", fechaInicio != null ? fechaInicio.toString() : JSONObject.NULL);
             jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);
