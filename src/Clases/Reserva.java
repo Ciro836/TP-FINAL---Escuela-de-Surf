@@ -141,10 +141,9 @@ public class Reserva implements InterfazJson<Reserva>
         try
         {
             jsonObj.put("idReserva", idReserva);
-            jsonObj.put("idAlumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
-            jsonObj.put("idClase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
-            jsonObj.put("idPago", pago != null ? pago.getIdPago() : JSONObject.NULL);
-
+            jsonObj.put("Alumno", alumno != null ? alumno.toJSON() : JSONObject.NULL); //compruebo que exista un alumno sino null en object json
+            jsonObj.put("Clase", claseDeSurf != null ? claseDeSurf.toJSON() : JSONObject.NULL);
+            jsonObj.put("Pago", pago != null ? pago.toJSON() : JSONObject.NULL);
         }
         catch (JSONException e)
         {

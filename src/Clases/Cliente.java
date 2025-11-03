@@ -119,17 +119,17 @@ public class Cliente extends Persona implements Pagos
             JSONArray jArray = new JSONArray();
             for (Pago p : pagos)
             {
-                jArray.put(p.getIdPago());
+                jArray.put(p.toJSON());
             }
-            jsonObject.put("idPagos", jArray);
+            jsonObject.put("Pagos", jArray);
 
             JSONArray jArrayAlquileres = new JSONArray();
             for (Alquiler a : alquileres)
             {
-                jArrayAlquileres.put(a.getIdAlquiler());
+                jArrayAlquileres.put(a.toJSON());
             }
 
-            jsonObject.put("idAlquileres", jArrayAlquileres);
+            jsonObject.put("Alquileres", jArrayAlquileres);
 
         }
         catch (JSONException e)

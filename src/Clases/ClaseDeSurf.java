@@ -222,16 +222,16 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
         try
         {
             jObj.put("idClase", idClase);
-            jObj.put("Instructor", instructor != null ? instructor.getIdInstructor() : JSONObject.NULL);
+            jObj.put("Instructor", instructor != null ? instructor.toJSON() : JSONObject.NULL);
             jObj.put("TipoDeClase", tipoDeClase != null ? tipoDeClase.toString() : JSONObject.NULL);
             jObj.put("fechaYhora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
 
             JSONArray jArrayAlumnosInscriptos = new JSONArray();
             for (Alumno alumno : alumnosInscriptos)
             {
-                jArrayAlumnosInscriptos.put(alumno.getIdAlumno()); // solo tomo el id haciendo referencia a ese alumno, sino voya tomar todos los valores de alumnos y guardarlo en clase de surf, y repetir valores q ya estan en otras clases.
+                jArrayAlumnosInscriptos.put(alumno.toJSON());
             }
-            jObj.put("idAlumnosInscriptos", jArrayAlumnosInscriptos);
+            jObj.put("AlumnosInscriptos", jArrayAlumnosInscriptos);
 
             jObj.put("cupoMax", cupoMax);
             jObj.put("valorClase", valorClase);

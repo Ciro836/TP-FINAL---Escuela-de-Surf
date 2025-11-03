@@ -223,14 +223,14 @@ public class Alquiler implements InterfazJson<Alquiler>
         {
 
             jObj.put("idAlquiler", idAlquiler);
-            jObj.put("cliente", cliente != null ? cliente.getIdCliente() : JSONObject.NULL);
+            jObj.put("cliente", cliente != null ? cliente.toJSON() : JSONObject.NULL);
 
             JSONArray jArray = new JSONArray();
             for (Equipo e : equiposAlquilados)
             {
-                jArray.put(e.getIdEquipo());
+                jArray.put(e.toJSON());
             }
-            jObj.put("idEquiposAlquilados", jArray);
+            jObj.put("EquiposAlquilados", jArray);
 
             jObj.put("fechaInicio", fechaInicio != null ? fechaInicio.toString() : JSONObject.NULL);
             jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);

@@ -209,16 +209,16 @@ public class Alumno extends Persona implements Pagos
             JSONArray jsonArray = new JSONArray();
             for (Reserva r : reservas)
             {
-                jsonArray.put(r.getIdReserva());
+                jsonArray.put(r.toJSON());
             }
-            jsonObj.put("idReservas", jsonArray);
+            jsonObj.put("Reservas", jsonArray);
 
             JSONArray jsonArrayPagos = new JSONArray();
             for (Pago p : pagos)
             {
-                jsonArrayPagos.put(p.getIdPago());
+                jsonArrayPagos.put(p.toJSON());
             }
-            jsonObj.put("idPagos", jsonArrayPagos);
+            jsonObj.put("Pagos", jsonArrayPagos);
 
         }
         catch (JSONException e)
