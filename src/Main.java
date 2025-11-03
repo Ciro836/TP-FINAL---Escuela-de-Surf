@@ -7,6 +7,8 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 static EscuelaDeSurf escuela = null;
 static Instructor instructor = null;
@@ -297,7 +299,9 @@ public static void caso12() //grabar repositorios a json
 
 public static void caso13() //leer y cargar el archivo json de repositorios
 {
+    JSONTokener tokener = JsonUtiles.leerUnJson("escuelaDeSurf.json");
 
+    JSONObject
 }
 
 public static void caso14() //mostrar todos los repositorios

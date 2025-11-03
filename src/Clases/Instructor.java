@@ -1,6 +1,5 @@
 package Clases;
 
-import Interfaces.ToJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Instructor extends Persona implements ToJson
+public class Instructor extends Persona
 {
     private static int contador = 0;
     private final int idInstructor;
@@ -150,5 +149,11 @@ public class Instructor extends Persona implements ToJson
         }
 
         return objeto;
+    }
+
+    @Override
+    public Instructor fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

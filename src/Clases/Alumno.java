@@ -4,7 +4,6 @@ import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Interfaces.Pagos;
-import Interfaces.ToJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alumno extends Persona implements Pagos, ToJson
+public class Alumno extends Persona implements Pagos
 {
     private static int contador = 0;
     private final int idAlumno;
@@ -228,5 +227,11 @@ public class Alumno extends Persona implements Pagos, ToJson
         }
 
         return jsonObj;
+    }
+
+    @Override
+    public Alumno fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

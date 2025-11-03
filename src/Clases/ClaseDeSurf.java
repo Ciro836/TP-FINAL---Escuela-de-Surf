@@ -5,7 +5,7 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClaseDeSurf implements ToJson
+public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
 {
     private static int contador = 0;
     private final int idClase;
@@ -250,5 +250,11 @@ public class ClaseDeSurf implements ToJson
         }
 
         return jObj;
+    }
+
+    @Override
+    public ClaseDeSurf fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

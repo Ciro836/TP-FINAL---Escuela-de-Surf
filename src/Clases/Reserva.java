@@ -1,10 +1,10 @@
 package Clases;
 
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Reserva implements ToJson
+public class Reserva implements InterfazJson<Reserva>
 {
     private static int contador = 0;
     private final int idReserva;
@@ -152,5 +152,11 @@ public class Reserva implements ToJson
         }
 
         return jsonObj;
+    }
+
+    @Override
+    public Reserva fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }
