@@ -37,6 +37,7 @@ public class Alumno extends Persona implements Pagos, ToJson
 
     public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
+        super(dni, nombre, apellido, edad, numeroTel);
         if (nivel == null)
         {
             throw new IllegalArgumentException("El nivel de surf del alumno no puede ser nulo.");
@@ -47,7 +48,6 @@ public class Alumno extends Persona implements Pagos, ToJson
             throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
         }
 
-        super(dni, nombre, apellido, edad, numeroTel);
         this.idAlumno = ++contador;
         this.nivel = nivel;
         this.cantClasesTomadas = cantClasesTomadas;

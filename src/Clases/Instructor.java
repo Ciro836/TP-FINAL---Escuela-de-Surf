@@ -30,12 +30,13 @@ public class Instructor extends Persona implements ToJson
 
     public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia)
     {
+        super(dni, nombre, apellido, edad, numeroTel);
+
         if (aniosExperiencia < 0)
         {
             throw new IllegalArgumentException("⚠️: Los años de experiencia no puede ser negativos");
         }
 
-        super(dni, nombre, apellido, edad, numeroTel);
         this.idInstructor = ++contador;
         this.aniosExperiencia = aniosExperiencia;
         this.sueldoBase = 10000;
