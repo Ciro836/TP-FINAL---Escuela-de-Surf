@@ -47,16 +47,21 @@ public class JsonUtiles
     //METODOS PROPIOS
 
     public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
-                                               Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente, String archivo)
+                                               Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
+                                               Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
+                                               Repositorio<Alquiler> repoAlquiler, String archivo)
     {
         try
         {
             JSONObject json = new JSONObject();
 
-            json.put("alumnos", coleccion_a_JsonArray(repoAlumno.getTodos()));
-            json.put("instructor", coleccion_a_JsonArray(repoInstructor.getTodos()));
-            json.put("clases", coleccion_a_JsonArray(repoClase.getTodos()));
-            json.put("cliente", coleccion_a_JsonArray(repoCliente.getTodos()));
+            json.put("repoAlumnos", coleccion_a_JsonArray(repoAlumno.getTodos()));
+            json.put("repoInstructores", coleccion_a_JsonArray(repoInstructor.getTodos()));
+            json.put("repoClases", coleccion_a_JsonArray(repoClase.getTodos()));
+            json.put("repoClientes", coleccion_a_JsonArray(repoCliente.getTodos()));
+            json.put("repoReservas", coleccion_a_JsonArray(repoReserva.getTodos()));
+            json.put("repoEquipos", coleccion_a_JsonArray(repoEquipo.getTodos()));
+            json.put("repoAlquileres", coleccion_a_JsonArray(repoAlquiler.getTodos()));
 
             try (FileWriter file = new FileWriter(archivo))
             {
