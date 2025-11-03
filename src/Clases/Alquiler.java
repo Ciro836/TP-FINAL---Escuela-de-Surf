@@ -230,7 +230,7 @@ public class Alquiler implements ToJson
             {
                 jArray.put(e.getIdEquipo());
             }
-            jObj.put("equiposAlquilados", jArray);
+            jObj.put("idEquiposAlquilados", jArray);
 
             jObj.put("fechaInicio", fechaInicio != null ? fechaInicio.toString() : JSONObject.NULL);
             jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);

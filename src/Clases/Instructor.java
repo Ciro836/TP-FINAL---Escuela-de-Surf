@@ -141,7 +141,7 @@ public class Instructor extends Persona implements ToJson
                 arrClases.put(clase.getIdClase());
             }
 
-            objeto.put("clases", arrClases);
+            objeto.put("idClases", arrClases);
         }
         catch (JSONException e)
         {

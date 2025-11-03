@@ -212,14 +212,14 @@ public class Alumno extends Persona implements Pagos, ToJson
             {
                 jsonArray.put(r.getIdReserva());
             }
-            jsonObj.put("reservas", jsonArray);
+            jsonObj.put("idReservas", jsonArray);
 
             JSONArray jsonArrayPagos = new JSONArray();
             for (Pago p : pagos)
             {
-                jsonArrayPagos.put(p.toJSON());
+                jsonArrayPagos.put(p.getIdPago());
             }
-            jsonObj.put("pagos", jsonArrayPagos);
+            jsonObj.put("idPagos", jsonArrayPagos);
 
         }
         catch (JSONException e)
