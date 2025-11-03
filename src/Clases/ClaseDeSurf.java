@@ -61,7 +61,6 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
         this.alumnosInscriptos = new HashSet<>();
         this.idClase = ++contador;
         this.instructor = instructor;
-        instructor.asignarClase(this);
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
         this.cupoMax = cupoMax;
@@ -86,14 +85,9 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
         {
             throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
         }
-        // se elimina la clase del instructor actual
-        this.instructor.eliminarClase(this);
 
         // asigno el nuevo instructor
         this.instructor = instructor;
-
-        // asigno la clase al nuevo instructor
-        this.instructor.asignarClase(this);
     }
 
     public TipoClase getTipoDeClase()
@@ -213,7 +207,6 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
         System.out.println("══════════════════════════════════════");
 
     }
-
 
     @Override
     public String toString()
