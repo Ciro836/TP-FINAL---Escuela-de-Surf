@@ -1,5 +1,15 @@
-[
-    [{
+{
+    "cliente": [{
+        "numeroTel": 223223854,
+        "alquileres": [],
+        "idCliente": 1,
+        "apellido": "Ferreyra",
+        "nombre": "Juan",
+        "edad": 35,
+        "pagos": [],
+        "dni": 48239633
+    }],
+    "alumnos": [{
         "idAlumno": 1,
         "cantClasesTomadas": 0,
         "numeroTel": 22384625,
@@ -11,33 +21,14 @@
         "pagos": [{
             "metodoPago": "EFECTIVO",
             "monto": 200,
-            "fechaLimite": "2025-12-02",
+            "fechaLimite": "2025-12-03",
             "idPago": 1,
             "estadoPago": "PENDIENTE",
             "fechaPago": null
         }],
         "dni": 47559633
     }],
-    [{
-        "numeroTel": 223223854,
-        "alquileres": [],
-        "idCliente": 1,
-        "apellido": "Ferreyra",
-        "nombre": "Juan",
-        "edad": 35,
-        "pagos": [],
-        "dni": 48239633
-    }],
-    [{
-        "valorClase": 200,
-        "TipoDeClase": "PARTICULAR",
-        "Instructor": 1,
-        "alumnosInscriptos": [1],
-        "idClase": 1,
-        "fechaYhora": "2026-10-27T16:30",
-        "cupoMax": 1
-    }],
-    [{
+    "instructor": [{
         "numeroTel": 22329625,
         "aniosExperiencia": 2,
         "idInstructor": 1,
@@ -55,5 +46,14 @@
         "nombre": "Balta",
         "edad": 18,
         "dni": 47279633
+    }],
+    "clases": [{
+        "valorClase": 200,
+        "TipoDeClase": "PARTICULAR",
+        "Instructor": 1,
+        "alumnosInscriptos": [1],
+        "idClase": 1,
+        "fechaYhora": "2026-10-27T16:30",
+        "cupoMax": 1
     }]
-]
+}

@@ -6,7 +6,6 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
-import org.json.JSONArray;
 
 static EscuelaDeSurf escuela = null;
 static Instructor instructor = null;
@@ -259,38 +258,13 @@ public static void caso11() //cancelar una reserva
 
 public static void caso12() //grabar repositorios a json
 {
-    JSONArray arregloJson = new JSONArray();
+    JsonUtiles.gabrarRepositorioEnJson(escuela.getRepoAlumnos(),
+            escuela.getRepoInstructores(),
+            escuela.getRepoClases(),
+            escuela.getRepoClientes(),
+            "escuelaDeSurf.json");
 
-    JSONArray arregloAlumnos = new JSONArray();
-    for (Alumno a : escuela.getRepoAlumnos().getTodos())
-    {
-        arregloAlumnos.put(a.toJSON());
-    }
-
-    JSONArray arregloClientes = new JSONArray();
-    for (Cliente c : escuela.getRepoClientes().getTodos())
-    {
-        arregloClientes.put(c.toJSON());
-    }
-
-    JSONArray arregloClases = new JSONArray();
-    for (ClaseDeSurf clase : escuela.getRepoClases().getTodos())
-    {
-        arregloClases.put(clase.toJSON());
-    }
-
-    JSONArray arregloInstructores = new JSONArray();
-    for (Instructor i : escuela.getRepoInstructores().getTodos())
-    {
-        arregloInstructores.put(i.toJSON());
-    }
-
-    arregloJson.put(arregloAlumnos);
-    arregloJson.put(arregloClientes);
-    arregloJson.put(arregloClases);
-    arregloJson.put(arregloInstructores);
-
-    JsonUtiles.grabarUnJson(arregloJson, "escuelaDeSurf.json");
+    System.out.println("Repositorios grabados en escuelaDeSurf.json");
 }
 
 public static void caso13() //leer y cargar el archivo json de repositorios
