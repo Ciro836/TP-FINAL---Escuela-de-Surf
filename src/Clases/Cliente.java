@@ -4,6 +4,8 @@ import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Interfaces.Pagos;
 import Interfaces.ToJson;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -111,24 +113,28 @@ public class Cliente extends Persona implements Pagos, ToJson
     {
         JSONObject jsonObject = super.toJSON();
 
-        try {
-
+        try
+        {
             jsonObject.put("idCliente", idCliente);
 
             JSONArray jArray = new JSONArray();
-            for (Pago p : pagos) {
+            for (Pago p : pagos)
+            {
                 jArray.put(p.toJSON());
             }
             jsonObject.put("pagos", jArray);
 
             JSONArray jArrayAlquileres = new JSONArray();
-            for (Alquiler a : alquileres) {
+            for (Alquiler a : alquileres)
+            {
                 jArrayAlquileres.put(a.getIdAlquiler());
             }
 
             jsonObject.put("alquileres", jArrayAlquileres);
 
-        }catch (JSONException e){
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 

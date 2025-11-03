@@ -1,6 +1,9 @@
 package Clases;
 
 import Enumeradores.NombreEquipo;
+import Interfaces.ToJson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Equipo implements ToJson
 {
@@ -75,17 +78,19 @@ public class Equipo implements ToJson
     }
 
     @Override
-    public JSONObject toJSON() {
-
+    public JSONObject toJSON()
+    {
         JSONObject jObj = new JSONObject();
 
-        try {
+        try
+        {
             jObj.put("idEquipo", idEquipo);
             jObj.put("nombre", nombre != null ? nombre.toString() : JSONObject.NULL);
             jObj.put("precioPorDia", precioPorDia);
             jObj.put("disponible", disponible);
-
-        }catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 

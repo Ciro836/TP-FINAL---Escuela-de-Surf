@@ -2,10 +2,13 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
+import Interfaces.ToJson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
-public class Pago
+public class Pago implements ToJson
 {
     private static int contador = 0;
     private final int idPago;
@@ -155,17 +158,20 @@ public class Pago
     }
 
     @Override
-    public JSONObject toJSON() {
+    public JSONObject toJSON()
+    {
         JSONObject jsonObj = new JSONObject();
-        try {
-
+        try
+        {
             jsonObj.put("idPago", idPago);
             jsonObj.put("metodoPago", metodoPago != null ? metodoPago.toString() : JSONObject.NULL);
             jsonObj.put("monto", monto);
             jsonObj.put("fechaLimite", fechaLimite.toString());
             jsonObj.put("fechaPago", fechaPago != null ? fechaPago.toString() : JSONObject.NULL);
             jsonObj.put("estadoPago", estadoPago.toString());
-        }catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
         return jsonObj;

@@ -1,6 +1,8 @@
 package Clases;
 
 import Interfaces.ToJson;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -125,6 +127,27 @@ public class Instructor extends Persona implements ToJson
     @Override
     public JSONObject toJSON()
     {
-        return null;
+        JSONObject objeto = super.toJSON();
+
+        try
+        {
+            objeto.put("idInstructor", idInstructor);
+            objeto.put("aniosExperiencia", aniosExperiencia);
+            objeto.put("sueldoBase", sueldoBase);
+
+            JSONArray arrClases = new JSONArray();
+            for (ClaseDeSurf clase : this.clases)
+            {
+                arrClases.put(clase.toJSON());
+            }
+
+            objeto.put("clases", arrClases);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return objeto;
     }
 }
