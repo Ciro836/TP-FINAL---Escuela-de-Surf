@@ -95,6 +95,18 @@ public class JsonUtiles
             {
                 jsonArray.put(((Cliente) item).toJSON());
             }
+            if (item instanceof Reserva)
+            {
+                jsonArray.put(((Reserva) item).toJSON());
+            }
+            if (item instanceof Equipo)
+            {
+                jsonArray.put(((Equipo) item).toJSON());
+            }
+            if (item instanceof Alquiler)
+            {
+                jsonArray.put(((Alquiler) item).toJSON());
+            }
         }
         return jsonArray;
     }
