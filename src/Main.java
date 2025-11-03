@@ -232,7 +232,7 @@ public static void caso9() //mostrar reservas de un alumno
         System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 3)");
     }
 
-    //alumno.mostrarReservas();
+    alumno.mostrarReservas();
 }
 
 public static void caso10() //mostrar alumnos inscriptos en una clase
@@ -242,7 +242,7 @@ public static void caso10() //mostrar alumnos inscriptos en una clase
         System.out.println("⚠️: Primero debe crear una clase. Elija la (opción 5)");
     }
 
-    //clase.mostrarAlumnosInscriptos();
+    clase.mostrarAlumnosInscriptos();
 
 }
 
