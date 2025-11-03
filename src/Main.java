@@ -6,6 +6,7 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
+import org.json.JSONArray;
 
 static EscuelaDeSurf escuela = null;
 static Instructor instructor = null;
@@ -121,7 +122,7 @@ public static void caso5() //crear clase de surf
     {
         try
         {
-            clase = new ClaseDeSurf(instructor, TipoClase.PARTICULAR, LocalDateTime.of(2025, 10, 27, 16, 30), 1);
+            clase = new ClaseDeSurf(instructor, TipoClase.PARTICULAR, LocalDateTime.of(2026, 10, 27, 16, 30), 1);
             String resultado = escuela.getRepoClases().agregar(1, clase) ? "Clase de surf creada y agregada al repositorio de clases correctamente." : "No se a podido crear la clase.";
             System.out.println(resultado);
         }
@@ -258,10 +259,41 @@ public static void caso11() //cancelar una reserva
 
 public static void caso12() //grabar repositorios a json
 {
+    JSONArray arregloJson = new JSONArray();
 
+    JSONArray arregloAlumnos = new JSONArray();
+    for (Alumno a : escuela.getRepoAlumnos().getTodos())
+    {
+        arregloAlumnos.put(a.toJSON());
+    }
+
+    JSONArray arregloClientes = new JSONArray();
+    for (Cliente c : escuela.getRepoClientes().getTodos())
+    {
+        arregloClientes.put(c.toJSON());
+    }
+
+    JSONArray arregloClases = new JSONArray();
+    for (ClaseDeSurf clase : escuela.getRepoClases().getTodos())
+    {
+        arregloClases.put(clase.toJSON());
+    }
+
+    JSONArray arregloInstructores = new JSONArray();
+    for (Instructor i : escuela.getRepoInstructores().getTodos())
+    {
+        arregloInstructores.put(i.toJSON());
+    }
+
+    arregloJson.put(arregloAlumnos);
+    arregloJson.put(arregloClientes);
+    arregloJson.put(arregloClases);
+    arregloJson.put(arregloInstructores);
+
+    JsonUtiles.grabarUnJson(arregloJson, "escuelaDeSurf.json");
 }
 
-public static void caso13() //leer el archivo json de repositorios
+public static void caso13() //leer y cargar el archivo json de repositorios
 {
 
 }
@@ -306,6 +338,8 @@ void main()
             case 9 -> caso9();
             case 10 -> caso10();
             case 11 -> caso11();
+            case 12 -> caso12();
+            case 13 -> caso13();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }
