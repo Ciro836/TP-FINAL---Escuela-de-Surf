@@ -111,6 +111,6 @@ public class Equipo implements InterfazJson<Equipo>
     @Override
     public Equipo fromJSON(JSONObject objeto)
     {
-        return null;
+        return new Equipo(NombreEquipo.valueOf(objeto.getString("nombre").toUpperCase()));
     }
 }
