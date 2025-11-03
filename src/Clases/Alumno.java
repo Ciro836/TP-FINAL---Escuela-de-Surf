@@ -5,6 +5,8 @@ import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Interfaces.Pagos;
 import Interfaces.ToJson;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -196,26 +198,32 @@ public class Alumno extends Persona implements Pagos, ToJson
     }
 
     @Override
-    public JSONObject toJSON() {
+    public JSONObject toJSON()
+    {
         JSONObject jsonObj = super.toJSON();
-        try{
+        try
+        {
             jsonObj.put("idAlumno", idAlumno);
             jsonObj.put("nivel", nivel);
             jsonObj.put("cantClasesTomadas", cantClasesTomadas);
 
             JSONArray jsonArray = new JSONArray();
-            for (Reserva r : reservas) {
+            for (Reserva r : reservas)
+            {
                 jsonArray.put(r.getIdReserva());
             }
             jsonObj.put("reservas", jsonArray);
 
             JSONArray jsonArrayPagos = new JSONArray();
-            for (Pago p : pagos) {
+            for (Pago p : pagos)
+            {
                 jsonArrayPagos.put(p.toJSON());
             }
             jsonObj.put("pagos", jsonArrayPagos);
 
-        }catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 

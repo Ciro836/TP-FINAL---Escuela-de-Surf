@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collection;
 
 public class JsonUtiles
@@ -29,6 +27,24 @@ public class JsonUtiles
             e.printStackTrace();
         }
     }
+
+    public static JSONTokener leerUnJson(String archivo)
+    {
+        JSONTokener tokener = null;
+
+        try
+        {
+            tokener = new JSONTokener(new FileReader(archivo));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        return tokener;
+    }
+
+    //METODOS PROPIOS
 
     public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
                                                Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente, String archivo)
@@ -77,38 +93,4 @@ public class JsonUtiles
         }
         return jsonArray;
     }
-
-
-    public static JSONTokener leerUnJson(String archivo)
-    {
-        JSONTokener tokener = null;
-
-        try
-        {
-            tokener = new JSONTokener(new FileReader(archivo));
-
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-        return tokener;
-    }
-
-    //Otra forma
-    public static String leer(String archivo)
-    {
-        String contenido = "";
-        try
-        {
-            contenido = new String(Files.readAllBytes(Paths.get(archivo + ".json")));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return contenido;
-    }
-
 }

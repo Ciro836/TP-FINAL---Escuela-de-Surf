@@ -6,6 +6,8 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
 import Interfaces.ToJson;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -216,7 +218,7 @@ public class ClaseDeSurf implements ToJson
     @Override
     public String toString()
     {
-        return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase;
+        return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase + " | Alumnos inscriptos: " + alumnosInscriptos;
     }
 
     @Override
@@ -224,15 +226,16 @@ public class ClaseDeSurf implements ToJson
     {
         JSONObject jObj = new JSONObject();
 
-        try {
-
+        try
+        {
             jObj.put("idClase", idClase);
             jObj.put("Instructor", instructor != null ? instructor.getIdInstructor() : JSONObject.NULL);
-            jObj.put("Tipo de Clase", tipoDeClase != null ? tipoDeClase.toString() : JSONObject.NULL);
-            jObj.put("fecha y hora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
+            jObj.put("TipoDeClase", tipoDeClase != null ? tipoDeClase.toString() : JSONObject.NULL);
+            jObj.put("fechaYhora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
 
             JSONArray jArrayAlumnosInscriptos = new JSONArray();
-            for (Alumno alumno : alumnosInscriptos) {
+            for (Alumno alumno : alumnosInscriptos)
+            {
                 jArrayAlumnosInscriptos.put(alumno.getIdAlumno()); // solo tomo el id haciendo referencia a ese alumno, sino voya tomar todos los valores de alumnos y guardarlo en clase de surf, y repetir valores q ya estan en otras clases.
             }
             jObj.put("alumnosInscriptos", jArrayAlumnosInscriptos);
@@ -240,7 +243,9 @@ public class ClaseDeSurf implements ToJson
             jObj.put("cupoMax", cupoMax);
             jObj.put("valorClase", valorClase);
 
-        }catch (JSONException e){
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 
