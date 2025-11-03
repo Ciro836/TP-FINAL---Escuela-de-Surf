@@ -149,6 +149,10 @@ public static void caso5() //crear clase de surf
 public static void caso6() //Agregar alquiler con varios equipos para un cliente
 {
     alquiler = new Alquiler(cliente, LocalDate.of(2026, 10, 27));
+    Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
+    Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
+    alquiler.agregarEquipo(equipo);
+    alquiler.agregarEquipo(equipo2);
 
     cliente.agregarAlquiler(alquiler);
 
@@ -156,11 +160,6 @@ public static void caso6() //Agregar alquiler con varios equipos para un cliente
     pagoAlquiler.setMonto(alquiler.getMontoTotal());
     cliente.pagar(pagoAlquiler, MetodoPago.TRANSFERENCIA);
 
-
-    Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
-    Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
-    alquiler.agregarEquipo(equipo);
-    alquiler.agregarEquipo(equipo2);
 
     escuela.getRepoEquipos().agregar(1, equipo);
     escuela.getRepoEquipos().agregar(2, equipo2);
@@ -195,14 +194,14 @@ public static void caso8() //metodo: reservar clase de alumno
         {
             alumno.reservar(clase, MetodoPago.EFECTIVO);
 
-            for (int i = 0; i < alumno.getReservas().size(); i++)
+            for (Reserva reserva : alumno.getReservas())
             {
-                escuela.getRepoReservas().agregar(i, alumno.getReservas().get(i));
+                escuela.getRepoReservas().agregar(reserva.getIdReserva(), reserva);
             }
 
-            for (int i = 0; i < alumno.getPagos().size(); i++)
+            for (Pago pago : alumno.getPagos())
             {
-                escuela.getRepoPagos().agregar(i, alumno.getPagos().get(i));
+                escuela.getRepoPagos().agregar(pago.getIdPago(), pago);
             }
 
             System.out.println("Se reservó correctamente la clase.");
@@ -233,7 +232,7 @@ public static void caso9() //mostrar reservas de un alumno
         System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 3)");
     }
 
-    //alumno.mostrarReservas();
+    alumno.mostrarReservas();
 }
 
 public static void caso10() //mostrar alumnos inscriptos en una clase
@@ -243,8 +242,7 @@ public static void caso10() //mostrar alumnos inscriptos en una clase
         System.out.println("⚠️: Primero debe crear una clase. Elija la (opción 5)");
     }
 
-    //clase.mostrarAlumnosInscriptos();
-
+    clase.mostrarAlumnosInscriptos();
 }
 
 public static void caso11() //cancelar una reserva
