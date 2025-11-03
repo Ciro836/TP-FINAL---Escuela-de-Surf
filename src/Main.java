@@ -243,7 +243,6 @@ public static void caso10() //mostrar alumnos inscriptos en una clase
     }
 
     clase.mostrarAlumnosInscriptos();
-
 }
 
 public static void caso11() //cancelar una reserva
