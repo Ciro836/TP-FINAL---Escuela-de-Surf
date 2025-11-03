@@ -194,14 +194,14 @@ public static void caso8() //metodo: reservar clase de alumno
         {
             alumno.reservar(clase, MetodoPago.EFECTIVO);
 
-            for (int i = 0; i < alumno.getReservas().size(); i++)
+            for (Reserva reserva : alumno.getReservas())
             {
-                escuela.getRepoReservas().agregar(i, alumno.getReservas().get(i));
+                escuela.getRepoReservas().agregar(reserva.getIdReserva(), reserva);
             }
 
-            for (int i = 0; i < alumno.getPagos().size(); i++)
+            for (Pago pago : alumno.getPagos())
             {
-                escuela.getRepoPagos().agregar(i, alumno.getPagos().get(i));
+                escuela.getRepoPagos().agregar(pago.getIdPago(), pago);
             }
 
             System.out.println("Se reservó correctamente la clase.");
