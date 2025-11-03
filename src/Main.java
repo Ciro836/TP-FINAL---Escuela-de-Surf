@@ -7,6 +7,7 @@ import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
 import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -301,7 +302,63 @@ public static void caso13() //leer y cargar el archivo json de repositorios
 {
     JSONTokener tokener = JsonUtiles.leerUnJson("escuelaDeSurf.json");
 
-    JSONObject
+    JSONObject objetoJson = new JSONObject(tokener);
+
+    JSONArray arregloPagos = objetoJson.getJSONArray("repoPagos");
+    for (int i = 0; i < arregloPagos.length(); i++)
+    {
+        Pago pago = new Pago().fromJSON(arregloPagos.getJSONObject(i));
+        escuela.getRepoPagos().agregar(pago.getIdPago(), pago);
+    }
+
+    JSONArray arregloReservas = objetoJson.getJSONArray("repoReservas");
+    for (int i = 0; i < arregloReservas.length(); i++)
+    {
+        Reserva reserva = new Reserva().fromJSON(arregloReservas.getJSONObject(i));
+        escuela.getRepoReservas().agregar(reserva.getIdReserva(), reserva);
+    }
+
+    JSONArray arregloClases = objetoJson.getJSONArray("repoClases");
+    for (int i = 0; i < arregloClases.length(); i++)
+    {
+        ClaseDeSurf clase = new ClaseDeSurf().fromJSON(arregloClases.getJSONObject(i));
+        escuela.getRepoClases().agregar(clase.getIdClase(), clase);
+    }
+
+    JSONArray arregloClientes = objetoJson.getJSONArray("repoClientes");
+    for (int i = 0; i < arregloClientes.length(); i++)
+    {
+        Cliente cliente = new Cliente().fromJSON(arregloClientes.getJSONObject(i));
+        escuela.getRepoClientes().agregar(cliente.getIdCliente(), cliente);
+    }
+
+    JSONArray arregloEquipos = objetoJson.getJSONArray("repoEquipos");
+    for (int i = 0; i < arregloEquipos.length(); i++)
+    {
+        Equipo equipo = new Equipo().fromJSON(arregloEquipos.getJSONObject(i));
+        escuela.getRepoEquipos().agregar(equipo.getIdEquipo(), equipo);
+    }
+
+    JSONArray arregloAlumnos = objetoJson.getJSONArray("repoAlumnos");
+    for (int i = 0; i < arregloAlumnos.length(); i++)
+    {
+        Alumno alumno = new Alumno().fromJSON(arregloAlumnos.getJSONObject(i));
+        escuela.getRepoAlumnos().agregar(alumno.getIdAlumno(), alumno);
+    }
+
+    JSONArray arregloAlquileres = objetoJson.getJSONArray("repoAlquileres");
+    for (int i = 0; i < arregloAlquileres.length(); i++)
+    {
+        Alquiler alquiler = new Alquiler().fromJSON(arregloAlquileres.getJSONObject(i));
+        escuela.getRepoAlquileres().agregar(alquiler.getIdAlquiler(), alquiler);
+    }
+
+    JSONArray arregloInstructores = objetoJson.getJSONArray("repoInstructores");
+    for (int i = 0; i < arregloInstructores.length(); i++)
+    {
+        Instructor instructor = new Instructor().fromJSON(arregloInstructores.getJSONObject(i));
+        escuela.getRepoInstructores().agregar(instructor.getIdInstructor(), instructor);
+    }
 }
 
 public static void caso14() //mostrar todos los repositorios
