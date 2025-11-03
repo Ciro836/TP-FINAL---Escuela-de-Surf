@@ -1,11 +1,11 @@
 package Clases;
 
 import Enumeradores.NombreEquipo;
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Equipo implements ToJson
+public class Equipo implements InterfazJson<Equipo>
 {
     private static int contador = 0;
     private final int idEquipo;
@@ -106,5 +106,11 @@ public class Equipo implements ToJson
         }
 
         return jObj;
+    }
+
+    @Override
+    public Equipo fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

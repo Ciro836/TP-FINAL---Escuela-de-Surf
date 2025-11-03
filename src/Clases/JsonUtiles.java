@@ -1,6 +1,6 @@
 package Clases;
 
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,9 +82,9 @@ public class JsonUtiles
         JSONArray jsonArray = new JSONArray();
         for (Object item : coleccion)
         {
-            if (item instanceof ToJson) // verifica la interfaz
+            if (item instanceof InterfazJson) // verifica la interfaz
             {
-                jsonArray.put(((ToJson) item).toJSON());
+                jsonArray.put(((InterfazJson) item).toJSON());
             }
         }
         return jsonArray;

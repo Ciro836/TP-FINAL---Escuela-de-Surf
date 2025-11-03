@@ -3,7 +3,6 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Interfaces.Pagos;
-import Interfaces.ToJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cliente extends Persona implements Pagos, ToJson
+public class Cliente extends Persona implements Pagos
 {
     private static int contador = 0;
     private final int idCliente;
@@ -139,5 +138,12 @@ public class Cliente extends Persona implements Pagos, ToJson
         }
 
         return jsonObject;
+    }
+
+    @Override
+    public Cliente fromJSON(JSONObject objeto)
+    {
+        super.fromJSON(objeto);
+        return null;
     }
 }

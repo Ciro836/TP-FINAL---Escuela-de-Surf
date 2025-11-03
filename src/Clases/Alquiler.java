@@ -1,6 +1,6 @@
 package Clases;
 
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alquiler implements ToJson
+public class Alquiler implements InterfazJson<Alquiler>
 {
     private static int contador = 0;
     private final int idAlquiler;
@@ -244,5 +244,11 @@ public class Alquiler implements ToJson
         }
 
         return jObj;
+    }
+
+    @Override
+    public Alquiler fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

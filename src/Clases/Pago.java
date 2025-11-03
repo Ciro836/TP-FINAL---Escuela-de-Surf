@@ -2,13 +2,13 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
 
-public class Pago implements ToJson
+public class Pago implements InterfazJson<Pago>
 {
     private static int contador = 0;
     private final int idPago;
@@ -175,5 +175,11 @@ public class Pago implements ToJson
             e.printStackTrace();
         }
         return jsonObj;
+    }
+
+    @Override
+    public Pago fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

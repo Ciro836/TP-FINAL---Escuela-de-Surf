@@ -1,10 +1,10 @@
 package Clases;
 
-import Interfaces.ToJson;
+import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class Persona implements ToJson
+public abstract class Persona implements InterfazJson<Persona>
 {
     private int dni;
     private String nombre;
@@ -152,5 +152,11 @@ public abstract class Persona implements ToJson
         }
 
         return objeto;
+    }
+
+    @Override
+    public Persona fromJSON(JSONObject objeto)
+    {
+        return null;
     }
 }

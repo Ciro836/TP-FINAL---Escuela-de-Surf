@@ -2,7 +2,9 @@ package Interfaces;
 
 import org.json.JSONObject;
 
-public interface ToJson
+public interface InterfazJson<T>
 {
     JSONObject toJSON();
+
+    T fromJSON(JSONObject objeto);
 }
