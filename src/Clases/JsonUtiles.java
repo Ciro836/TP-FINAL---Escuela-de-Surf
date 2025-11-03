@@ -1,5 +1,6 @@
 package Clases;
 
+import Interfaces.ToJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,33 +80,9 @@ public class JsonUtiles
         JSONArray jsonArray = new JSONArray();
         for (Object item : coleccion)
         {
-            if (item instanceof Alumno)
+            if (item instanceof ToJson) // verifica la interfaz
             {
-                jsonArray.put(((Alumno) item).toJSON());
-            }
-            if (item instanceof Instructor)
-            {
-                jsonArray.put(((Instructor) item).toJSON());
-            }
-            if (item instanceof ClaseDeSurf)
-            {
-                jsonArray.put(((ClaseDeSurf) item).toJSON());
-            }
-            if (item instanceof Cliente)
-            {
-                jsonArray.put(((Cliente) item).toJSON());
-            }
-            if (item instanceof Reserva)
-            {
-                jsonArray.put(((Reserva) item).toJSON());
-            }
-            if (item instanceof Equipo)
-            {
-                jsonArray.put(((Equipo) item).toJSON());
-            }
-            if (item instanceof Alquiler)
-            {
-                jsonArray.put(((Alquiler) item).toJSON());
+                jsonArray.put(((ToJson) item).toJSON());
             }
         }
         return jsonArray;
