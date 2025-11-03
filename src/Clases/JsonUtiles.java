@@ -50,7 +50,8 @@ public class JsonUtiles
     public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
                                                Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
                                                Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
-                                               Repositorio<Alquiler> repoAlquiler, String archivo)
+                                               Repositorio<Alquiler> repoAlquiler,
+                                               Repositorio<Pago> repoPago, String archivo)
     {
         try
         {
@@ -63,6 +64,7 @@ public class JsonUtiles
             json.put("repoReservas", coleccion_a_JsonArray(repoReserva.getTodos()));
             json.put("repoEquipos", coleccion_a_JsonArray(repoEquipo.getTodos()));
             json.put("repoAlquileres", coleccion_a_JsonArray(repoAlquiler.getTodos()));
+            json.put("repoPagos", coleccion_a_JsonArray(repoPago.getTodos()));
 
             try (FileWriter file = new FileWriter(archivo))
             {
