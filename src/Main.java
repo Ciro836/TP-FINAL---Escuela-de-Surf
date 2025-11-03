@@ -152,6 +152,10 @@ public static void caso6() //Agregar alquiler con varios equipos para un cliente
 
     cliente.agregarAlquiler(alquiler);
 
+    Pago pagoAlquiler = new Pago();
+    pagoAlquiler.setMonto(alquiler.getMontoTotal());
+    cliente.pagar(pagoAlquiler, MetodoPago.TRANSFERENCIA);
+
 
     Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
     Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
@@ -160,7 +164,10 @@ public static void caso6() //Agregar alquiler con varios equipos para un cliente
 
     escuela.getRepoEquipos().agregar(1, equipo);
     escuela.getRepoEquipos().agregar(2, equipo2);
+    escuela.getRepoPagos().agregar(1, pagoAlquiler);
     escuela.getRepoAlquileres().agregar(1, alquiler);
+
+    System.out.println("Alquiler con su lista de equipos y pagos agregado correctamente.");
 }
 
 public static void caso7() //buscar alumno por su id
@@ -191,6 +198,11 @@ public static void caso8() //metodo: reservar clase de alumno
             for (int i = 0; i < alumno.getReservas().size(); i++)
             {
                 escuela.getRepoReservas().agregar(i, alumno.getReservas().get(i));
+            }
+
+            for (int i = 0; i < alumno.getPagos().size(); i++)
+            {
+                escuela.getRepoPagos().agregar(i, alumno.getPagos().get(i));
             }
 
             System.out.println("Se reservó correctamente la clase.");
@@ -258,6 +270,7 @@ public static void caso11() //cancelar una reserva
         if (reserva.getIdReserva() == idReserva)
         {
             alumno.cancelarReserva(reserva);
+            escuela.getRepoReservas().eliminar(idReserva);
             System.out.println("Reserva cancelada con éxito");
             flag = true;
             break;
@@ -278,6 +291,7 @@ public static void caso12() //grabar repositorios a json
             escuela.getRepoReservas(),
             escuela.getRepoEquipos(),
             escuela.getRepoAlquileres(),
+            escuela.getRepoPagos(),
             "escuelaDeSurf.json");
 
     System.out.println("Repositorios grabados en escuelaDeSurf.json");

@@ -78,6 +78,17 @@ public class Equipo implements ToJson
     }
 
     @Override
+    public String toString()
+    {
+        return "Equipo{" +
+                "idEquipo=" + idEquipo +
+                ", nombre=" + nombre +
+                ", precioPorDia=" + precioPorDia +
+                ", disponible=" + disponible +
+                '}';
+    }
+
+    @Override
     public JSONObject toJSON()
     {
         JSONObject jObj = new JSONObject();

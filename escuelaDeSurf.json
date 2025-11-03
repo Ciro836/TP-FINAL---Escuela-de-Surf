@@ -1,51 +1,94 @@
 {
-    "cliente": [{
-        "numeroTel": 223223854,
-        "alquileres": [],
-        "idCliente": 1,
-        "apellido": "Ferreyra",
-        "nombre": "Juan",
-        "edad": 35,
-        "pagos": [],
-        "dni": 48239633
-    }],
-    "alumnos": [{
-        "idAlumno": 1,
-        "cantClasesTomadas": 0,
-        "numeroTel": 22384625,
-        "reservas": [1],
-        "apellido": "Marzoni",
-        "nombre": "Ciro",
-        "edad": 18,
-        "nivel": "PRINCIPIANTE",
-        "pagos": [{
+    "repoPagos": [
+        {
             "metodoPago": "EFECTIVO",
             "monto": 200,
             "fechaLimite": "2025-12-03",
-            "idPago": 1,
+            "idPago": 2,
             "estadoPago": "PENDIENTE",
             "fechaPago": null
-        }],
-        "dni": 47559633
-    }],
-    "instructor": [{
-        "numeroTel": 22329625,
-        "aniosExperiencia": 2,
-        "idInstructor": 1,
-        "clases": [1],
-        "apellido": "Llorca",
-        "sueldoBase": 10000,
-        "nombre": "Balta",
-        "edad": 18,
-        "dni": 47279633
-    }],
-    "clases": [{
+        },
+        {
+            "metodoPago": "TRANSFERENCIA",
+            "monto": 0,
+            "fechaLimite": "2025-12-03",
+            "idPago": 1,
+            "estadoPago": "REALIZADO",
+            "fechaPago": "2025-11-03"
+        }
+    ],
+    "repoClases": [{
         "valorClase": 200,
         "TipoDeClase": "PARTICULAR",
+        "idAlumnosInscriptos": [1],
         "Instructor": 1,
-        "alumnosInscriptos": [1],
         "idClase": 1,
         "fechaYhora": "2026-10-27T16:30",
         "cupoMax": 1
+    }],
+    "repoAlumnos": [{
+        "idAlumno": 1,
+        "cantClasesTomadas": 0,
+        "numeroTel": 22384625,
+        "idReservas": [1],
+        "apellido": "Marzoni",
+        "idPagos": [2],
+        "nombre": "Ciro",
+        "edad": 18,
+        "nivel": "PRINCIPIANTE",
+        "dni": 47559633
+    }],
+    "repoReservas": [{
+        "idAlumno": 1,
+        "idPago": 2,
+        "idClase": 1,
+        "idReserva": 1
+    }],
+    "repoAlquileres": [{
+        "cliente": 1,
+        "fechaInicio": "2025-11-03",
+        "idAlquiler": 1,
+        "estaActivo": true,
+        "idEquiposAlquilados": [
+            1,
+            2
+        ],
+        "fechaFin": "2026-10-27",
+        "montoTotal": 62825
+    }],
+    "repoClientes": [{
+        "numeroTel": 223223854,
+        "idCliente": 1,
+        "apellido": "Ferreyra",
+        "idPagos": [1],
+        "idAlquileres": [1],
+        "nombre": "Juan",
+        "edad": 35,
+        "dni": 48239633
+    }],
+    "repoEquipos": [
+        {
+            "idEquipo": 1,
+            "precioPorDia": 100,
+            "nombre": "TABLA_DE_SURF",
+            "disponible": false
+        },
+        {
+            "idEquipo": 2,
+            "precioPorDia": 75,
+            "nombre": "TRAJE_DE_NEOPRENE",
+            "disponible": false
+        }
+    ],
+    "repoInstructores": [{
+        "numeroTel": 22329625,
+        "aniosExperiencia": 2,
+        "idInstructor": 1,
+        "apellido": "Llorca",
+        "sueldoBase": 10000,
+        "idClases": [1],
+        "nombre": "Balta",
+        "edad": 18,
+        "dni": 47279633
     }]
 }

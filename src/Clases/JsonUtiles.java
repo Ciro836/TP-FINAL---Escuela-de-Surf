@@ -1,5 +1,6 @@
 package Clases;
 
+import Interfaces.ToJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +50,8 @@ public class JsonUtiles
     public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
                                                Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
                                                Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
-                                               Repositorio<Alquiler> repoAlquiler, String archivo)
+                                               Repositorio<Alquiler> repoAlquiler,
+                                               Repositorio<Pago> repoPago, String archivo)
     {
         try
         {
@@ -62,6 +64,7 @@ public class JsonUtiles
             json.put("repoReservas", coleccion_a_JsonArray(repoReserva.getTodos()));
             json.put("repoEquipos", coleccion_a_JsonArray(repoEquipo.getTodos()));
             json.put("repoAlquileres", coleccion_a_JsonArray(repoAlquiler.getTodos()));
+            json.put("repoPagos", coleccion_a_JsonArray(repoPago.getTodos()));
 
             try (FileWriter file = new FileWriter(archivo))
             {
@@ -79,21 +82,9 @@ public class JsonUtiles
         JSONArray jsonArray = new JSONArray();
         for (Object item : coleccion)
         {
-            if (item instanceof Alumno)
+            if (item instanceof ToJson) // verifica la interfaz
             {
-                jsonArray.put(((Alumno) item).toJSON());
-            }
-            if (item instanceof Instructor)
-            {
-                jsonArray.put(((Instructor) item).toJSON());
-            }
-            if (item instanceof ClaseDeSurf)
-            {
-                jsonArray.put(((ClaseDeSurf) item).toJSON());
-            }
-            if (item instanceof Cliente)
-            {
-                jsonArray.put(((Cliente) item).toJSON());
+                jsonArray.put(((ToJson) item).toJSON());
             }
         }
         return jsonArray;

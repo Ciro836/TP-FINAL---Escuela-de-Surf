@@ -141,9 +141,9 @@ public class Reserva implements ToJson
         try
         {
             jsonObj.put("idReserva", idReserva);
-            jsonObj.put("alumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
-            jsonObj.put("clase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
-            jsonObj.put("pago", pago != null ? pago.getIdPago() : JSONObject.NULL);
+            jsonObj.put("idAlumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
+            jsonObj.put("idClase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
+            jsonObj.put("idPago", pago != null ? pago.getIdPago() : JSONObject.NULL);
 
         }
         catch (JSONException e)
