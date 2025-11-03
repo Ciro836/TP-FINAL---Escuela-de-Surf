@@ -1,6 +1,10 @@
 package Clases;
 
-public abstract class Persona
+import Interfaces.ToJson;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public abstract class Persona implements ToJson
 {
     private int dni;
     private String nombre;
@@ -128,5 +132,25 @@ public abstract class Persona
     {
         return " PERSONA: " + "Dni: " + dni + "| Nombre: " + nombre + "| Apellido:" + apellido
                 + "| Edad: " + edad + "| Numero de Telefono: " + numeroTel;
+    }
+
+    public JSONObject toJSON()
+    {
+        JSONObject objeto = new JSONObject();
+
+        try
+        {
+            objeto.put("dni", dni);
+            objeto.put("nombre", nombre);
+            objeto.put("apellido", apellido);
+            objeto.put("edad", edad);
+            objeto.put("numeroTel", numeroTel);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return objeto;
     }
 }

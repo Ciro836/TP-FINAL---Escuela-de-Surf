@@ -1,6 +1,10 @@
 package Clases;
 
-public class Reserva
+import Interfaces.ToJson;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Reserva implements ToJson
 {
     private static int contador = 0;
     private final int idReserva;
@@ -108,7 +112,8 @@ public class Reserva
                 ']';
     }
 
-    public String mostrarReservaMejorada() {
+    public String mostrarReservaMejorada()
+    {
         String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
         String claseInfo = "Clase ID: " + claseDeSurf.getIdClase();
         String estadopago = pago.getEstadoPago().toString();
@@ -129,20 +134,23 @@ public class Reserva
     }
 
     @Override
-    public JSONObject toJSON() {
+    public JSONObject toJSON()
+    {
         JSONObject jsonObj = new JSONObject();
 
-        try {
-
+        try
+        {
             jsonObj.put("idReserva", idReserva);
             jsonObj.put("alumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
             jsonObj.put("clase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
             jsonObj.put("pago", pago != null ? pago.getIdPago() : JSONObject.NULL);
 
-        }catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 
-        return  jsonObj;
+        return jsonObj;
     }
 }

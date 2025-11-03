@@ -1,12 +1,17 @@
 package Clases;
 
+import Interfaces.ToJson;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alquiler
+public class Alquiler implements ToJson
 {
     private static int contador = 0;
     private final int idAlquiler;
@@ -210,17 +215,19 @@ public class Alquiler
     }
 
     @Override
-    public JSONObject toJSON() {
-
+    public JSONObject toJSON()
+    {
         JSONObject jObj = new JSONObject();
 
-        try {
+        try
+        {
 
             jObj.put("idAlquiler", idAlquiler);
             jObj.put("cliente", cliente != null ? cliente.getIdCliente() : JSONObject.NULL);
 
             JSONArray jArray = new JSONArray();
-            for (Equipo e:  equiposAlquilados) {
+            for (Equipo e : equiposAlquilados)
+            {
                 jArray.put(e.toJSON());
             }
             jObj.put("equipoAlquilados", jArray);
@@ -230,7 +237,9 @@ public class Alquiler
             jObj.put("montoTotal", montoTotal);
             jObj.put("estaActivo", estaActivo);
 
-        }catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
 
