@@ -255,6 +255,11 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
     @Override
     public ClaseDeSurf fromJSON(JSONObject objeto)
     {
-        return null;
+        Instructor instructor = new Instructor().fromJSON(objeto.getJSONObject("instructor"));
+
+        return new ClaseDeSurf(instructor,
+                TipoClase.valueOf(objeto.getString("TipoDeClase").toUpperCase()),
+                LocalDateTime.parse(objeto.getString("fechaYhora")),
+                objeto.getInt("cupoMax"));
     }
 }
