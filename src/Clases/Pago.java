@@ -181,4 +181,9 @@ public class Pago implements InterfazJson<Pago>
     {
         return new Pago(MetodoPago.valueOf(objeto.getString("metodoPago").toUpperCase()), objeto.getDouble("monto"));
     }
+
+    public int getID()
+    {
+        return idPago;
+    }
 }

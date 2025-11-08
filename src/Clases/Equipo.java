@@ -113,4 +113,9 @@ public class Equipo implements InterfazJson<Equipo>
     {
         return new Equipo(NombreEquipo.valueOf(objeto.getString("nombre").toUpperCase()));
     }
+
+    public int getID()
+    {
+        return idEquipo;
+    }
 }

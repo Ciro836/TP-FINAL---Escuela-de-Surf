@@ -3,6 +3,7 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
+import Interfaces.InterfazJson;
 import Interfaces.Pagos;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -233,5 +234,9 @@ public class Alumno extends Persona implements Pagos
     public Alumno fromJSON(JSONObject objeto)
     {
         return null;
+    }
+
+    public int getID(){
+        return idAlumno;
     }
 }

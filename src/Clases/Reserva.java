@@ -159,4 +159,8 @@ public class Reserva implements InterfazJson<Reserva>
     {
         return null;
     }
+
+    public int getID(){
+        return idReserva;
+    }
 }

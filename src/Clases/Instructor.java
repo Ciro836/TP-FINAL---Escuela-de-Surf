@@ -92,4 +92,8 @@ public class Instructor extends Persona
                 objeto.getInt("numeroTel"),
                 objeto.getInt("aniosExperiencia"));
     }
+
+    public int getID(){
+        return idInstructor;
+    }
 }

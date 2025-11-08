@@ -251,4 +251,8 @@ public class Alquiler implements InterfazJson<Alquiler>
     {
         return null;
     }
+
+    public int getID(){
+        return idAlquiler;
+    }
 }

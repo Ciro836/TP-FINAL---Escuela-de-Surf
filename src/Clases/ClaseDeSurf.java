@@ -255,4 +255,8 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
                 LocalDateTime.parse(objeto.getString("fechaYhora")),
                 objeto.getInt("cupoMax"));
     }
+
+    public int getID(){
+        return idClase;
+    }
 }
