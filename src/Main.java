@@ -20,7 +20,7 @@ static Alquiler alquiler = null;
 
 static Scanner scanner = new Scanner(System.in);
 
-public static void caso1() //crear escuela de surf
+public static void crearEscuelaDeSurf()
 {
     if (escuela == null)
     {
@@ -33,7 +33,7 @@ public static void caso1() //crear escuela de surf
     }
 }
 
-public static void caso2() //agregar alumno
+public static void agregarAlumno()
 {
     if (escuela == null)
     {
@@ -59,7 +59,7 @@ public static void caso2() //agregar alumno
     }
 }
 
-public static void caso3() //agregar instructor
+public static void agregarInstructor()
 {
     if (escuela == null)
     {
@@ -86,7 +86,7 @@ public static void caso3() //agregar instructor
     }
 }
 
-public static void caso4() //agregar cliente
+public static void agregarCliente()
 {
     if (escuela == null)
     {
@@ -112,7 +112,7 @@ public static void caso4() //agregar cliente
     }
 }
 
-public static void caso5() //crear clase de surf
+public static void crearClaseDeSurf()
 {
     if (instructor == null)
     {
@@ -149,7 +149,7 @@ public static void caso5() //crear clase de surf
     }
 }
 
-public static void caso6() //Agregar alquiler con varios equipos para un cliente
+public static void agregarAlquiler()
 {
     alquiler = new Alquiler(cliente, LocalDate.of(2026, 10, 27));
     Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
@@ -172,7 +172,7 @@ public static void caso6() //Agregar alquiler con varios equipos para un cliente
     System.out.println("Alquiler con su lista de equipos y pagos agregado correctamente.");
 }
 
-public static void caso7() //buscar alumno por su id
+public static void buscarAlumnoPorId()
 {
     Alumno alumno = escuela.getRepoAlumnos().buscarPorId(1);
     if (alumno != null)
@@ -185,7 +185,7 @@ public static void caso7() //buscar alumno por su id
     }
 }
 
-public static void caso8() //metodo: reservar clase de alumno
+public static void alumnoReservarClase()
 {
     if (alumno == null)
     {
@@ -228,7 +228,7 @@ public static void caso8() //metodo: reservar clase de alumno
     }
 }
 
-public static void caso9() //mostrar reservas de un alumno
+public static void mostrarReservasAlumno()
 {
     if (alumno == null)
     {
@@ -238,7 +238,7 @@ public static void caso9() //mostrar reservas de un alumno
     alumno.mostrarReservas();
 }
 
-public static void caso10() //mostrar alumnos inscriptos en una clase
+public static void mostrarAlumnosInscriptosEnClase()
 {
     if (clase == null)
     {
@@ -248,7 +248,7 @@ public static void caso10() //mostrar alumnos inscriptos en una clase
     clase.mostrarAlumnosInscriptos();
 }
 
-public static void caso11() //cancelar una reserva
+public static void cancelarReserva()
 {
     if (alumno == null)
     {
@@ -283,9 +283,9 @@ public static void caso11() //cancelar una reserva
     }
 }
 
-public static void caso12() //grabar repositorios a json
+public static void grabarRepositoriosAjson()
 {
-    JsonUtiles.gabrarRepositorioEnJson(escuela.getRepoAlumnos(),
+    JsonUtiles.grabarRepositorioEnJson(escuela.getRepoAlumnos(),
             escuela.getRepoInstructores(),
             escuela.getRepoClases(),
             escuela.getRepoClientes(),
@@ -298,7 +298,7 @@ public static void caso12() //grabar repositorios a json
     System.out.println("Repositorios grabados en escuelaDeSurf.json");
 }
 
-public static void caso13() //leer y cargar el archivo json de repositorios
+public static void leerYcargarJsonDeRepositorios()
 {
     JSONTokener tokener = JsonUtiles.leerUnJson("escuelaDeSurf.json");
 
@@ -361,7 +361,7 @@ public static void caso13() //leer y cargar el archivo json de repositorios
     }
 }
 
-public static void caso14() //mostrar todos los repositorios
+public static void mostrarRepositorios()
 {
     if (escuela == null)
     {
@@ -403,20 +403,20 @@ void main()
 
         switch (opcion)
         {
-            case 1 -> caso1();
-            case 2 -> caso2();
-            case 3 -> caso3();
-            case 4 -> caso4();
-            case 5 -> caso5();
-            case 6 -> caso6();
-            case 7 -> caso7();
-            case 8 -> caso8();
-            case 9 -> caso9();
-            case 10 -> caso10();
-            case 11 -> caso11();
-            case 12 -> caso12();
-            case 13 -> caso13();
-            case 14 -> caso14();
+            case 1 -> crearEscuelaDeSurf();
+            case 2 -> agregarAlumno();
+            case 3 -> agregarInstructor();
+            case 4 -> agregarCliente();
+            case 5 -> crearClaseDeSurf();
+            case 6 -> agregarAlquiler();
+            case 7 -> buscarAlumnoPorId();
+            case 8 -> alumnoReservarClase();
+            case 9 -> mostrarReservasAlumno();
+            case 10 -> mostrarAlumnosInscriptosEnClase();
+            case 11 -> cancelarReserva();
+            case 12 -> grabarRepositoriosAjson();
+            case 13 -> leerYcargarJsonDeRepositorios();
+            case 14 -> mostrarRepositorios();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }

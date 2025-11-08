@@ -47,7 +47,6 @@ public class Pago implements InterfazJson<Pago>
         this.fechaLimite = LocalDate.now().plusDays(30);
         this.fechaPago = null;
         this.estadoPago = EstadoPago.PENDIENTE;
-
     }
 
     /// GETTERS Y SETTERS
@@ -180,6 +179,6 @@ public class Pago implements InterfazJson<Pago>
     @Override
     public Pago fromJSON(JSONObject objeto)
     {
-        return null;
+        return new Pago(MetodoPago.valueOf(objeto.getString("metodoPago").toUpperCase()), objeto.getDouble("monto"));
     }
 }
