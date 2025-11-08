@@ -146,4 +146,8 @@ public class Cliente extends Persona implements Pagos
         super.fromJSON(objeto);
         return null;
     }
+
+    public int getID(){
+        return idCliente;
+    }
 }
