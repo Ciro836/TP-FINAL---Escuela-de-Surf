@@ -285,7 +285,7 @@ public static void caso11() //cancelar una reserva
 
 public static void caso12() //grabar repositorios a json
 {
-    JsonUtiles.gabrarRepositorioEnJson(escuela.getRepoAlumnos(),
+    JsonUtiles.grabarRepositorioEnJson(escuela.getRepoAlumnos(),
             escuela.getRepoInstructores(),
             escuela.getRepoClases(),
             escuela.getRepoClientes(),

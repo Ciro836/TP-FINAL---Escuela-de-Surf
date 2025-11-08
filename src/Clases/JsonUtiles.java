@@ -47,7 +47,7 @@ public class JsonUtiles
 
     //METODOS PROPIOS
 
-    public static void gabrarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
+    public static void grabarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
                                                Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
                                                Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
                                                Repositorio<Alquiler> repoAlquiler,
