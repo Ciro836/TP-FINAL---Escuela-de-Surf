@@ -361,7 +361,7 @@ public static void leerYcargarJsonDeRepositorios()
     }
 }
 
-public static void mostrarRepositorios() //mostrar todos los repositorios
+public static void mostrarRepositorios()
 {
     if (escuela == null)
     {
