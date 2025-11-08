@@ -60,6 +60,15 @@ public class Cliente extends Persona implements Pagos
 
     /// METODOS
 
+    public void agregarAlquiler(Alquiler alquiler)
+    {
+        if (alquiler == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alquiler no puede ser nulo.");
+        }
+        this.alquileres.add(alquiler);
+    }
+
     @Override
     public boolean esMoroso()
     {
@@ -96,15 +105,6 @@ public class Cliente extends Persona implements Pagos
     public String toString()
     {
         return super.toString() + " idCliente: " + idCliente;
-    }
-
-    public void agregarAlquiler(Alquiler alquiler)
-    {
-        if (alquiler == null)
-        {
-            throw new IllegalArgumentException("⚠️: El alquiler no puede ser nulo.");
-        }
-        this.alquileres.add(alquiler);
     }
 
     @Override

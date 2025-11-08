@@ -77,6 +77,8 @@ public class Equipo implements InterfazJson<Equipo>
         this.disponible = disponible;
     }
 
+    /// METODOS
+
     @Override
     public String toString()
     {

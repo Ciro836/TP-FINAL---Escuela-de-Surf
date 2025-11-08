@@ -100,18 +100,6 @@ public class Reserva implements InterfazJson<Reserva>
         return alumno != null && claseDeSurf != null && pago != null;
     }
 
-    @Override
-    public String toString()
-    {
-        return "Reserva [" +
-                " IDReserva=" + idReserva +
-                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
-                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
-                ", Pago=" + pago +
-                ", Estado=" + pago.getEstadoPago() +
-                ']';
-    }
-
     public String mostrarReservaMejorada()
     {
         String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
@@ -131,6 +119,18 @@ public class Reserva implements InterfazJson<Reserva>
                 "\nFecha del pago: " + fechaPago +
                 "\n─────────────────────────────\n";
 
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Reserva [" +
+                " IDReserva=" + idReserva +
+                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
+                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
+                ", Pago=" + pago +
+                ", Estado=" + pago.getEstadoPago() +
+                ']';
     }
 
     @Override
