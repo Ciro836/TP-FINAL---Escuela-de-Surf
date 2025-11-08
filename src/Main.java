@@ -373,6 +373,15 @@ public static void mostrarRepositorios()
     }
 }
 
+public static void chequearMorosidad()
+{
+    String resultadoAlumno = alumno.esMoroso() ? "El Alumno es un deudor!!!" : "El alumno tiene sus pagos en tiempo y forma.";
+    System.out.println(resultadoAlumno);
+
+    String resultadoCliente = cliente.esMoroso() ? "El Cliente es un deudor!!!" : "El cliente tiene sus pagos en tiempo y forma.";
+    System.out.println(resultadoCliente);
+}
+
 void main()
 {
     int opcion;
@@ -394,6 +403,7 @@ void main()
         System.out.println("12. Grabar repositorios a json");
         System.out.println("13. Leer el archivo json de repositorios");
         System.out.println("14. Mostrar todos los repositorios.");
+        System.out.println("15. Chequear morosidad de alumno y cliente.");
 
         System.out.println("999. Salir.");
 
@@ -417,6 +427,7 @@ void main()
             case 12 -> grabarRepositoriosAjson();
             case 13 -> leerYcargarJsonDeRepositorios();
             case 14 -> mostrarRepositorios();
+            case 15 -> chequearMorosidad();
             case 999 -> System.out.println("\nSaliendo del programa...");
             default -> System.out.println("\nIngrese una opción valida...");
         }
