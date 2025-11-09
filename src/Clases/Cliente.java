@@ -36,6 +36,20 @@ public class Cliente extends Persona implements Pagos
         this.alquileres = new ArrayList<>();
     }
 
+    //constructor para JSON
+    public Cliente(int dni, String nombre, String apellido, int edad, int numeroTel, int idCliente, List<Pago> pagos, List<Alquiler> alquileres)
+    {
+        super(dni, nombre, apellido, edad, numeroTel);
+        this.idCliente = idCliente;
+        this.pagos = pagos;
+        this.alquileres = alquileres;
+
+        if (idCliente > contador)
+        {
+            contador = idCliente;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public static int getContador()
@@ -143,8 +157,32 @@ public class Cliente extends Persona implements Pagos
     @Override
     public Cliente fromJSON(JSONObject objeto)
     {
-        super.fromJSON(objeto);
-        return null;
+        int dni = objeto.getInt("dni");
+        String nombre = objeto.getString("nombre");
+        String apellido = objeto.getString("apellido");
+        int edad = objeto.getInt("edad");
+        int numeroTel = objeto.getInt("numeroTel");
+
+        int id = objeto.getInt("idCliente");
+
+        List<Pago> pagos = new ArrayList<>();
+
+        if (objeto.has("idPagos")){
+            JSONArray jsonArrayPagos = objeto.getJSONArray("idPagos");
+            for(int i = 0; i < jsonArrayPagos.length(); i++){
+                int idPago = jsonArrayPagos.getInt(i);
+            }
+        }
+
+        List<Alquiler> alquileres = new ArrayList<>();
+        if (objeto.has("idAlquiler")){
+            JSONArray jsonArrayAlquileres = objeto.getJSONArray("idAlquiler");
+            for(int i = 0; i < jsonArrayAlquileres.length(); i++){
+                int idAlquiler = jsonArrayAlquileres.getInt(i);
+            }
+        }
+
+        return new Cliente(dni, nombre, apellido, edad, numeroTel, id, pagos, alquileres);
     }
 
     public int getID(){
