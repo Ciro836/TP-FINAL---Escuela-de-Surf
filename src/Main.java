@@ -300,6 +300,18 @@ public static void grabarRepositoriosAjson()
 
 public static void leerYcargarJsonDeRepositorios()
 {
+    JsonUtiles.leerRepositorioDesdeJson(escuela.getRepoAlumnos(),
+            escuela.getRepoInstructores(),
+            escuela.getRepoClases(),
+            escuela.getRepoClientes(),
+            escuela.getRepoReservas(),
+            escuela.getRepoEquipos(),
+            escuela.getRepoAlquileres(),
+            escuela.getRepoPagos(),
+            "escuelaDeSurf.json");
+
+
+    /*
     JSONTokener tokener = JsonUtiles.leerUnJson("escuelaDeSurf.json");
 
     JSONObject objetoJson = new JSONObject(tokener);
@@ -359,6 +371,8 @@ public static void leerYcargarJsonDeRepositorios()
         Instructor instructor = new Instructor().fromJSON(arregloInstructores.getJSONObject(i));
         escuela.getRepoInstructores().agregar(instructor.getIdInstructor(), instructor);
     }
+    */
+
 }
 
 public static void mostrarRepositorios()

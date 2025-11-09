@@ -58,6 +58,22 @@ public class Alquiler implements InterfazJson<Alquiler>
         this.estaActivo = true;
         this.montoTotal = 0;
     }
+    // constructor para JSON
+    public Alquiler(int idAlquiler, Cliente cliente, List<Equipo> equiposAlquilados, LocalDate fechaInicio, LocalDate fechaFin, double monto, boolean estaActivo)
+    {
+        this.idAlquiler = idAlquiler;
+        this.cliente = cliente;
+        this.equiposAlquilados = equiposAlquilados;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.montoTotal = monto;
+        this.estaActivo = estaActivo;
+
+        if (idAlquiler > contador){
+            contador = idAlquiler;
+        }
+    }
+
 
     /// GETTERS Y SETTERS
 
@@ -249,7 +265,35 @@ public class Alquiler implements InterfazJson<Alquiler>
     @Override
     public Alquiler fromJSON(JSONObject objeto)
     {
-        return null;
+        int id = objeto.getInt("idAlquiler");
+
+        Cliente cliente = null;
+        if (!objeto.isNull("cliente")) {
+            int idCliente = objeto.getInt("cliente");
+        }
+
+        //solo paso los id de los equipos alquilados, en vez del objeto completo. Lo mismo hice con cliente
+
+        List<Equipo> equiposAlquilados = new ArrayList<>();
+        JSONArray jsonArrayEquipos =  objeto.getJSONArray("idEquiposAlquilados");
+        for (int i = 0; i < jsonArrayEquipos.length(); i++){
+                int idEquipos = jsonArrayEquipos.getInt(i);
+        }
+
+        LocalDate fechaInicio = null;
+        if (!objeto.isNull("fechaInicio")) {
+            fechaInicio = LocalDate.parse(objeto.getString("fechaInicio"));
+        }
+
+        LocalDate fechaFin = null;
+        if (!objeto.isNull("fechaFin")) {
+            fechaFin = LocalDate.parse(objeto.getString("fechaFin"));
+        }
+
+        double montoTotal = objeto.getDouble("montoTotal");
+        boolean estaActivo = objeto.getBoolean("estaActivo");
+
+        return new Alquiler(id, cliente, equiposAlquilados, fechaInicio, fechaInicio, montoTotal, estaActivo);
     }
 
     public int getID(){
