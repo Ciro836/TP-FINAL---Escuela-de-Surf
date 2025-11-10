@@ -303,67 +303,35 @@ public static void grabarRepositoriosAjson()
     System.out.println("Repositorios grabados en escuelaDeSurf.json");
 }
 
-public static void leerYcargarJsonDeRepositorios()
+public static void leerYmostrarJsonDeRepositorios()
 {
     JSONTokener tokener = JsonUtiles.leerUnJson("escuelaDeSurf.json");
 
     JSONObject objetoJson = new JSONObject(tokener);
 
-    JSONArray arregloPagos = objetoJson.getJSONArray("repoPagos");
-    for (int i = 0; i < arregloPagos.length(); i++)
-    {
-        Pago pago = new Pago().fromJSON(arregloPagos.getJSONObject(i));
-        escuela.getRepoPagos().agregar(pago.getIdPago(), pago);
-    }
+    JSONArray repoPagos = objetoJson.getJSONArray("repoPagos");
+    System.out.println("REPOSITORIO PAGOS: " + repoPagos);
 
-    JSONArray arregloReservas = objetoJson.getJSONArray("repoReservas");
-    for (int i = 0; i < arregloReservas.length(); i++)
-    {
-        Reserva reserva = new Reserva().fromJSON(arregloReservas.getJSONObject(i));
-        escuela.getRepoReservas().agregar(reserva.getIdReserva(), reserva);
-    }
+    JSONArray repoClases = objetoJson.getJSONArray("repoClases");
+    System.out.println("REPOSITORIO CLASES: " + repoClases);
 
-    JSONArray arregloClases = objetoJson.getJSONArray("repoClases");
-    for (int i = 0; i < arregloClases.length(); i++)
-    {
-        ClaseDeSurf clase = new ClaseDeSurf().fromJSON(arregloClases.getJSONObject(i));
-        escuela.getRepoClases().agregar(clase.getIdClase(), clase);
-    }
+    JSONArray repoAlumnos = objetoJson.getJSONArray("repoAlumnos");
+    System.out.println("REPOSITORIO ALUMNOS: " + repoAlumnos);
 
-    JSONArray arregloClientes = objetoJson.getJSONArray("repoClientes");
-    for (int i = 0; i < arregloClientes.length(); i++)
-    {
-        Cliente cliente = new Cliente().fromJSON(arregloClientes.getJSONObject(i));
-        escuela.getRepoClientes().agregar(cliente.getIdCliente(), cliente);
-    }
+    JSONArray repoReservas = objetoJson.getJSONArray("repoReservas");
+    System.out.println("REPOSITORIO RESERVAS: " + repoReservas);
 
-    JSONArray arregloEquipos = objetoJson.getJSONArray("repoEquipos");
-    for (int i = 0; i < arregloEquipos.length(); i++)
-    {
-        Equipo equipo = new Equipo().fromJSON(arregloEquipos.getJSONObject(i));
-        escuela.getRepoEquipos().agregar(equipo.getIdEquipo(), equipo);
-    }
+    JSONArray repoAlquileres = objetoJson.getJSONArray("repoAlquileres");
+    System.out.println("REPOSITORIO ALQUILERES: " + repoAlquileres);
 
-    JSONArray arregloAlumnos = objetoJson.getJSONArray("repoAlumnos");
-    for (int i = 0; i < arregloAlumnos.length(); i++)
-    {
-        Alumno alumno = new Alumno().fromJSON(arregloAlumnos.getJSONObject(i));
-        escuela.getRepoAlumnos().agregar(alumno.getIdAlumno(), alumno);
-    }
+    JSONArray repoClientes = objetoJson.getJSONArray("repoClientes");
+    System.out.println("REPOSITORIO CLIENTES: " + repoClientes);
 
-    JSONArray arregloAlquileres = objetoJson.getJSONArray("repoAlquileres");
-    for (int i = 0; i < arregloAlquileres.length(); i++)
-    {
-        Alquiler alquiler = new Alquiler().fromJSON(arregloAlquileres.getJSONObject(i));
-        escuela.getRepoAlquileres().agregar(alquiler.getIdAlquiler(), alquiler);
-    }
+    JSONArray repoEquipos = objetoJson.getJSONArray("repoEquipos");
+    System.out.println("REPOSITORIO EQUIPOS: " + repoEquipos);
 
-    JSONArray arregloInstructores = objetoJson.getJSONArray("repoInstructores");
-    for (int i = 0; i < arregloInstructores.length(); i++)
-    {
-        Instructor instructor = new Instructor().fromJSON(arregloInstructores.getJSONObject(i));
-        escuela.getRepoInstructores().agregar(instructor.getIdInstructor(), instructor);
-    }
+    JSONArray repoInstructores = objetoJson.getJSONArray("repoInstructores");
+    System.out.println("REPOSITORIO INSTRUCTORES: " + repoInstructores);
 }
 
 public static void mostrarRepositorios()
@@ -430,7 +398,7 @@ void main()
             case 10 -> mostrarAlumnosInscriptosEnClase();
             case 11 -> cancelarReserva();
             case 12 -> grabarRepositoriosAjson();
-            case 13 -> leerYcargarJsonDeRepositorios();
+            case 13 -> leerYmostrarJsonDeRepositorios();
             case 14 -> mostrarRepositorios();
             case 15 -> chequearMorosidad();
             case 999 -> System.out.println("\nSaliendo del programa...");
