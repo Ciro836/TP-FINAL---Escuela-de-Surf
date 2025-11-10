@@ -348,16 +348,31 @@ public static void mostrarRepositorios()
 
 public static void chequearMorosidad()
 {
-    String resultadoAlumno = alumno.esMoroso() ? "El Alumno es un deudor!!!" : "El alumno tiene sus pagos en tiempo y forma.";
-    System.out.println(resultadoAlumno);
+    if (escuela == null)
+    {
+        System.out.println("⚠️: Primero debe crear la escuela. Elija la (opción 1).");
+    }
+    else if (alumno == null)
+    {
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2).");
+    }
+    else if (cliente == null)
+    {
+        System.out.println("⚠️: Primero debe crear un cliente. Elija la (opción 4).");
+    }
+    else
+    {
+        String resultadoAlumno = alumno.esMoroso() ? "El Alumno es un deudor!!!" : "El alumno tiene sus pagos en tiempo y forma.";
+        System.out.println(resultadoAlumno);
 
-    String resultadoCliente = cliente.esMoroso() ? "El Cliente es un deudor!!!" : "El cliente tiene sus pagos en tiempo y forma.";
-    System.out.println(resultadoCliente);
+        String resultadoCliente = cliente.esMoroso() ? "El Cliente es un deudor!!!" : "El cliente tiene sus pagos en tiempo y forma.";
+        System.out.println(resultadoCliente);
+    }
 }
 
 void main()
 {
-    int opcion;
+    int opcion = 0;
 
     do
     {
@@ -380,29 +395,43 @@ void main()
 
         System.out.println("999. Salir.");
 
-        System.out.print("Ingrese una de las opciones: ");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (opcion)
+        try
         {
-            case 1 -> crearEscuelaDeSurf();
-            case 2 -> agregarAlumno();
-            case 3 -> agregarInstructor();
-            case 4 -> agregarCliente();
-            case 5 -> crearClaseDeSurf();
-            case 6 -> agregarAlquiler();
-            case 7 -> buscarAlumnoPorId();
-            case 8 -> alumnoReservarClase();
-            case 9 -> mostrarReservasAlumno();
-            case 10 -> mostrarAlumnosInscriptosEnClase();
-            case 11 -> cancelarReserva();
-            case 12 -> grabarRepositoriosAjson();
-            case 13 -> leerYmostrarJsonDeRepositorios();
-            case 14 -> mostrarRepositorios();
-            case 15 -> chequearMorosidad();
-            case 999 -> System.out.println("\nSaliendo del programa...");
-            default -> System.out.println("\nIngrese una opción valida...");
+            System.out.print("Ingrese una de las opciones: ");
+            opcion = scanner.nextInt();
+
+            switch (opcion)
+            {
+                case 1 -> crearEscuelaDeSurf();
+                case 2 -> agregarAlumno();
+                case 3 -> agregarInstructor();
+                case 4 -> agregarCliente();
+                case 5 -> crearClaseDeSurf();
+                case 6 -> agregarAlquiler();
+                case 7 -> buscarAlumnoPorId();
+                case 8 -> alumnoReservarClase();
+                case 9 -> mostrarReservasAlumno();
+                case 10 -> mostrarAlumnosInscriptosEnClase();
+                case 11 -> cancelarReserva();
+                case 12 -> grabarRepositoriosAjson();
+                case 13 -> leerYmostrarJsonDeRepositorios();
+                case 14 -> mostrarRepositorios();
+                case 15 -> chequearMorosidad();
+                case 999 -> System.out.println("\nSaliendo del programa...");
+                default -> System.out.println("\nIngrese una opción valida...");
+            }
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("\nError: debes ingresar un número.");
+        }
+        catch (Exception e)
+        {
+            System.out.println("\nError inesperado: " + e.getMessage());
+        }
+        finally
+        {
+            scanner.nextLine();
         }
     } while (opcion != 999);
 }
