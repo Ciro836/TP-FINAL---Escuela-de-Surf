@@ -99,7 +99,7 @@ public class EscuelaDeSurf
         System.out.println("\n--------------------------------------------------\n");
         System.out.println("REPOSITORIO DE ALQUILERES: " + repoAlquileres);
         System.out.println("\n--------------------------------------------------\n");
-        System.out.println("REPOSITORIO DE Pagos: " + repoPagos);
+        System.out.println("REPOSITORIO DE PAGOS: " + repoPagos);
         System.out.println("\n--------------------------------------------------");
     }
 }
