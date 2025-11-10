@@ -232,7 +232,12 @@ public static void mostrarReservasAlumno()
 {
     if (alumno == null)
     {
-        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 3)");
+        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2)");
+    }
+
+    if (alumno.getReservas().isEmpty())
+    {
+        System.out.println("⚠️: Primero debe agregar una reserva. Elija la (opción 8)");
     }
 
     alumno.mostrarReservas();
@@ -397,11 +402,11 @@ void main()
         System.out.println("6. Agregar alquiler con varios equipos para un cliente.");
         System.out.println("7. Buscar alumno por su id.");
         System.out.println("8. Método: Reservar clase de Alumno.");
-        System.out.println("9. Mostrar reservas de un alumno");
-        System.out.println("10. Mostrar alumnos inscriptos en una clase");
-        System.out.println("11. Cancelar una reserva");
-        System.out.println("12. Grabar repositorios a json");
-        System.out.println("13. Leer el archivo json de repositorios");
+        System.out.println("9. Mostrar reservas de un alumno.");
+        System.out.println("10. Mostrar alumnos inscriptos en una clase.");
+        System.out.println("11. Cancelar una reserva.");
+        System.out.println("12. Grabar repositorios a json.");
+        System.out.println("13. Leer el archivo json de repositorios.");
         System.out.println("14. Mostrar todos los repositorios.");
         System.out.println("15. Chequear morosidad de alumno y cliente.");
 
