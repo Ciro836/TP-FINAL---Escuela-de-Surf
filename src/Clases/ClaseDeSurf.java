@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
+public class ClaseDeSurf implements InterfazJson
 {
     private static int contador = 0;
     private final int idClase;
@@ -243,16 +243,5 @@ public class ClaseDeSurf implements InterfazJson<ClaseDeSurf>
         }
 
         return jObj;
-    }
-
-    @Override
-    public ClaseDeSurf fromJSON(JSONObject objeto)
-    {
-        Instructor instructor = new Instructor().fromJSON(objeto.getJSONObject("instructor"));
-
-        return new ClaseDeSurf(instructor,
-                TipoClase.valueOf(objeto.getString("TipoDeClase").toUpperCase()),
-                LocalDateTime.parse(objeto.getString("fechaYhora")),
-                objeto.getInt("cupoMax"));
     }
 }

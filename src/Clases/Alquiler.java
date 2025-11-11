@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alquiler implements InterfazJson<Alquiler>
+public class Alquiler implements InterfazJson
 {
     private static int contador = 0;
     private final int idAlquiler;
@@ -244,11 +244,5 @@ public class Alquiler implements InterfazJson<Alquiler>
         }
 
         return jObj;
-    }
-
-    @Override
-    public Alquiler fromJSON(JSONObject objeto)
-    {
-        return null;
     }
 }

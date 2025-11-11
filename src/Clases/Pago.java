@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 
-public class Pago implements InterfazJson<Pago>
+public class Pago implements InterfazJson
 {
     private static int contador = 0;
     private final int idPago;
@@ -174,11 +174,5 @@ public class Pago implements InterfazJson<Pago>
             e.printStackTrace();
         }
         return jsonObj;
-    }
-
-    @Override
-    public Pago fromJSON(JSONObject objeto)
-    {
-        return new Pago(MetodoPago.valueOf(objeto.getString("metodoPago").toUpperCase()), objeto.getDouble("monto"));
     }
 }

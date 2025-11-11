@@ -227,10 +227,4 @@ public class Alumno extends Persona implements Pagos
 
         return jsonObj;
     }
-
-    @Override
-    public Alumno fromJSON(JSONObject objeto)
-    {
-        return null;
-    }
 }

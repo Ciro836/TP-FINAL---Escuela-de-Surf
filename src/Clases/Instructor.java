@@ -81,15 +81,4 @@ public class Instructor extends Persona
 
         return objeto;
     }
-
-    @Override
-    public Instructor fromJSON(JSONObject objeto)
-    {
-        return new Instructor(objeto.getInt("dni"),
-                objeto.getString("nombre"),
-                objeto.getString("apellido"),
-                objeto.getInt("edad"),
-                objeto.getInt("numeroTel"),
-                objeto.getInt("aniosExperiencia"));
-    }
 }

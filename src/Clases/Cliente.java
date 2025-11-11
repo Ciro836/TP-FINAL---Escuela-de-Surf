@@ -139,11 +139,4 @@ public class Cliente extends Persona implements Pagos
 
         return jsonObject;
     }
-
-    @Override
-    public Cliente fromJSON(JSONObject objeto)
-    {
-        super.fromJSON(objeto);
-        return null;
-    }
 }

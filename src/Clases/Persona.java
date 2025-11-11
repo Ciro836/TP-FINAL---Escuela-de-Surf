@@ -4,7 +4,7 @@ import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class Persona implements InterfazJson<Persona>
+public abstract class Persona implements InterfazJson
 {
     private int dni;
     private String nombre;
@@ -152,11 +152,5 @@ public abstract class Persona implements InterfazJson<Persona>
         }
 
         return objeto;
-    }
-
-    @Override
-    public Persona fromJSON(JSONObject objeto)
-    {
-        return null;
     }
 }
