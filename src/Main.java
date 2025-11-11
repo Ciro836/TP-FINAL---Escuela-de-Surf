@@ -152,7 +152,7 @@ public static void crearClaseDeSurf()
 
 public static void agregarAlquiler()
 {
-    alquiler = new Alquiler(cliente, LocalDate.of(2026, 10, 27));
+    alquiler = new Alquiler(LocalDate.of(2026, 10, 27));
     Equipo equipo = new Equipo(NombreEquipo.TABLA_DE_SURF);
     Equipo equipo2 = new Equipo(NombreEquipo.TRAJE_DE_NEOPRENE);
     alquiler.agregarEquipo(equipo);
@@ -343,7 +343,7 @@ public static void mostrarRepositorios()
     }
     else
     {
-        escuela.mostrarEscuelaDeSurf();
+        escuela.mostrarTodosLosRepositorios();
     }
 }
 

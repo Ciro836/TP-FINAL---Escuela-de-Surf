@@ -15,32 +15,28 @@ public class Alquiler implements InterfazJson
 {
     private static int contador = 0;
     private final int idAlquiler;
-    private Cliente cliente;
     private final List<Equipo> equiposAlquilados;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private double montoTotal;
     private boolean estaActivo;
+    private Pago pago;
 
     /// CONSTRUCTORES
 
     public Alquiler()
     {
         this.idAlquiler = ++contador;
-        this.cliente = new Cliente();
         this.equiposAlquilados = new ArrayList<>();
         this.fechaInicio = null;
         this.fechaFin = null;
         this.montoTotal = 0;
         this.estaActivo = false;
+        this.pago = new Pago();
     }
 
-    public Alquiler(Cliente cliente, LocalDate fechaFin)
+    public Alquiler(LocalDate fechaFin)
     {
-        if (cliente == null)
-        {
-            throw new IllegalArgumentException("⚠️: El cliente no puede ser nulo.");
-        }
         if (fechaFin == null)
         {
             throw new IllegalArgumentException("⚠️: La Fecha de Fin no puede ser nula.");
@@ -51,12 +47,12 @@ public class Alquiler implements InterfazJson
         }
 
         this.idAlquiler = ++contador;
-        this.cliente = cliente;
         this.equiposAlquilados = new ArrayList<>();
         this.fechaInicio = LocalDate.now();
         this.fechaFin = fechaFin;
         this.estaActivo = true;
         this.montoTotal = 0;
+        this.pago = new Pago();
     }
 
     /// GETTERS Y SETTERS
@@ -69,20 +65,6 @@ public class Alquiler implements InterfazJson
     public int getIdAlquiler()
     {
         return idAlquiler;
-    }
-
-    public Cliente getCliente()
-    {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente)
-    {
-        if (cliente == null)
-        {
-            throw new IllegalArgumentException("El cliente no puede ser nulo.");
-        }
-        this.cliente = cliente;
     }
 
     public List<Equipo> getEquiposAlquilados()
@@ -141,6 +123,16 @@ public class Alquiler implements InterfazJson
         this.estaActivo = estaActivo;
     }
 
+    public Pago getPago()
+    {
+        return pago;
+    }
+
+    public void setPago(Pago pago)
+    {
+        this.pago = pago;
+    }
+
     /// METODOS
 
     public int contarDiasDeAlquiler()
@@ -159,6 +151,7 @@ public class Alquiler implements InterfazJson
         }
 
         this.montoTotal = total;
+        pago.setMonto(total);
     }
 
     public void finalizarAlquiler()
@@ -207,7 +200,6 @@ public class Alquiler implements InterfazJson
     public String toString()
     {
         return "ALQUILER: ID=" + idAlquiler +
-                " | Cliente: " + cliente.getNombre() +
                 " | Periodo: " + fechaInicio + " a " + fechaFin +
                 " | Monto: $" + montoTotal +
                 " | Activo: " + estaActivo +
@@ -223,7 +215,6 @@ public class Alquiler implements InterfazJson
         {
 
             jObj.put("idAlquiler", idAlquiler);
-            jObj.put("cliente", cliente != null ? cliente.getIdCliente() : JSONObject.NULL);
 
             JSONArray jArray = new JSONArray();
             for (Equipo e : equiposAlquilados)

@@ -1,5 +1,10 @@
 package Clases;
 
+import Enumeradores.EstadoPago;
+import Enumeradores.MetodoPago;
+
+import java.time.LocalDate;
+
 public class EscuelaDeSurf
 {
     private final Repositorio<Instructor> repoInstructores;
@@ -82,7 +87,7 @@ public class EscuelaDeSurf
                 '}';
     }
 
-    public void mostrarEscuelaDeSurf()
+    public void mostrarTodosLosRepositorios()
     {
         System.out.println("--------------------------------------------------\n");
         System.out.println("REPOSITORIO DE ALUMNOS: " + repoAlumnos);
@@ -101,5 +106,12 @@ public class EscuelaDeSurf
         System.out.println("\n--------------------------------------------------\n");
         System.out.println("REPOSITORIO DE PAGOS: " + repoPagos);
         System.out.println("\n--------------------------------------------------");
+    }
+
+    public void pagar(Pago pago, MetodoPago metodo)
+    {
+        pago.setMetodoPago(metodo);
+        pago.setFechaPago(LocalDate.now());
+        pago.setEstadoPago(EstadoPago.REALIZADO);
     }
 }
