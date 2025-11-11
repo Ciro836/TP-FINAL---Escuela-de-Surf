@@ -32,13 +32,15 @@ public class Repositorio<T>
         return datos.values();
     }
 
-    public void agregar(int clave, T valor)
+    public boolean agregar(int clave, T valor)
     {
         if (datos.containsKey(clave))
         {
             throw new IllegalArgumentException("Ya se encuentra un registro con la misma clave.");
         }
+        
         datos.put(clave, valor);
+        return true;
     }
 
     public boolean eliminar(int clave)
