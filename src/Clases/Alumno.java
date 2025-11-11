@@ -6,19 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class Alumno extends Persona
 {
     private static int contador = 0;
     private final int idAlumno;
     private NivelDeSurf nivel;
     private int cantClasesTomadas;
-    private final List<Reserva> reservas;
-    private final List<Pago> pagos;
-
 
     /// CONSTRUCTORES
 
@@ -27,8 +20,6 @@ public class Alumno extends Persona
         this.idAlumno = ++contador;
         this.nivel = null;
         this.cantClasesTomadas = 0;
-        this.reservas = new ArrayList<>(); //incializa vacía, para que no tire una excepcion si luego quiero agregar una reserva al alumno
-        this.pagos = new ArrayList<>();
     }
 
     public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
@@ -47,8 +38,6 @@ public class Alumno extends Persona
         this.idAlumno = ++contador;
         this.nivel = nivel;
         this.cantClasesTomadas = cantClasesTomadas;
-        this.reservas = new ArrayList<>();
-        this.pagos = new ArrayList<>();
     }
 
 
@@ -85,16 +74,6 @@ public class Alumno extends Persona
             throw new IllegalArgumentException("La cantidad de clases tomadas no puede ser negativa.");
         }
         this.cantClasesTomadas = cantClasesTomadas;
-    }
-
-    public List<Reserva> getReservas()
-    {
-        return Collections.unmodifiableList(reservas);
-    }
-
-    public List<Pago> getPagos()
-    {
-        return Collections.unmodifiableList(pagos);
     }
 
     /// METODOS
