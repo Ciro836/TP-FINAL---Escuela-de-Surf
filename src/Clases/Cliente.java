@@ -1,18 +1,14 @@
 package Clases;
 
-import Enumeradores.EstadoPago;
-import Enumeradores.MetodoPago;
-import Interfaces.Pagos;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cliente extends Persona implements Pagos
+public class Cliente extends Persona
 {
     private static int contador = 0;
     private final int idCliente;
@@ -67,38 +63,6 @@ public class Cliente extends Persona implements Pagos
             throw new IllegalArgumentException("⚠️: El alquiler no puede ser nulo.");
         }
         this.alquileres.add(alquiler);
-    }
-
-    @Override
-    public boolean esMoroso()
-    {
-        for (Pago pago : pagos)
-        {
-            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
-            {
-                return true;// es moroso.
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean pagar(Pago pago, MetodoPago metodo)
-    {
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
-        }
-        // Si el pago no está en la lista de pagos del cliente, lo agrega
-        if (!this.pagos.contains(pago))
-        {
-            this.pagos.add(pago);
-        }
-        // Marca el pago como realizado
-        pago.setMetodoPago(metodo);
-        pago.setFechaPago(LocalDate.now());
-        pago.setEstadoPago(EstadoPago.REALIZADO);
-        return true;
     }
 
     @Override
