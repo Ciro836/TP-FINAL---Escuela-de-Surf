@@ -3,10 +3,10 @@ import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
-import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoInvalidoException;
-import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.CupoLlenoException;
-import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.FechaInvalidaException;
-import ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf.PagoPendienteException;
+import ExcepcionesPersonalizadas.CupoInvalidoException;
+import ExcepcionesPersonalizadas.CupoLlenoException;
+import ExcepcionesPersonalizadas.FechaInvalidaException;
+import ExcepcionesPersonalizadas.PagoPendienteException;
 import Utiles.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -218,9 +218,9 @@ public static void alumnoReservarClase()
         {
             System.out.println("❌ Error de reserva: " + e.getMessage());
         }
-        catch (IllegalStateException e)
+        catch (IllegalStateException | IllegalArgumentException e)
         {
-            System.out.println("⚠️ Error de estado: " + e.getMessage());
+            System.out.println("⚠️ Error: " + e.getMessage());
         }
         catch (Exception e)
         {
