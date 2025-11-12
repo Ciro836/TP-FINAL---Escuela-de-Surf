@@ -94,10 +94,19 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoEquipos().agregar(equipo);
     }
 
+    public void registrarNuevoInstructor(Instructor instructor)
+    {
+        if (instructor == null)
+        {
+            throw new IllegalArgumentException("El instructor no puede ser nulo");
+        }
+        getRepoInstructores().agregar(instructor);
+    }
+
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
     {
         Alumno a = getRepoAlumnos().buscarPorId(id);
-        
+
         if (a == null)
         {
             throw new IdNoEncontradoException("No se ha encontrado ningun alumno con el id ingresado.");

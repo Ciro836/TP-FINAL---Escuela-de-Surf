@@ -53,7 +53,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 {
                     case 1 -> agregarAlumno();
                     case 2 -> agregarEquipo();
-                    //case 3 -> agregarInstructor();
+                    case 3 -> agregarInstructor();
                     //case 4 -> agregarCliente();
                     //case 5 -> crearClaseDeSurf();
                     //case 6 -> agregarAlquiler();
@@ -162,6 +162,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
             }
 
+            //Preguntamos si se desea seguir cargando
             try
             {
                 System.out.print("Desea seguir cargando alumnos? (s/n): ");
@@ -172,7 +173,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de esta letras: (s/n).");
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
                 }
                 scanner.nextLine();
             }
@@ -231,6 +232,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
+            //Preguntamos si se desea seguir cargando
             try
             {
                 System.out.print("Desea seguir cargando equipos? (s/n): ");
@@ -241,7 +243,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de esta letras: (s/n).");
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
                 }
                 scanner.nextLine();
             }
@@ -250,6 +252,77 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("\nError: debes ingresar(s/n).");
                 scanner.nextLine();
             }
+        } while (seguir == 's');
+    }
+
+    public void agregarInstructor()
+    {
+        char seguir = 's';
+        do
+        {
+            try
+            {
+                System.out.println("CARGA DE DATOS DE INSTRUCTORES\n");
+
+                System.out.print("Ingrese el numero de DNI: ");
+                String dni = scanner.nextLine().trim();
+
+                System.out.print("Ingrese el nombre del instructor: ");
+                String nombre = scanner.nextLine().trim();
+
+                System.out.print("Ingrese el apellido del instructor: ");
+                String apellido = scanner.nextLine().trim();
+
+                System.out.print("Ingrese la edad del instructor: ");
+                int edad = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Ingrese el numero de telefono: ");
+                String telefono = scanner.nextLine().trim();
+
+                System.out.print("Ingrese los años de experiencia del instructor: ");
+                int aniosExp = scanner.nextInt();
+                scanner.nextLine();
+
+                Instructor instructor = new Instructor(dni, nombre, apellido, edad, telefono, aniosExp);
+                escuela.registrarNuevoInstructor(instructor);
+                System.out.println("Alumno agregado correctamente.");
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+                scanner.nextLine();
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error de datos: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            }
+
+            //Preguntamos si se desea seguir cargando
+            try
+            {
+                System.out.print("Desea seguir cargando instructores? (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                if (entrada == 's' || entrada == 'n')
+                {
+                    seguir = entrada;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                }
+                scanner.nextLine();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("\nError: debes ingresar(s/n).");
+                scanner.nextLine();
+            }
+
         } while (seguir == 's');
     }
 
