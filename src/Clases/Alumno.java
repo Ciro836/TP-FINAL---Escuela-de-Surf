@@ -2,7 +2,6 @@ package Clases;
 
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,6 +79,7 @@ public class Alumno extends Persona
 
     public boolean reservar(ClaseDeSurf clase, MetodoPago metodo)
     {
+
         //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
         clase.inscribirAlumno(this);
 
@@ -88,10 +88,7 @@ public class Alumno extends Persona
 
         //creo una reserva y paso los valores
         Reserva nueva = new Reserva(this, clase, pago);
-        //agrego la reserva a la list
-        reservas.add(nueva);
-        //agrego el pago a la list
-        pagos.add(pago);
+
         return true; //retorto true, fue guardado con exito la reserva
     }
 
@@ -108,15 +105,13 @@ public class Alumno extends Persona
         {
             clase.eliminarAlumno(this);
         }
-        //ahora elimino la reserva y su pago
-        reservas.remove(reserva);
-        pagos.remove(reserva.getPago());
 
         return true;
     }
 
     public void mostrarReservas()
     {
+        /*
         if (reservas.isEmpty())
         {
             System.out.println("No tiene hecha ninguna reserva");
@@ -128,6 +123,8 @@ public class Alumno extends Persona
                 System.out.println(reserva.mostrarReservaMejorada());
             }
         }
+
+         */
     }
 
     @Override
@@ -135,8 +132,7 @@ public class Alumno extends Persona
     {
         return super.toString() + " IdAlumno: " + idAlumno +
                 "| Nivel de surf: " + nivel +
-                "| cantClasesTomadas: " + cantClasesTomadas +
-                "| Cantidad de reservas: " + reservas.size();
+                "| cantClasesTomadas: " + cantClasesTomadas;
     }
 
     @Override
@@ -148,21 +144,6 @@ public class Alumno extends Persona
             jsonObj.put("idAlumno", idAlumno);
             jsonObj.put("nivel", nivel);
             jsonObj.put("cantClasesTomadas", cantClasesTomadas);
-
-            JSONArray jsonArray = new JSONArray();
-            for (Reserva r : reservas)
-            {
-                jsonArray.put(r.getIdReserva());
-            }
-            jsonObj.put("idReservas", jsonArray);
-
-            JSONArray jsonArrayPagos = new JSONArray();
-            for (Pago p : pagos)
-            {
-                jsonArrayPagos.put(p.getIdPago());
-            }
-            jsonObj.put("idPagos", jsonArrayPagos);
-
         }
         catch (JSONException e)
         {
