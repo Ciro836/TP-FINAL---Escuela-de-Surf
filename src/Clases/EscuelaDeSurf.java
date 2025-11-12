@@ -177,36 +177,66 @@ public class EscuelaDeSurf
                 System.out.println("CARGA DE DATOS DE ALUMNOS\n");
 
                 System.out.print("Ingrese el numero de DNI: ");
-                int dni = scanner.nextInt();
-                scanner.nextLine();
+                String dni = scanner.nextLine().trim();
+                if (!dni.matches("\\d{7,8}"))
+                {
+                    throw new IllegalArgumentException("El DNI debe tener entre 7 y 8 dígitos numéricos.");
+                }
 
                 System.out.print("Ingrese el nombre del alumno: ");
-                String nombre = scanner.nextLine();
+                String nombre = scanner.nextLine().trim();
+                if (nombre.isEmpty())
+                {
+                    throw new IllegalArgumentException("El nombre no puede estar vacío.");
+                }
 
                 System.out.print("Ingrese el apellido del alumno: ");
-                String apellido = scanner.nextLine();
+                String apellido = scanner.nextLine().trim();
+                if (apellido.isEmpty())
+                {
+                    throw new IllegalArgumentException("El apellido no puede estar vacío.");
+                }
 
                 System.out.print("Ingrese la edad del alumno: ");
                 int edad = scanner.nextInt();
                 scanner.nextLine();
+                if (edad <= 0)
+                {
+                    throw new IllegalArgumentException("La edad debe ser un número positivo.");
+                }
 
                 System.out.print("Ingrese el numero de telefono: ");
-                int telefono = scanner.nextInt();
-                scanner.nextLine();
+                String telefono = scanner.nextLine().trim();
+                if (!telefono.matches("\\d{7,15}"))
+                {
+                    throw new IllegalArgumentException("El teléfono debe contener solo números.");
+                }
 
                 System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
-                NivelDeSurf nivel = NivelDeSurf.valueOf(scanner.nextLine().toUpperCase());
+                try
+                {
+                    NivelDeSurf nivel = NivelDeSurf.valueOf(scanner.nextLine().trim().toUpperCase());
+                }
+                catch (IllegalArgumentException ex)
+                {
+                    throw new IllegalArgumentException("Nivel de surf inválido. Use: Principiante, Intermedio o Avanzado.");
+                }
 
                 System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
                 int cantDeClases = scanner.nextInt();
                 scanner.nextLine();
+                if (cantDeClases < 0)
+                {
+                    throw new IllegalArgumentException("La cantidad de clases no puede ser negativa.");
+                }
 
                 Alumno alumno = new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
                 getRepoAlumnos().agregar(alumno);
                 System.out.println("Alumno agregado correctamente.");
 
                 System.out.print("Desea seguir cargando alumnos? (s/n): ");
-                seguir = scanner.next().charAt(0);
+                seguir = scanner.next().toLowerCase().charAt(0);
+                scanner.nextLine();
 
             } while (seguir == 's');
         }
