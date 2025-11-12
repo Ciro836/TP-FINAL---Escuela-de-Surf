@@ -3,8 +3,13 @@ package Clases;
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
+import ExcepcionesPersonalizadas.CupoInvalidoException;
+import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -174,13 +179,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                    throw new IllegalArgumentException();
                 }
                 scanner.nextLine();
             }
-            catch (InputMismatchException e)
+            catch (InputMismatchException | IllegalArgumentException e)
             {
-                System.out.println("\nError: debes ingresar(s/n).");
+                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
                 scanner.nextLine();
             }
 
@@ -244,13 +249,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                    throw new IllegalArgumentException();
                 }
                 scanner.nextLine();
             }
-            catch (InputMismatchException e)
+            catch (InputMismatchException | IllegalArgumentException e)
             {
-                System.out.println("\nError: debes ingresar(s/n).");
+                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
                 scanner.nextLine();
             }
         } while (seguir == 's');
@@ -314,13 +319,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                    throw new IllegalArgumentException();
                 }
                 scanner.nextLine();
             }
-            catch (InputMismatchException e)
+            catch (InputMismatchException | IllegalArgumentException e)
             {
-                System.out.println("\nError: debes ingresar(s/n).");
+                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
                 scanner.nextLine();
             }
 
@@ -336,11 +341,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             {
                 System.out.println("CARGA DE DATOS DE CLASES DE SURF\n");
 
+                //INSTRUCTOR
                 System.out.print("Ingrese el id del instructor que dictará la clase: ");
                 int idInstructor = scanner.nextInt();
                 scanner.nextLine();
                 Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
 
+                //TIPO DE CLASE
                 System.out.println("Ingrese el tipo de clase: ");
                 System.out.println("1. Clase grupal");
                 System.out.println("2. Clase particular");
@@ -352,14 +359,27 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 {
                     case 1 -> tipoClase = TipoClase.GRUPAL;
                     case 2 -> tipoClase = TipoClase.PARTICULAR;
+                    default -> throw new IllegalArgumentException("Opción de tipo de clase no válida.");
                 }
 
+                //FECHA Y HORA
+                System.out.print("Ingrese la fecha de la clase (formato YYYY-MM-DD): ");
+                String fechaStr = scanner.nextLine().trim();
+                System.out.print("Ingrese la hora de la clase (formato HH:MM, 24hs): ");
+                String horaStr = scanner.nextLine().trim();
 
-                System.out.print("Ingrese los años de experiencia del instructor: ");
-                int aniosExp = scanner.nextInt();
+                // Combinamos la fecha y la hora
+                String fechaHoraStr = fechaStr + " " + horaStr;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, formatter);
+
+                //CUPO MÁXIMO
+                System.out.print("Ingrese el cupo máximo de alumnos: ");
+                int cupoMax = scanner.nextInt();
                 scanner.nextLine();
 
-                ClaseDeSurf clase = new ClaseDeSurf(instructor, tipoClase, );
+                //CREACION DE CLASE y ademas se agrega al repo de clases.
+                ClaseDeSurf clase = new ClaseDeSurf(instructor, tipoClase, fechaHora, cupoMax);
                 escuela.registrarNuevaClase(clase);
                 System.out.println("Clase agregada correctamente.");
             }
@@ -367,6 +387,18 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             {
                 System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
                 scanner.nextLine();
+            }
+            catch (DateTimeParseException e)
+            {
+                System.out.println("❌ Error en el formato de fecha u hora. Use YYYY-MM-DD y HH:MM.");
+            }
+            catch (IdNoEncontradoException e)
+            {
+                System.out.println("❌ Error: " + e.getMessage()); //
+            }
+            catch (FechaInvalidaException | CupoInvalidoException e)
+            {
+                System.out.println("❌ Error al crear la clase: " + e.getMessage()); //
             }
             catch (IllegalArgumentException e)
             {
@@ -388,13 +420,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                    throw new IllegalArgumentException();
                 }
                 scanner.nextLine();
             }
-            catch (InputMismatchException e)
+            catch (InputMismatchException | IllegalArgumentException e)
             {
-                System.out.println("\nError: debes ingresar(s/n).");
+                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
                 scanner.nextLine();
             }
 
