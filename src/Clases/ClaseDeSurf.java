@@ -2,9 +2,7 @@ package Clases;
 
 import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.CupoInvalidoException;
-import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
-import ExcepcionesPersonalizadas.PagoPendienteException;
 import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,6 +149,7 @@ public class ClaseDeSurf implements InterfazJson
 
     public boolean inscribirAlumno(Alumno alumno)
     {
+        /*
         if (alumno == null)
         {
             throw new IllegalArgumentException("El alumno no puede ser nulo.");
@@ -169,6 +168,9 @@ public class ClaseDeSurf implements InterfazJson
         }
 
         alumnosInscriptos.add(alumno);
+
+
+         */
         return true;
     }
 
