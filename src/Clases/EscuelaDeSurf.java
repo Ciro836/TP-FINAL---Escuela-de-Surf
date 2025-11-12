@@ -94,14 +94,16 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoEquipos().agregar(equipo);
     }
 
-    public void BuscarAlumnoPorId(int id) throws IdNoEncontradoException
+    public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
     {
-        if (repoAlumnos.getDatos().get(id) == null)
+        Alumno a = getRepoAlumnos().buscarPorId(id);
+        
+        if (a == null)
         {
             throw new IdNoEncontradoException("No se ha encontrado ningun alumno con el id ingresado.");
         }
 
-        System.out.println(getRepoAlumnos().buscarPorId(id));
+        return a;
     }
 
     public void pagar(Pago pago, MetodoPago metodo)

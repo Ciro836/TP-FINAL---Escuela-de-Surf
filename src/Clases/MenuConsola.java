@@ -255,6 +255,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void buscarAlumnoPorId()
     {
+        //Pedimos que el usuario ingrese el id
         int id = 0;
         try
         {
@@ -272,14 +273,16 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("\nError inesperado: " + e.getMessage());
         }
 
+        //Buscamos el alumno con ese id
         try
         {
-            escuela.BuscarAlumnoPorId(id);
+            Alumno alumnito = escuela.buscarAlumnoPorId(id);
+            System.out.println("✅ Alumno encontrado!");
+            System.out.println(alumnito);
         }
         catch (IdNoEncontradoException e)
         {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 }
