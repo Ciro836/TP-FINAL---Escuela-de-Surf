@@ -2,33 +2,6 @@ import Clases.EscuelaDeSurf;
 import Clases.MenuConsola;
 
 /*
-public static void agregarInstructor()
-{
-    if (escuela == null)
-    {
-        System.out.println("⚠️: Primero debe crear la escuela. Elija la (opción 1).");
-    }
-    else
-    {
-        try
-        {
-            //Hardcodeado
-            instructor = new Instructor(47279633, "Balta", "Llorca", 18, 22329625, 2);
-            String resultado = escuela.getRepoInstructores().agregar(1, instructor) ? "Instructor creado y agregado al repositorio de instructores correctamente." : "No se pudo agregar al instructor.";
-            System.out.println(resultado);
-        }
-        catch (IllegalArgumentException e)
-        {
-            System.out.println("❌ Error de datos al crear el instructor: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado al procesar el instructor: " + e.getMessage());
-        }
-
-    }
-}
-
 public static void agregarCliente()
 {
     if (escuela == null)
