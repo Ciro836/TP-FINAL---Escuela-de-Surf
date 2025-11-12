@@ -109,6 +109,7 @@ public class EscuelaDeSurf
             {
                 System.out.print("Ingrese una de las opciones: ");
                 opcion = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (opcion)
                 {
@@ -134,14 +135,11 @@ public class EscuelaDeSurf
             catch (InputMismatchException e)
             {
                 System.out.println("\nError: debes ingresar un número.");
+                scanner.nextLine();
             }
             catch (Exception e)
             {
                 System.out.println("\nError inesperado: " + e.getMessage());
-            }
-            finally
-            {
-                scanner.nextLine();
             }
         } while (opcion != 999);
     }
@@ -169,48 +167,28 @@ public class EscuelaDeSurf
 
     public void agregarAlumno()
     {
-        try
+        char seguir;
+        do
         {
-            char seguir;
-            do
+            try
             {
                 System.out.println("CARGA DE DATOS DE ALUMNOS\n");
 
                 System.out.print("Ingrese el numero de DNI: ");
                 String dni = scanner.nextLine().trim();
-                if (!dni.matches("\\d{7,8}"))
-                {
-                    throw new IllegalArgumentException("El DNI debe tener entre 7 y 8 dígitos numéricos.");
-                }
 
                 System.out.print("Ingrese el nombre del alumno: ");
                 String nombre = scanner.nextLine().trim();
-                if (nombre.isEmpty())
-                {
-                    throw new IllegalArgumentException("El nombre no puede estar vacío.");
-                }
 
                 System.out.print("Ingrese el apellido del alumno: ");
                 String apellido = scanner.nextLine().trim();
-                if (apellido.isEmpty())
-                {
-                    throw new IllegalArgumentException("El apellido no puede estar vacío.");
-                }
 
                 System.out.print("Ingrese la edad del alumno: ");
                 int edad = scanner.nextInt();
                 scanner.nextLine();
-                if (edad <= 0)
-                {
-                    throw new IllegalArgumentException("La edad debe ser un número positivo.");
-                }
 
                 System.out.print("Ingrese el numero de telefono: ");
                 String telefono = scanner.nextLine().trim();
-                if (!telefono.matches("\\d{7,15}"))
-                {
-                    throw new IllegalArgumentException("El teléfono debe contener solo números.");
-                }
 
                 System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
                 String nivelTexto = scanner.nextLine().trim().toUpperCase();
@@ -227,34 +205,30 @@ public class EscuelaDeSurf
                 System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
                 int cantDeClases = scanner.nextInt();
                 scanner.nextLine();
-                if (cantDeClases < 0)
-                {
-                    throw new IllegalArgumentException("La cantidad de clases no puede ser negativa.");
-                }
 
                 Alumno alumno = new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
                 getRepoAlumnos().agregar(alumno);
                 System.out.println("Alumno agregado correctamente.");
-
-                System.out.print("Desea seguir cargando alumnos? (s/n): ");
-                seguir = scanner.next().toLowerCase().charAt(0);
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
                 scanner.nextLine();
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+            }
 
-            } while (seguir == 's');
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            System.out.print("Desea seguir cargando alumnos? (s/n): ");
+            seguir = scanner.next().toLowerCase().charAt(0);
             scanner.nextLine();
-        }
-        catch (IllegalArgumentException e)
-        {
-            System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
-        }
+
+        } while (seguir == 's');
     }
 
     public void pagar(Pago pago, MetodoPago metodo)
