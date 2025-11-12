@@ -21,7 +21,7 @@ public class Alumno extends Persona
         this.cantClasesTomadas = 0;
     }
 
-    public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
+    public Alumno(String dni, String nombre, String apellido, int edad, String numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         if (nivel == null)

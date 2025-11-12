@@ -24,7 +24,7 @@ public class Cliente extends Persona
         this.alquileres = new ArrayList<>();
     }
 
-    public Cliente(int dni, String nombre, String apellido, int edad, int numeroTel)
+    public Cliente(String dni, String nombre, String apellido, int edad, String numeroTel)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idCliente = ++contador;
