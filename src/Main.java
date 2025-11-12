@@ -115,19 +115,6 @@ public static void agregarAlquiler()
     System.out.println("Alquiler con su lista de equipos y pagos agregado correctamente.");
 }
 
-public static void buscarAlumnoPorId()
-{
-    Alumno alumno = escuela.getRepoAlumnos().buscarPorId(1);
-    if (alumno != null)
-    {
-        System.out.println("Alumno encontrado: " + alumno);
-    }
-    else
-    {
-        System.out.println("⚠️: Primero debe crear un alumno. Elija la (opción 2)");
-    }
-}
-
 public static void alumnoReservarClase()
 {
     if (alumno == null)
