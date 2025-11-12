@@ -3,6 +3,7 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
+import Enumeradores.NombreEquipo;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -114,7 +115,7 @@ public class EscuelaDeSurf
                 switch (opcion)
                 {
                     case 1 -> agregarAlumno();
-                    //case 2 -> agregarEquipo;
+                    case 2 -> agregarEquipo();
                     //case 3 -> agregarInstructor();
                     //case 4 -> agregarCliente();
                     //case 5 -> crearClaseDeSurf();
@@ -225,6 +226,52 @@ public class EscuelaDeSurf
             }
 
             System.out.print("Desea seguir cargando alumnos? (s/n): ");
+            seguir = scanner.next().toLowerCase().charAt(0);
+            scanner.nextLine();
+
+        } while (seguir == 's');
+    }
+
+    public void agregarEquipo()
+    {
+        char seguir;
+        do
+        {
+            try
+            {
+                System.out.println("CARGA DE DATOS DE EQUIPOS\n");
+
+                System.out.print("Ingrese el nombre del equipo(Tabla de Surf/Traje de Neoprene/Bodyboard/Patas de Rana): ");
+                String texto = scanner.nextLine().trim().toUpperCase();
+                NombreEquipo nombreEquipo;
+                try
+                {
+                    nombreEquipo = NombreEquipo.valueOf(texto);
+                }
+                catch (IllegalArgumentException ex)
+                {
+                    throw new IllegalArgumentException("Nombre del equipo inválido. Use: Tabla de Surf - Traje de Neoprene - Bodyboard - Patas de Rana.");
+                }
+
+                Equipo equipo = new Equipo(nombreEquipo);
+                getRepoEquipos().agregar(equipo);
+                System.out.println("Equipo agregado correctamente.");
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+                scanner.nextLine();
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error de datos: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            }
+
+            System.out.print("Desea seguir cargando equipos? (s/n): ");
             seguir = scanner.next().toLowerCase().charAt(0);
             scanner.nextLine();
 
