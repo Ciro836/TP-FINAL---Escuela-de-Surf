@@ -213,9 +213,11 @@ public class EscuelaDeSurf
                 }
 
                 System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
+                String nivelTexto = scanner.nextLine().trim().toUpperCase();
+                NivelDeSurf nivel;
                 try
                 {
-                    NivelDeSurf nivel = NivelDeSurf.valueOf(scanner.nextLine().trim().toUpperCase());
+                    nivel = NivelDeSurf.valueOf(nivelTexto);
                 }
                 catch (IllegalArgumentException ex)
                 {
