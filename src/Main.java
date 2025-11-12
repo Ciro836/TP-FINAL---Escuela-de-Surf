@@ -1,4 +1,5 @@
 import Clases.EscuelaDeSurf;
+import Clases.MenuConsola;
 
 /*
 public static void agregarInstructor()
@@ -318,6 +319,8 @@ void main()
 {
     EscuelaDeSurf escuela = new EscuelaDeSurf();
 
-    escuela.ejecutarMenu();
+    MenuConsola menu = new MenuConsola(escuela);
+
+    menu.ejecutarMenu();
 }
 
