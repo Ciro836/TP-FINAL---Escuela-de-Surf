@@ -4,14 +4,10 @@ import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.CupoInvalidoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import Interfaces.InterfazJson;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ClaseDeSurf implements InterfazJson
 {
@@ -20,7 +16,6 @@ public class ClaseDeSurf implements InterfazJson
     private Instructor instructor;
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
-    private final Set<Alumno> alumnosInscriptos;
     private int cupoMax;
     private final double valorClase;
 
@@ -32,7 +27,6 @@ public class ClaseDeSurf implements InterfazJson
         this.instructor = null;
         this.tipoDeClase = null;
         this.fechaHora = null;
-        this.alumnosInscriptos = new HashSet<>();
         this.cupoMax = 1;
         valorClase = 0.0;
     }
@@ -56,7 +50,6 @@ public class ClaseDeSurf implements InterfazJson
             throw new CupoInvalidoException();
         }
 
-        this.alumnosInscriptos = new HashSet<>();
         this.idClase = ++contador;
         this.instructor = instructor;
         this.tipoDeClase = tipoDeClase;
@@ -116,11 +109,6 @@ public class ClaseDeSurf implements InterfazJson
         this.fechaHora = fechaHora;
     }
 
-    public Set<Alumno> getAlumnosInscriptos()
-    {
-        return Collections.unmodifiableSet(alumnosInscriptos);
-    }
-
     public int getCupoMax()
     {
         return cupoMax;
@@ -141,11 +129,6 @@ public class ClaseDeSurf implements InterfazJson
     }
 
     /// METODOS
-
-    public boolean tieneCupo()
-    {
-        return alumnosInscriptos.size() < cupoMax;
-    }
 
     public boolean inscribirAlumno(Alumno alumno)
     {
@@ -176,15 +159,20 @@ public class ClaseDeSurf implements InterfazJson
 
     public boolean eliminarAlumno(Alumno alumno)
     {
+        /*
         if (alumno == null)
         {
             throw new IllegalArgumentException("El alumno pasado por parametros, no puede ser nulo.");
         }
         return (alumnosInscriptos.remove(alumno));//remove ya se encarga de buscar si contiene ese alumno y devuelve true si lo elimina corectamente
+
+         */
+        return true;
     }
 
     public void mostrarAlumnosInscriptos()
     {
+        /*
         if (alumnosInscriptos.isEmpty())
         {
             System.out.println("Todavía no hay alumnos inscriptos.");
@@ -208,12 +196,14 @@ public class ClaseDeSurf implements InterfazJson
         System.out.println("Cupo: " + alumnosInscriptos.size() + "/" + cupoMax);
         System.out.println("══════════════════════════════════════");
 
+
+         */
     }
 
     @Override
     public String toString()
     {
-        return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase + " | Alumnos inscriptos: " + alumnosInscriptos;
+        return " idClase: " + idClase + "| Instructor: " + instructor + "| Tipo de Clase: " + tipoDeClase + "| fecha y hora: " + fechaHora + "| cupoMax: " + cupoMax + "| valorClase: " + valorClase;
     }
 
     @Override
@@ -227,14 +217,6 @@ public class ClaseDeSurf implements InterfazJson
             jObj.put("Instructor", instructor != null ? instructor.getIdInstructor() : JSONObject.NULL);
             jObj.put("TipoDeClase", tipoDeClase != null ? tipoDeClase.toString() : JSONObject.NULL);
             jObj.put("fechaYhora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
-
-            JSONArray jArrayAlumnosInscriptos = new JSONArray();
-            for (Alumno alumno : alumnosInscriptos)
-            {
-                jArrayAlumnosInscriptos.put(alumno.getIdAlumno()); // solo tomo el id haciendo referencia a ese alumno, sino voya tomar todos los valores de alumnos y guardarlo en clase de surf, y repetir valores q ya estan en otras clases.
-            }
-            jObj.put("idAlumnosInscriptos", jArrayAlumnosInscriptos);
-
             jObj.put("cupoMax", cupoMax);
             jObj.put("valorClase", valorClase);
 
