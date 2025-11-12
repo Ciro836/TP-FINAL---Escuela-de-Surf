@@ -5,6 +5,8 @@ import Enumeradores.MetodoPago;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y lógica de negocio
@@ -134,6 +136,23 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         }
 
         return i;
+    }
+
+    public List<Reserva> buscarReservasPorAlumnoId(int idAlumno) throws IdNoEncontradoException
+    {
+        Alumno alumno = buscarAlumnoPorId(idAlumno);
+
+        List<Reserva> reservasDelAlumno = new ArrayList<>();
+
+        for (Reserva reserva : getRepoReservas().getTodos())
+        {
+            if (reserva.getIdAlumno() == alumno.getIdAlumno()) //
+            {
+                reservasDelAlumno.add(reserva);
+            }
+        }
+        
+        return reservasDelAlumno;
     }
 
     public void pagar(Pago pago, MetodoPago metodo)

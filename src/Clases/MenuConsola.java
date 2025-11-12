@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuConsola //Clase para encargarse de la gestión de la interfaz de usuario
@@ -65,7 +66,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 6 -> agregarEquipo();
                     //case 7 -> agregarAlquiler();
                     case 8 -> buscarAlumnoPorId();
-                    //case 9 -> mostrarReservasAlumno();
+                    case 9 -> mostrarReservasAlumno();
                     //case 10 -> mostrarAlumnosInscriptosEnClase();
                     //case 11 -> cancelarReserva();
                     //case 12 -> grabarRepositoriosAjson();
@@ -404,6 +405,51 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         catch (IdNoEncontradoException e)
         {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void mostrarReservasAlumno()
+    {
+        //le pedimos al usuario el id del alumno para ver sus reservas
+        int id = 0;
+        try
+        {
+            System.out.print("Ingresa el id del alumno para ver sus reservas: ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un número.");
+            scanner.nextLine();
+            return;
+        }
+
+        //mostramos las reservas del alumno
+        try
+        {
+            List<Reserva> reservas = escuela.buscarReservasPorAlumnoId(id);//este metodo lanza la excepcion de idNoEncontrado
+
+            if (reservas.isEmpty())
+            {
+                System.out.println("El alumno con ID " + id + " existe, pero no tiene reservas activas.");
+            }
+            else
+            {
+                System.out.println("Mostrando " + reservas.size() + " reserva(s) del alumno ID " + id + ":");
+                for (Reserva r : reservas)
+                {
+                    System.out.println(r.mostrarReservaMejorada());
+                }
+            }
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("❌ Error: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
         }
     }
 }
