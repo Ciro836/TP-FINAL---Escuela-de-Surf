@@ -1,6 +1,5 @@
 package Clases;
 
-import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,56 +75,6 @@ public class Alumno extends Persona
     }
 
     /// METODOS
-
-    public boolean reservar(ClaseDeSurf clase, MetodoPago metodo)
-    {
-
-        //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
-        clase.inscribirAlumno(this);
-
-        //creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
-        Pago pago = new Pago(metodo, clase.getValorClase());
-
-        //creo una reserva y paso los valores
-        Reserva nueva = new Reserva(this, clase, pago);
-
-        return true; //retorto true, fue guardado con exito la reserva
-    }
-
-    public boolean cancelarReserva(Reserva reserva)
-    {
-        if (reserva == null)
-        {
-            throw new IllegalArgumentException("La reserva no puede ser nula.");
-        }
-        //guardo en clase, la clase reservada por el alumno
-        ClaseDeSurf clase = reserva.getClaseDeSurf();
-        //si no es nula, elimo el alumno de esa clase
-        if (clase != null)
-        {
-            clase.eliminarAlumno(this);
-        }
-
-        return true;
-    }
-
-    public void mostrarReservas()
-    {
-        /*
-        if (reservas.isEmpty())
-        {
-            System.out.println("No tiene hecha ninguna reserva");
-        }
-        else
-        {
-            for (Reserva reserva : reservas)
-            {
-                System.out.println(reserva.mostrarReservaMejorada());
-            }
-        }
-
-         */
-    }
 
     @Override
     public String toString()
