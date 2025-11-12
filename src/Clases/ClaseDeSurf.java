@@ -37,7 +37,7 @@ public class ClaseDeSurf implements InterfazJson
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
     {
         if (instructor == null)
         {
@@ -107,7 +107,7 @@ public class ClaseDeSurf implements InterfazJson
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora)
+    public void setFechaHora(LocalDateTime fechaHora) throws FechaInvalidaException
     {
         if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
         {
@@ -126,7 +126,7 @@ public class ClaseDeSurf implements InterfazJson
         return cupoMax;
     }
 
-    public void setCupoMax(int cupoMax)
+    public void setCupoMax(int cupoMax) throws CupoInvalidoException
     {
         if (cupoMax <= 0)
         {
