@@ -168,7 +168,7 @@ public class EscuelaDeSurf
 
     public void agregarAlumno()
     {
-        char seguir;
+        char seguir = 's';
         do
         {
             try
@@ -225,35 +225,58 @@ public class EscuelaDeSurf
                 System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
             }
 
-            System.out.print("Desea seguir cargando alumnos? (s/n): ");
-            seguir = scanner.next().toLowerCase().charAt(0);
-            scanner.nextLine();
-
+            try
+            {
+                System.out.print("Desea seguir cargando alumnos? (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                if (entrada == 's' || entrada == 'n')
+                {
+                    seguir = entrada;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de esta letras: (s/n).");
+                }
+                scanner.nextLine();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("\nError: debes ingresar(s/n).");
+                scanner.nextLine();
+            }
+            
         } while (seguir == 's');
     }
 
     public void agregarEquipo()
     {
-        char seguir;
+        char seguir = 's';
         do
         {
             try
             {
                 System.out.println("CARGA DE DATOS DE EQUIPOS\n");
 
-                System.out.print("Ingrese el nombre del equipo(Tabla de Surf/Traje de Neoprene/Bodyboard/Patas de Rana): ");
-                String texto = scanner.nextLine().trim().toUpperCase();
-                NombreEquipo nombreEquipo;
-                try
+                NombreEquipo[] tiposDeEquipo = NombreEquipo.values();
+
+                System.out.println("Seleccione el tipo de equipo:");
+                for (int i = 0; i < tiposDeEquipo.length; i++)
                 {
-                    nombreEquipo = NombreEquipo.valueOf(texto);
+                    System.out.println((i) + ". " + tiposDeEquipo[i].getNombreEquipo());
                 }
-                catch (IllegalArgumentException ex)
+                System.out.print("Ingrese el número de la opción: ");
+
+                int seleccion = scanner.nextInt();
+                scanner.nextLine();
+
+                if (seleccion < 0 || seleccion > tiposDeEquipo.length)
                 {
-                    throw new IllegalArgumentException("Nombre del equipo inválido. Use: Tabla de Surf - Traje de Neoprene - Bodyboard - Patas de Rana.");
+                    throw new IllegalArgumentException("Selección inválida. Ingrese un número entre 0 y " + tiposDeEquipo.length + ".");
                 }
 
-                Equipo equipo = new Equipo(nombreEquipo);
+                NombreEquipo nombreEnum = tiposDeEquipo[seleccion];
+
+                Equipo equipo = new Equipo(nombreEnum);
                 getRepoEquipos().agregar(equipo);
                 System.out.println("Equipo agregado correctamente.");
             }
@@ -271,10 +294,25 @@ public class EscuelaDeSurf
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            System.out.print("Desea seguir cargando equipos? (s/n): ");
-            seguir = scanner.next().toLowerCase().charAt(0);
-            scanner.nextLine();
-
+            try
+            {
+                System.out.print("Desea seguir cargando equipos? (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                if (entrada == 's' || entrada == 'n')
+                {
+                    seguir = entrada;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de esta letras: (s/n).");
+                }
+                scanner.nextLine();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("\nError: debes ingresar(s/n).");
+                scanner.nextLine();
+            }
         } while (seguir == 's');
     }
 
