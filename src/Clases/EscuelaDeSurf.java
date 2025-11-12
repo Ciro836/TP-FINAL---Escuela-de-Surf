@@ -2,6 +2,7 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
+import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
 import java.time.LocalDate;
 
@@ -91,6 +92,16 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
             throw new IllegalArgumentException("El equipo no puede ser nulo");
         }
         getRepoEquipos().agregar(equipo);
+    }
+
+    public void BuscarAlumnoPorId(int id) throws IdNoEncontradoException
+    {
+        if (repoAlumnos.getDatos().get(id) == null)
+        {
+            throw new IdNoEncontradoException("No se ha encontrado ningun alumno con el id ingresado.");
+        }
+
+        System.out.println(getRepoAlumnos().buscarPorId(id));
     }
 
     public void pagar(Pago pago, MetodoPago metodo)

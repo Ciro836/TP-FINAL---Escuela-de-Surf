@@ -2,6 +2,7 @@ package Clases;
 
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
+import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -56,7 +57,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     //case 4 -> agregarCliente();
                     //case 5 -> crearClaseDeSurf();
                     //case 6 -> agregarAlquiler();
-                    //case 7 -> buscarAlumnoPorId();
+                    case 7 -> buscarAlumnoPorId();
                     //case 8 -> alumnoReservarClase();
                     //case 9 -> mostrarReservasAlumno();
                     //case 10 -> mostrarAlumnosInscriptosEnClase();
@@ -250,6 +251,35 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 scanner.nextLine();
             }
         } while (seguir == 's');
+    }
+
+    public void buscarAlumnoPorId()
+    {
+        int id = 0;
+        try
+        {
+            System.out.print("Ingresa el id de el alumno a buscar: ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("\nError: ingresa un valor correcto. " + e.getMessage());
+            scanner.nextLine();
+        }
+        catch (Exception e)
+        {
+            System.out.println("\nError inesperado: " + e.getMessage());
+        }
+
+        try
+        {
+            escuela.BuscarAlumnoPorId(id);
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
 }
