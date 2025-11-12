@@ -12,7 +12,6 @@ public class Cliente extends Persona
 {
     private static int contador = 0;
     private final int idCliente;
-    private final List<Pago> pagos;
     private final List<Alquiler> alquileres;
 
     /// CONSTRUCTORES
@@ -20,7 +19,6 @@ public class Cliente extends Persona
     public Cliente()
     {
         this.idCliente = ++contador;
-        this.pagos = new ArrayList<>();
         this.alquileres = new ArrayList<>();
     }
 
@@ -28,7 +26,6 @@ public class Cliente extends Persona
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idCliente = ++contador;
-        this.pagos = new ArrayList<>();
         this.alquileres = new ArrayList<>();
     }
 
@@ -42,11 +39,6 @@ public class Cliente extends Persona
     public int getIdCliente()
     {
         return idCliente;
-    }
-
-    public List<Pago> getPagos()
-    {
-        return Collections.unmodifiableList(pagos);
     }
 
     public List<Alquiler> getAlquileres()
@@ -79,13 +71,6 @@ public class Cliente extends Persona
         try
         {
             jsonObject.put("idCliente", idCliente);
-
-            JSONArray jArray = new JSONArray();
-            for (Pago p : pagos)
-            {
-                jArray.put(p.getIdPago());
-            }
-            jsonObject.put("idPagos", jArray);
 
             JSONArray jArrayAlquileres = new JSONArray();
             for (Alquiler a : alquileres)

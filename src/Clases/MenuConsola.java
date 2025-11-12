@@ -2,9 +2,16 @@ package Clases;
 
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
+import Enumeradores.TipoClase;
+import ExcepcionesPersonalizadas.CupoInvalidoException;
+import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuConsola //Clase para encargarse de la gestión de la interfaz de usuario
@@ -26,13 +33,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         {
             System.out.println("\nMENU ESCUELA DE SURF\n");
             System.out.println("1. Agregar Alumno.");
-            System.out.println("2. Agregar Equipo.");
-            System.out.println("3. Agregar Instructor.");
-            System.out.println("4. Agregar Cliente.");
-            System.out.println("5. Agregar Clase de Surf.");
-            System.out.println("6. Agregar alquiler con varios equipos para un cliente.");
-            System.out.println("7. Buscar alumno por su id.");
-            System.out.println("8. Método: Reservar clase de Alumno.");
+            System.out.println("2. Agregar Instructor.");
+            System.out.println("3. Agregar Clase de Surf.");
+            System.out.println("4. Agregar Reserva.");
+            System.out.println("5. Agregar Cliente.");
+            System.out.println("6. Agregar Equipo.");
+            System.out.println("7. Agregar Alquiler.");
+            System.out.println("8. Buscar alumno por su id.");
             System.out.println("9. Mostrar reservas de un alumno.");
             System.out.println("10. Mostrar alumnos inscriptos en una clase.");
             System.out.println("11. Cancelar una reserva.");
@@ -52,14 +59,14 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 switch (opcion)
                 {
                     case 1 -> agregarAlumno();
-                    case 2 -> agregarEquipo();
-                    case 3 -> agregarInstructor();
-                    //case 4 -> agregarCliente();
-                    //case 5 -> crearClaseDeSurf();
-                    //case 6 -> agregarAlquiler();
-                    case 7 -> buscarAlumnoPorId();
-                    //case 8 -> alumnoReservarClase();
-                    //case 9 -> mostrarReservasAlumno();
+                    case 2 -> agregarInstructor();
+                    case 3 -> agregarClaseDeSurf();
+                    //case 4 -> agregarReserva();
+                    //case 5 -> agregarCliente();
+                    case 6 -> agregarEquipo();
+                    //case 7 -> agregarAlquiler();
+                    case 8 -> buscarAlumnoPorId();
+                    case 9 -> mostrarReservasAlumno();
                     //case 10 -> mostrarAlumnosInscriptosEnClase();
                     //case 11 -> cancelarReserva();
                     //case 12 -> grabarRepositoriosAjson();
@@ -80,6 +87,34 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("\nError inesperado: " + e.getMessage());
             }
         } while (opcion != 999);
+    }
+
+    private boolean deseaContinuar(String mensaje)
+    {
+        while (true) // Bucle infinito hasta que se ingrese 's' o 'n'
+        {
+            try
+            {
+                System.out.print(mensaje + " (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                scanner.nextLine();
+
+                if (entrada == 's')
+                {
+                    return true;
+                }
+                if (entrada == 'n')
+                {
+                    return false;
+                }
+
+                throw new IllegalArgumentException("Error: debes ingresar 's' o 'n'.");
+            }
+            catch (Exception e)
+            {
+                System.out.println("❌ Error inesperado: " + e.getMessage());
+            }
+        }
     }
 
     public void mostrarTodosLosRepositorios()
@@ -105,7 +140,6 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void agregarAlumno()
     {
-        char seguir = 's';
         do
         {
             try
@@ -162,33 +196,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando alumnos? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("\nError: debes ingresar(s/n).");
-                scanner.nextLine();
-            }
-
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando alumnos?"));
     }
 
     public void agregarEquipo()
     {
-        char seguir = 's';
         do
         {
             try
@@ -232,32 +244,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando equipos? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("\nError: debes ingresar(s/n).");
-                scanner.nextLine();
-            }
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando equipos?"));
     }
 
     public void agregarInstructor()
     {
-        char seguir = 's';
         do
         {
             try
@@ -302,28 +293,86 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
+        } while (deseaContinuar("Desea seguir cargando instructores?"));
+    }
+
+    public void agregarClaseDeSurf()
+    {
+        do
+        {
             try
             {
-                System.out.print("Desea seguir cargando instructores? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
-                }
+                System.out.println("CARGA DE DATOS DE CLASES DE SURF\n");
+
+                //INSTRUCTOR
+                System.out.print("Ingrese el id del instructor que dictará la clase: ");
+                int idInstructor = scanner.nextInt();
                 scanner.nextLine();
+                Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
+
+                //TIPO DE CLASE
+                System.out.println("Ingrese el tipo de clase: ");
+                System.out.println("1. Clase grupal");
+                System.out.println("2. Clase particular");
+                int respuesta = scanner.nextInt();
+                scanner.nextLine();
+
+                TipoClase tipoClase = null;
+                switch (respuesta)
+                {
+                    case 1 -> tipoClase = TipoClase.GRUPAL;
+                    case 2 -> tipoClase = TipoClase.PARTICULAR;
+                    default -> throw new IllegalArgumentException("Opción de tipo de clase no válida.");
+                }
+
+                //FECHA Y HORA
+                System.out.print("Ingrese la fecha de la clase (formato YYYY-MM-DD): ");
+                String fechaStr = scanner.nextLine().trim();
+                System.out.print("Ingrese la hora de la clase (formato HH:MM, 24hs): ");
+                String horaStr = scanner.nextLine().trim();
+
+                // Combinamos la fecha y la hora
+                String fechaHoraStr = fechaStr + " " + horaStr;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, formatter);
+
+                //CUPO MÁXIMO
+                System.out.print("Ingrese el cupo máximo de alumnos: ");
+                int cupoMax = scanner.nextInt();
+                scanner.nextLine();
+
+                //CREACION DE CLASE y ademas se agrega al repo de clases.
+                ClaseDeSurf clase = new ClaseDeSurf(instructor, tipoClase, fechaHora, cupoMax);
+                escuela.registrarNuevaClase(clase);
+                System.out.println("Clase agregada correctamente.");
             }
             catch (InputMismatchException e)
             {
-                System.out.println("\nError: debes ingresar(s/n).");
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
                 scanner.nextLine();
             }
+            catch (DateTimeParseException e)
+            {
+                System.out.println("❌ Error en el formato de fecha u hora. Use YYYY-MM-DD y HH:MM.");
+            }
+            catch (IdNoEncontradoException e)
+            {
+                System.out.println("❌ Error: " + e.getMessage()); //
+            }
+            catch (FechaInvalidaException | CupoInvalidoException e)
+            {
+                System.out.println("❌ Error al crear la clase: " + e.getMessage()); //
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error de datos: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            }
 
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando clases de surf?"));
     }
 
     public void buscarAlumnoPorId()
@@ -356,6 +405,51 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         catch (IdNoEncontradoException e)
         {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void mostrarReservasAlumno()
+    {
+        //le pedimos al usuario el id del alumno para ver sus reservas
+        int id = 0;
+        try
+        {
+            System.out.print("Ingresa el id del alumno para ver sus reservas: ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un número.");
+            scanner.nextLine();
+            return;
+        }
+
+        //mostramos las reservas del alumno
+        try
+        {
+            List<Reserva> reservas = escuela.buscarReservasPorAlumnoId(id);//este metodo lanza la excepcion de idNoEncontrado
+
+            if (reservas.isEmpty())
+            {
+                System.out.println("El alumno con ID " + id + " existe, pero no tiene reservas activas.");
+            }
+            else
+            {
+                System.out.println("Mostrando " + reservas.size() + " reserva(s) del alumno ID " + id + ":");
+                for (Reserva r : reservas)
+                {
+                    System.out.println(r.mostrarReservaMejorada());
+                }
+            }
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("❌ Error: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
         }
     }
 }

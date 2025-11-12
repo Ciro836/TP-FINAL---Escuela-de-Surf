@@ -5,6 +5,8 @@ import Enumeradores.MetodoPago;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y lógica de negocio
@@ -103,6 +105,15 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoInstructores().agregar(instructor);
     }
 
+    public void registrarNuevaClase(ClaseDeSurf clase)
+    {
+        if (clase == null)
+        {
+            throw new IllegalArgumentException("La clase no puede ser nula");
+        }
+        getRepoClases().agregar(clase);
+    }
+
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
     {
         Alumno a = getRepoAlumnos().buscarPorId(id);
@@ -113,6 +124,35 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         }
 
         return a;
+    }
+
+    public Instructor buscarInstructorPorId(int id) throws IdNoEncontradoException
+    {
+        Instructor i = getRepoInstructores().buscarPorId(id);
+
+        if (i == null)
+        {
+            throw new IdNoEncontradoException("No se ha encontrado ningun alumno con el id ingresado.");
+        }
+
+        return i;
+    }
+
+    public List<Reserva> buscarReservasPorAlumnoId(int idAlumno) throws IdNoEncontradoException
+    {
+        Alumno alumno = buscarAlumnoPorId(idAlumno);
+
+        List<Reserva> reservasDelAlumno = new ArrayList<>();
+
+        for (Reserva reserva : getRepoReservas().getTodos())
+        {
+            if (reserva.getIdAlumno() == alumno.getIdAlumno()) //
+            {
+                reservasDelAlumno.add(reserva);
+            }
+        }
+        
+        return reservasDelAlumno;
     }
 
     public void pagar(Pago pago, MetodoPago metodo)
