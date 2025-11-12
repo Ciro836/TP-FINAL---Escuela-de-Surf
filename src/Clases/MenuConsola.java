@@ -2,6 +2,7 @@ package Clases;
 
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
+import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
 import java.util.InputMismatchException;
@@ -53,7 +54,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 {
                     case 1 -> agregarAlumno();
                     case 2 -> agregarInstructor();
-                    //case 3 -> agregarClaseDeSurf();
+                    case 3 -> agregarClaseDeSurf();
                     //case 4 -> agregarReserva();
                     //case 5 -> agregarCliente();
                     case 6 -> agregarEquipo();
@@ -306,6 +307,80 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             try
             {
                 System.out.print("Desea seguir cargando instructores? (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                if (entrada == 's' || entrada == 'n')
+                {
+                    seguir = entrada;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("Error: debes ingresar alguna de estas letras: (s/n).");
+                }
+                scanner.nextLine();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("\nError: debes ingresar(s/n).");
+                scanner.nextLine();
+            }
+
+        } while (seguir == 's');
+    }
+
+    public void agregarClaseDeSurf()
+    {
+        char seguir = 's';
+        do
+        {
+            try
+            {
+                System.out.println("CARGA DE DATOS DE CLASES DE SURF\n");
+
+                System.out.print("Ingrese el id del instructor que dictará la clase: ");
+                int idInstructor = scanner.nextInt();
+                scanner.nextLine();
+                Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
+
+                System.out.println("Ingrese el tipo de clase: ");
+                System.out.println("1. Clase grupal");
+                System.out.println("2. Clase particular");
+                int respuesta = scanner.nextInt();
+                scanner.nextLine();
+
+                TipoClase tipoClase = null;
+                switch (respuesta)
+                {
+                    case 1 -> tipoClase = TipoClase.GRUPAL;
+                    case 2 -> tipoClase = TipoClase.PARTICULAR;
+                }
+
+
+                System.out.print("Ingrese los años de experiencia del instructor: ");
+                int aniosExp = scanner.nextInt();
+                scanner.nextLine();
+
+                ClaseDeSurf clase = new ClaseDeSurf(instructor, tipoClase, );
+                escuela.registrarNuevaClase(clase);
+                System.out.println("Clase agregada correctamente.");
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+                scanner.nextLine();
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error de datos: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            }
+
+            //Preguntamos si se desea seguir cargando
+            try
+            {
+                System.out.print("Desea seguir cargando clases? (s/n): ");
                 char entrada = scanner.next().toLowerCase().charAt(0);
                 if (entrada == 's' || entrada == 'n')
                 {
