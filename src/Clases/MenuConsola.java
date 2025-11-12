@@ -88,6 +88,34 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         } while (opcion != 999);
     }
 
+    private boolean deseaContinuar(String mensaje)
+    {
+        while (true) // Bucle infinito hasta que se ingrese 's' o 'n'
+        {
+            try
+            {
+                System.out.print(mensaje + " (s/n): ");
+                char entrada = scanner.next().toLowerCase().charAt(0);
+                scanner.nextLine();
+
+                if (entrada == 's')
+                {
+                    return true;
+                }
+                if (entrada == 'n')
+                {
+                    return false;
+                }
+
+                throw new IllegalArgumentException("Error: debes ingresar 's' o 'n'.");
+            }
+            catch (Exception e)
+            {
+                System.out.println("❌ Error inesperado: " + e.getMessage());
+            }
+        }
+    }
+
     public void mostrarTodosLosRepositorios()
     {
         System.out.println("--------------------------------------------------\n");
@@ -111,7 +139,6 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void agregarAlumno()
     {
-        char seguir = 's';
         do
         {
             try
@@ -168,33 +195,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando alumnos? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException();
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException | IllegalArgumentException e)
-            {
-                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
-                scanner.nextLine();
-            }
-
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando alumnos?"));
     }
 
     public void agregarEquipo()
     {
-        char seguir = 's';
         do
         {
             try
@@ -238,32 +243,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando equipos? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException();
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException | IllegalArgumentException e)
-            {
-                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
-                scanner.nextLine();
-            }
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando equipos?"));
     }
 
     public void agregarInstructor()
     {
-        char seguir = 's';
         do
         {
             try
@@ -308,33 +292,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando instructores? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException();
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException | IllegalArgumentException e)
-            {
-                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
-                scanner.nextLine();
-            }
-
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando instructores?"));
     }
 
     public void agregarClaseDeSurf()
     {
-        char seguir = 's';
         do
         {
             try
@@ -409,28 +371,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("⚠️ Error inesperado: " + e.getMessage());
             }
 
-            //Preguntamos si se desea seguir cargando
-            try
-            {
-                System.out.print("Desea seguir cargando clases? (s/n): ");
-                char entrada = scanner.next().toLowerCase().charAt(0);
-                if (entrada == 's' || entrada == 'n')
-                {
-                    seguir = entrada;
-                }
-                else
-                {
-                    throw new IllegalArgumentException();
-                }
-                scanner.nextLine();
-            }
-            catch (InputMismatchException | IllegalArgumentException e)
-            {
-                System.out.println("Error: debes ingresar alguna de estas letras: (s/n).");
-                scanner.nextLine();
-            }
-
-        } while (seguir == 's');
+        } while (deseaContinuar("Desea seguir cargando clases de surf?"));
     }
 
     public void buscarAlumnoPorId()
