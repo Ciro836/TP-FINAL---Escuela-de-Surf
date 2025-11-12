@@ -8,7 +8,7 @@ import java.util.Map;
 public class Repositorio<T>
 {
     private final Map<Integer, T> datos;
-    private int proximoId = 0; // genera IDs automáticos
+    private int proximoId = 1; // genera IDs automáticos
 
     /// CONSTRUCTOR
 
