@@ -329,25 +329,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     public void buscarAlumnoPorId()
     {
         //Pedimos que el usuario ingrese el id
-        int opcion = 0;
         int id = 0;
         try
         {
-            System.out.print("Ingresa el repositorio en el que queres buscar: ");
-            System.out.println("1. Alumnos");
-            System.out.println("2. Instructores");
-            System.out.println("3. Clientes");
-            System.out.println("4. Pagos");
-            System.out.println("5. Reservas");
-            System.out.println("6. Alquileres");
-            System.out.println("7. Equipos");
-            System.out.println("8. Clases de surf");
-
-            System.out.println("Ingresa una de las opciones: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            System.out.print("Ingresa el id a buscar: ");
+            System.out.print("Ingresa el id de el alumno a buscar: ");
             id = scanner.nextInt();
             scanner.nextLine();
         }
@@ -362,35 +347,15 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         }
 
         //Buscamos el alumno con ese id
-        switch (opcion)
+        try
         {
-            case 1 ->
-            {
-                try
-                {
-                    Alumno alumnito = escuela.buscarAlumnoPorId(id);
-                    System.out.println("✅ Alumno encontrado!");
-                    System.out.println(alumnito);
-                }
-                catch (IdNoEncontradoException e)
-                {
-                    System.out.println("Error: " + e.getMessage());
-                }
-            }
-            case 2 ->
-            {
-                try
-                {
-                    Instructor instructor = escuela.buscarInstructorPorId(id);
-                    System.out.println("✅ Instructor encontrado!");
-                    System.out.println(instructor);
-                }
-                catch (IdNoEncontradoException e)
-                {
-                    System.out.println("Error: " + e.getMessage());
-                }
-            }
+            Alumno alumnito = escuela.buscarAlumnoPorId(id);
+            System.out.println("✅ Alumno encontrado!");
+            System.out.println(alumnito);
         }
-
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
