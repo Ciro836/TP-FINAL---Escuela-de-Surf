@@ -1,65 +1,6 @@
-import Clases.*;
-import Enumeradores.MetodoPago;
-import Enumeradores.NivelDeSurf;
-import Enumeradores.NombreEquipo;
-import Enumeradores.TipoClase;
-import ExcepcionesPersonalizadas.CupoInvalidoException;
-import ExcepcionesPersonalizadas.CupoLlenoException;
-import ExcepcionesPersonalizadas.FechaInvalidaException;
-import ExcepcionesPersonalizadas.PagoPendienteException;
-import Utiles.JsonUtiles;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import Clases.EscuelaDeSurf;
 
-static EscuelaDeSurf escuela = null;
-static Instructor instructor = null;
-static Cliente cliente = null;
-static Alumno alumno = null;
-static ClaseDeSurf clase = null;
-static Alquiler alquiler = null;
-
-static Scanner scanner = new Scanner(System.in);
-
-public static void crearEscuelaDeSurf()
-{
-    if (escuela == null)
-    {
-        escuela = new EscuelaDeSurf();
-        System.out.println("Escuela de Surf creada correctamente...");
-    }
-    else
-    {
-        System.out.println("️⚠️: La escuela ya ha sido creada anteriormente.");
-    }
-}
-
-public static void agregarAlumno()
-{
-    if (escuela == null)
-    {
-        System.out.println("⚠️: Primero debe crear la escuela. Elija la (opción 1).");
-    }
-    else
-    {
-        try
-        {
-            //Hardcodeado
-            alumno = new Alumno(47559633, "Ciro", "Marzoni", 18, 22384625, NivelDeSurf.PRINCIPIANTE, 0);
-            String resultado = escuela.getRepoAlumnos().agregar(1, alumno) ? "Alumno creado y agregado al repositorio de alumnos correctamente." : "No se pudo agregar al alumno.";
-            System.out.println(resultado);
-        }
-        catch (IllegalArgumentException e)
-        {
-            System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
-        }
-    }
-}
-
+/*
 public static void agregarInstructor()
 {
     if (escuela == null)
@@ -371,69 +312,12 @@ public static void chequearMorosidad()
     }
 }
 
+*/
+
 void main()
 {
-    int opcion = 0;
+    EscuelaDeSurf escuela = new EscuelaDeSurf();
 
-    do
-    {
-        System.out.println("\nMENU ESCUELA DE SURF\n");
-        System.out.println("1. Crear la Escuela de Surf.");
-        System.out.println("2. Agregar Alumno.");
-        System.out.println("3. Agregar Instructor.");
-        System.out.println("4. Agregar Cliente.");
-        System.out.println("5. Agregar Clase de Surf.");
-        System.out.println("6. Agregar alquiler con varios equipos para un cliente.");
-        System.out.println("7. Buscar alumno por su id.");
-        System.out.println("8. Método: Reservar clase de Alumno.");
-        System.out.println("9. Mostrar reservas de un alumno.");
-        System.out.println("10. Mostrar alumnos inscriptos en una clase.");
-        System.out.println("11. Cancelar una reserva.");
-        System.out.println("12. Grabar repositorios a json.");
-        System.out.println("13. Leer el archivo json de repositorios.");
-        System.out.println("14. Mostrar todos los repositorios.");
-        System.out.println("15. Chequear morosidad de alumno y cliente.");
-
-        System.out.println("999. Salir.");
-
-        try
-        {
-            System.out.print("Ingrese una de las opciones: ");
-            opcion = scanner.nextInt();
-
-            switch (opcion)
-            {
-                case 1 -> crearEscuelaDeSurf();
-                case 2 -> agregarAlumno();
-                case 3 -> agregarInstructor();
-                case 4 -> agregarCliente();
-                case 5 -> crearClaseDeSurf();
-                case 6 -> agregarAlquiler();
-                case 7 -> buscarAlumnoPorId();
-                case 8 -> alumnoReservarClase();
-                case 9 -> mostrarReservasAlumno();
-                case 10 -> mostrarAlumnosInscriptosEnClase();
-                case 11 -> cancelarReserva();
-                case 12 -> grabarRepositoriosAjson();
-                case 13 -> leerYmostrarJsonDeRepositorios();
-                case 14 -> mostrarRepositorios();
-                case 15 -> chequearMorosidad();
-                case 999 -> System.out.println("\nSaliendo del programa...");
-                default -> System.out.println("\nIngrese una opción valida...");
-            }
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("\nError: debes ingresar un número.");
-        }
-        catch (Exception e)
-        {
-            System.out.println("\nError inesperado: " + e.getMessage());
-        }
-        finally
-        {
-            scanner.nextLine();
-        }
-    } while (opcion != 999);
+    escuela.ejecutarMenu();
 }
 

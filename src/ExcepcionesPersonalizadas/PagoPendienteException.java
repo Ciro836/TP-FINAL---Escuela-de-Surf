@@ -1,6 +1,6 @@
 package ExcepcionesPersonalizadas;
 
-public class PagoPendienteException extends RuntimeException
+public class PagoPendienteException extends Exception
 {
     //CONSTRUCORES
 

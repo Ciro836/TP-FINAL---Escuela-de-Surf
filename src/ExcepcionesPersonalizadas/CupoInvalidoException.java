@@ -1,6 +1,6 @@
 package ExcepcionesPersonalizadas;
 
-public class CupoInvalidoException extends RuntimeException
+public class CupoInvalidoException extends Exception
 {
     public CupoInvalidoException()
     {

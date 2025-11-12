@@ -2,9 +2,7 @@ package Clases;
 
 import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.CupoInvalidoException;
-import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
-import ExcepcionesPersonalizadas.PagoPendienteException;
 import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +37,7 @@ public class ClaseDeSurf implements InterfazJson
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax)
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
     {
         if (instructor == null)
         {
@@ -109,7 +107,7 @@ public class ClaseDeSurf implements InterfazJson
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora)
+    public void setFechaHora(LocalDateTime fechaHora) throws FechaInvalidaException
     {
         if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
         {
@@ -128,7 +126,7 @@ public class ClaseDeSurf implements InterfazJson
         return cupoMax;
     }
 
-    public void setCupoMax(int cupoMax)
+    public void setCupoMax(int cupoMax) throws CupoInvalidoException
     {
         if (cupoMax <= 0)
         {
@@ -151,6 +149,7 @@ public class ClaseDeSurf implements InterfazJson
 
     public boolean inscribirAlumno(Alumno alumno)
     {
+        /*
         if (alumno == null)
         {
             throw new IllegalArgumentException("El alumno no puede ser nulo.");
@@ -169,6 +168,9 @@ public class ClaseDeSurf implements InterfazJson
         }
 
         alumnosInscriptos.add(alumno);
+
+
+         */
         return true;
     }
 

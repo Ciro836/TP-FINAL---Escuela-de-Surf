@@ -6,28 +6,28 @@ import org.json.JSONObject;
 
 public abstract class Persona implements InterfazJson
 {
-    private int dni;
+    private String dni;
     private String nombre;
     private String apellido;
     private int edad;
-    private int numeroTel;
+    private String numeroTel;
 
     /// CONSTRUCTORES
 
     public Persona()
     {
-        this.dni = 0;
+        this.dni = "";
         this.nombre = "";
         this.apellido = "";
         this.edad = 0;
-        this.numeroTel = 0;
+        this.numeroTel = "";
     }
 
-    public Persona(int dni, String nombre, String apellido, int edad, int numeroTel)
+    public Persona(String dni, String nombre, String apellido, int edad, String numeroTel)
     {
-        if (dni <= 0)
+        if (!dni.matches("\\d{7,8}"))
         {
-            throw new IllegalArgumentException("⚠️: El DNI debe ser un número positivo.");
+            throw new IllegalArgumentException("⚠️: El DNI debe tener entre 7 y 8 dígitos numéricos.");
         }
         if (nombre == null || nombre.isEmpty())
         {
@@ -41,9 +41,9 @@ public abstract class Persona implements InterfazJson
         {
             throw new IllegalArgumentException("⚠️: La edad debe ser un número positivo.");
         }
-        if (numeroTel <= 0)
+        if (!numeroTel.matches("\\d{7,15}"))
         {
-            throw new IllegalArgumentException("⚠️: El telefono debe ser un número positivo.");
+            throw new IllegalArgumentException("⚠️: El teléfono debe contener solo números");
         }
 
         this.dni = dni;
@@ -55,16 +55,16 @@ public abstract class Persona implements InterfazJson
 
     /// GETTERS Y SETTERS
 
-    public int getDni()
+    public String getDni()
     {
         return dni;
     }
 
-    public void setDni(int dni)
+    public void setDni(String dni)
     {
-        if (dni <= 0)
+        if (!dni.matches("\\d{7,8}"))
         {
-            throw new IllegalArgumentException("⚠️: El DNI debe ser un número positivo.");
+            throw new IllegalArgumentException("⚠️: El DNI debe tener entre 7 y 8 dígitos numéricos.");
         }
         this.dni = dni;
     }
@@ -111,16 +111,16 @@ public abstract class Persona implements InterfazJson
         this.edad = edad;
     }
 
-    public int getNumeroTel()
+    public String getNumeroTel()
     {
         return numeroTel;
     }
 
-    public void setNumeroTel(int numeroTel)
+    public void setNumeroTel(String numeroTel)
     {
-        if (numeroTel <= 0)
+        if (!numeroTel.matches("\\d{7,15}"))
         {
-            throw new IllegalArgumentException("⚠️: El telefono debe ser un número positivo.");
+            throw new IllegalArgumentException("⚠️: El teléfono debe contener solo números");
         }
         this.numeroTel = numeroTel;
     }

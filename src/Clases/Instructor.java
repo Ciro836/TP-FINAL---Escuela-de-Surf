@@ -17,7 +17,7 @@ public class Instructor extends Persona
         this.aniosExperiencia = 0;
     }
 
-    public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia)
+    public Instructor(String dni, String nombre, String apellido, int edad, String numeroTel, int aniosExperiencia)
     {
         super(dni, nombre, apellido, edad, numeroTel);
 
