@@ -71,7 +71,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     //case 7 -> agregarAlquiler();
                     case 8 -> buscarAlumnoPorId();
                     case 9 -> mostrarReservasAlumno();
-                    //case 10 -> mostrarAlumnosInscriptosEnClase();
+                    case 10 -> mostrarAlumnosInscriptosEnClase();
                     //case 11 -> cancelarReserva();
                     case 12 -> pagarUnaReserva();
                     case 13 -> pagarUnAlquiler();
@@ -598,6 +598,35 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         catch (IdNoEncontradoException e)
         {
             System.out.println("❌ Error: " + e.getMessage());
+        }
+    }
+
+    public void mostrarAlumnosInscriptosEnClase()
+    {
+        System.out.println("MOSTRAR ALUMNOS INSCRIPTOS\n");
+
+        try
+        {
+            System.out.println("Ingrese el ID de la clase para mostrar sus alumnos: ");
+            int idClase = scanner.nextInt();
+            scanner.nextLine();
+
+            List<Alumno> arrAlumnos = escuela.mostrarAlumnosDeUnaClase(idClase);
+
+            System.out.println(arrAlumnos);
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("\nError: ingresa un valor correcto. " + e.getMessage());
+            scanner.nextLine();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error inesperado: " + e.getMessage());
         }
     }
 }

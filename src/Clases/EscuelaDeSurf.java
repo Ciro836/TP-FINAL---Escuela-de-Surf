@@ -229,4 +229,28 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         return false;
     }
+
+    public List<Alumno> mostrarAlumnosDeUnaClase(int idClase) throws IdNoEncontradoException
+    {
+        boolean encontrado = false;
+
+        List<Alumno> arrAlumnos = new ArrayList<>();
+
+        for (Reserva r : getRepoReservas().getTodos())
+        {
+            if (r.getClaseDeSurf().getIdClase() == idClase)
+            {
+                encontrado = true;
+                Alumno alumno = r.getAlumno();
+                arrAlumnos.add(alumno);
+            }
+        }
+
+        if (!encontrado)
+        {
+            throw new IdNoEncontradoException("No fue encontrada ninguna clase con ese ID.");
+        }
+
+        return arrAlumnos;
+    }
 }
