@@ -151,14 +151,16 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
                 reservasDelAlumno.add(reserva);
             }
         }
-        
+
         return reservasDelAlumno;
     }
 
-    public void pagar(Pago pago, MetodoPago metodo)
+    private void pagar(Pago pago, MetodoPago metodo)
     {
         pago.setMetodoPago(metodo);
         pago.setFechaPago(LocalDate.now());
         pago.setEstadoPago(EstadoPago.REALIZADO);
     }
+
+    
 }

@@ -22,17 +22,12 @@ public class Reserva implements InterfazJson
         this.pago = new Pago(); //se inicializa vacío
     }
 
-    public Reserva(int idAlumno, int idClaseDeSurf, Pago pago)
+    public Reserva(int idAlumno, int idClaseDeSurf)
     {
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
-        }
-
         this.idReserva = ++contador;
         this.idAlumno = idAlumno;
         this.idClaseDeSurf = idClaseDeSurf;
-        this.pago = pago;
+        this.pago = new Pago();
     }
 
     /// GETTERS Y SETTERS
@@ -102,6 +97,11 @@ public class Reserva implements InterfazJson
                 "\nFecha del pago: " + fechaPago +
                 "\n─────────────────────────────\n";
 
+    }
+
+    public void calcularMontoTotal()
+    {
+        
     }
 
     @Override
