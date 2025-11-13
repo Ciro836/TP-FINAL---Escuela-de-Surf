@@ -47,15 +47,6 @@ public static void leerYmostrarJsonDeRepositorios()
     JSONArray repoInstructores = objetoJson.getJSONArray("repoInstructores");
     System.out.println("REPOSITORIO INSTRUCTORES: " + repoInstructores);
 }
-
-public static void chequearMorosidad()
-{
-        String resultadoAlumno = alumno.esMoroso() ? "El Alumno es un deudor!!!" : "El alumno tiene sus pagos en tiempo y forma.";
-        System.out.println(resultadoAlumno);
-
-        String resultadoCliente = cliente.esMoroso() ? "El Cliente es un deudor!!!" : "El cliente tiene sus pagos en tiempo y forma.";
-        System.out.println(resultadoCliente);
-}
 */
 
 void main()
