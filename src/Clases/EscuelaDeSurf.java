@@ -3,6 +3,7 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
+import Utiles.JsonUtiles;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -250,5 +251,20 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         }
 
         return arrAlumnos;
+    }
+
+    public void grabarRepositoriosAjson()
+    {
+        JsonUtiles.grabarRepositorioEnJson(repoAlumnos,
+                repoInstructores,
+                repoClases,
+                repoClientes,
+                repoReservas,
+                repoEquipos,
+                repoAlquileres,
+                repoPagos,
+                "escuelaDeSurf.json");
+
+        System.out.println("Repositorios grabados en escuelaDeSurf.json");
     }
 }
