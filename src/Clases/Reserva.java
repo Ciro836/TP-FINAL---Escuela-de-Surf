@@ -22,7 +22,7 @@ public class Reserva implements InterfazJson
         this.pago = new Pago(); //se inicializa vacío
     }
 
-    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
+    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf)
     {
         if (alumno == null)
         {
@@ -32,15 +32,12 @@ public class Reserva implements InterfazJson
         {
             throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
         }
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
-        }
 
         this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
-        this.pago = pago;
+        this.pago = new Pago();
+        calcularMontoTotal();
     }
 
     /// GETTERS Y SETTERS
