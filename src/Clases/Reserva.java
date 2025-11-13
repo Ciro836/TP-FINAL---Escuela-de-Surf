@@ -8,8 +8,8 @@ public class Reserva implements InterfazJson
 {
     private static int contador = 0;
     private final int idReserva;
-    private int idAlumno;
-    private int idClaseDeSurf;
+    private Alumno alumno;
+    private ClaseDeSurf claseDeSurf;
     private Pago pago;
 
     /// CONSTRUCTORES
@@ -17,17 +17,39 @@ public class Reserva implements InterfazJson
     public Reserva()
     {
         this.idReserva = ++contador;
-        this.idAlumno = -1;
-        this.idClaseDeSurf = -1;
+        this.alumno = null; //todavía no se le asigno un alumno, con esto podemos detectar si la reserva tiene o no un alumno o clase ya asignado
+        this.claseDeSurf = null; //todavía no se le asigno una clase
         this.pago = new Pago(); //se inicializa vacío
     }
 
+<<<<<<< HEAD
     public Reserva(int idAlumno, int idClaseDeSurf)
     {
         this.idReserva = ++contador;
         this.idAlumno = idAlumno;
         this.idClaseDeSurf = idClaseDeSurf;
         this.pago = new Pago();
+=======
+    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
+    {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
+        if (pago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
+        }
+
+        this.idReserva = ++contador;
+        this.alumno = alumno;
+        this.claseDeSurf = claseDeSurf;
+        this.pago = pago;
+>>>>>>> parent of f3fd2cc (Cambio Reserva para que guarde los id de alumno y de la clase de surf)
     }
 
     /// GETTERS Y SETTERS
@@ -37,24 +59,32 @@ public class Reserva implements InterfazJson
         return idReserva;
     }
 
-    public int getIdAlumno()
+    public Alumno getAlumno()
     {
-        return idAlumno;
+        return alumno;
     }
 
-    public void setIdAlumno(int idAlumno)
+    public void setAlumno(Alumno alumno)
     {
-        this.idAlumno = idAlumno;
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
+        this.alumno = alumno;
     }
 
-    public int getIdClaseDeSurf()
+    public ClaseDeSurf getClaseDeSurf()
     {
-        return idClaseDeSurf;
+        return claseDeSurf;
     }
 
-    public void setIdClaseDeSurf(int idClaseDeSurf)
+    public void setClaseDeSurf(ClaseDeSurf claseDeSurf)
     {
-        this.idClaseDeSurf = idClaseDeSurf;
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
+        this.claseDeSurf = claseDeSurf;
     }
 
     public Pago getPago()
@@ -76,19 +106,20 @@ public class Reserva implements InterfazJson
     //retorna si una reserva esta completa
     public boolean esValida()
     {
-        //return alumno != null && claseDeSurf != null && pago != null;
-        return true;
+        return alumno != null && claseDeSurf != null && pago != null;
     }
 
     public String mostrarReservaMejorada()
     {
+        String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
+        String claseInfo = "Clase ID: " + claseDeSurf.getIdClase();
         String estadopago = pago.getEstadoPago().toString();
         String fechaLimite = pago.getFechaLimite().toString();
         String fechaPago = (pago.getFechaPago() == null) ? "No pagó aún" : pago.getFechaPago().toString();
 
         return "\n──────── RESERVA #" + idReserva + " ────────" +
-                "\nAlumno: " + idAlumno +
-                "\nClase: " + idClaseDeSurf +
+                "\nAlumno: " + alumnoNombre +
+                "\n" + claseInfo +
                 "\nEstado del pago: " + estadopago +
                 "\n--------------------------------" +
                 "\n\nPAGO" +
@@ -109,8 +140,8 @@ public class Reserva implements InterfazJson
     {
         return "Reserva [" +
                 " IDReserva=" + idReserva +
-                ", Alumno=" + idAlumno +
-                ", Clase=" + idClaseDeSurf +
+                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
+                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
                 ", Pago=" + pago +
                 ", Estado=" + pago.getEstadoPago() +
                 ']';
@@ -124,9 +155,10 @@ public class Reserva implements InterfazJson
         try
         {
             jsonObj.put("idReserva", idReserva);
-            jsonObj.put("idAlumno", idAlumno);
-            jsonObj.put("idClase", idClaseDeSurf);
+            jsonObj.put("idAlumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
+            jsonObj.put("idClase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
             jsonObj.put("idPago", pago != null ? pago.getIdPago() : JSONObject.NULL);
+
         }
         catch (JSONException e)
         {
