@@ -195,4 +195,38 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         pagar(pago, metodo);
     }
+
+    public boolean chequearMorosidadAlumno(int idAlumno) throws IdNoEncontradoException
+    {
+        List<Reserva> reservas = buscarReservasPorAlumnoId(idAlumno);
+
+        for (Reserva r : reservas)
+        {
+            if (r.getPago().esMoroso())
+            {
+                return true;
+            }
+        }
+
+        return false; // Si termina el bucle, significa que no encontró pagos morosos
+    }
+
+    public boolean chequearMorosidadCliente(int idCliente) throws IdNoEncontradoException
+    {
+        Cliente cliente = getRepoClientes().buscarPorId(idCliente);
+        if (cliente == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ningún cliente con el ID: " + idCliente);
+        }
+
+        for (Alquiler a : cliente.getAlquileres())
+        {
+            if (a.getPago().esMoroso())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -46,10 +46,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("11. Cancelar una reserva.");
             System.out.println("12. Pagar una reserva de clase.");
             System.out.println("13. Pagar un alquiler de equipo.");
-            System.out.println("14. Chequear morosidad de alumno y cliente.");
-            System.out.println("15. Grabar repositorios a json.");
-            System.out.println("16. Leer el archivo json de repositorios.");
-            System.out.println("17. Mostrar todos los repositorios.");
+            System.out.println("14. Chequear morosidad de alumno.");
+            System.out.println("15. Chequear morosidad de cliente.");
+            System.out.println("16. Grabar repositorios a json.");
+            System.out.println("17. Leer el archivo json de repositorios.");
+            System.out.println("18. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -74,10 +75,11 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     //case 11 -> cancelarReserva();
                     case 12 -> pagarUnaReserva();
                     case 13 -> pagarUnAlquiler();
-                    //case 14 -> chequearMorosidad();
-                    //case 15 -> leerYmostrarJsonDeRepositorios();
-                    //case 16 ->grabarRepositoriosAjson();
-                    case 17 -> mostrarTodosLosRepositorios();
+                    case 14 -> chequearMorosidadAlumno();
+                    case 15 -> chequearMorosidadCliente();
+                    //case 16 -> leerYmostrarJsonDeRepositorios();
+                    //case 17 ->grabarRepositoriosAjson();
+                    case 18 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -534,6 +536,68 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         catch (Exception e)
         {
             System.out.println("⚠️ Error inesperado: " + e.getMessage());
+        }
+    }
+
+    public void chequearMorosidadAlumno()
+    {
+        System.out.println("CHEQUEO DE MOROSIDAD\n");
+
+        try
+        {
+            System.out.print("Ingrese el ID del ALUMNO a chequear: ");
+            int idAlumno = scanner.nextInt();
+            scanner.nextLine();
+
+            boolean esMoroso = escuela.chequearMorosidadAlumno(idAlumno);
+            if (esMoroso)
+            {
+                System.out.println("El alumno ID " + idAlumno + " TIENE pagos pendientes vencidos.");
+            }
+            else
+            {
+                System.out.println("El alumno ID " + idAlumno + " está al día con sus pagos.");
+            }
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debe ingresar un número.");
+            scanner.nextLine();
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("❌ Error: " + e.getMessage());
+        }
+    }
+
+    public void chequearMorosidadCliente()
+    {
+        System.out.println("CHEQUEO DE MOROSIDAD\n");
+
+        try
+        {
+            System.out.print("Ingrese el ID del CLIENTE a chequear: ");
+            int idCliente = scanner.nextInt();
+            scanner.nextLine();
+
+            boolean esMoroso = escuela.chequearMorosidadCliente(idCliente);
+            if (esMoroso)
+            {
+                System.out.println("El cliente ID " + idCliente + " TIENE pagos pendientes vencidos.");
+            }
+            else
+            {
+                System.out.println("El cliente ID " + idCliente + " está al día con sus pagos.");
+            }
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debe ingresar un número.");
+            scanner.nextLine();
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
 }
