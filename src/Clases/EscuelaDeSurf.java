@@ -232,7 +232,11 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
     public List<Alumno> mostrarAlumnosDeUnaClase(int idClase) throws IdNoEncontradoException
     {
-        boolean encontrado = false;
+        ClaseDeSurf clase = getRepoClases().buscarPorId(idClase);
+        if (clase == null)
+        {
+            throw new IdNoEncontradoException("No fue encontrada ninguna clase con ese ID: " + idClase);
+        }
 
         List<Alumno> arrAlumnos = new ArrayList<>();
 
@@ -240,15 +244,9 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             if (r.getClaseDeSurf().getIdClase() == idClase)
             {
-                encontrado = true;
                 Alumno alumno = r.getAlumno();
                 arrAlumnos.add(alumno);
             }
-        }
-
-        if (!encontrado)
-        {
-            throw new IdNoEncontradoException("No fue encontrada ninguna clase con ese ID.");
         }
 
         return arrAlumnos;
