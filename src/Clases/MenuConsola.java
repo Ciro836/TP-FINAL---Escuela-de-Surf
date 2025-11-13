@@ -613,7 +613,17 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             List<Alumno> arrAlumnos = escuela.mostrarAlumnosDeUnaClase(idClase);
 
-            System.out.println(arrAlumnos);
+            if (arrAlumnos.isEmpty())
+            {
+                System.out.println("La clase ID " + idClase + " existe, pero no tiene alumnos inscriptos.");
+            }
+            else
+            {
+                for (Alumno alumno : arrAlumnos)
+                {
+                    System.out.println("  - " + alumno);
+                }
+            }
         }
         catch (IdNoEncontradoException e)
         {
