@@ -111,16 +111,21 @@ public class Pago implements InterfazJson
 
     /// METODOS
 
+    public boolean esMoroso()
+    {
+        return getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(getFechaLimite());
+    }
+
     @Override
     public String toString()
     {
         String estadoActual;
 
-        if (estadoPago == EstadoPago.REALIZADO)
+        if (!esMoroso())
         {
             estadoActual = "Pagado";
         }
-        else if (LocalDate.now().isAfter(fechaLimite)) // Si está PENDIENTE y venció la fecha
+        else if (esMoroso())
         {
             estadoActual = "Pendiente (Vencido)";
         }

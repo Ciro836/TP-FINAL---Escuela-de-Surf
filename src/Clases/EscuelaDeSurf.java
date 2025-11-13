@@ -3,6 +3,7 @@ package Clases;
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
+import Utiles.JsonUtiles;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -146,19 +147,124 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         for (Reserva reserva : getRepoReservas().getTodos())
         {
-            if (reserva.getIdAlumno() == alumno.getIdAlumno()) //
+            if (reserva.getAlumno().getIdAlumno() == alumno.getIdAlumno())
             {
                 reservasDelAlumno.add(reserva);
             }
         }
-        
+
         return reservasDelAlumno;
     }
 
-    public void pagar(Pago pago, MetodoPago metodo)
+    private void pagar(Pago pago, MetodoPago metodo)
     {
         pago.setMetodoPago(metodo);
         pago.setFechaPago(LocalDate.now());
         pago.setEstadoPago(EstadoPago.REALIZADO);
+    }
+
+    public void pagarReserva(int idReserva, MetodoPago metodo) throws IdNoEncontradoException, IllegalStateException
+    {
+        Reserva reserva = getRepoReservas().buscarPorId(idReserva);
+        if (reserva == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ninguna reserva con el ID: " + idReserva);
+        }
+
+        Pago pago = reserva.getPago();
+        if (pago.getEstadoPago() == EstadoPago.REALIZADO)
+        {
+            throw new IllegalStateException("Esta reserva ya se encuentra pagada.");
+        }
+
+        pagar(pago, metodo);
+    }
+
+    public void pagarAlquiler(int idAlquiler, MetodoPago metodo) throws IdNoEncontradoException, IllegalStateException
+    {
+        Alquiler alquiler = getRepoAlquileres().buscarPorId(idAlquiler);
+        if (alquiler == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ningún alquiler con el ID: " + idAlquiler);
+        }
+
+        Pago pago = alquiler.getPago();
+        if (pago.getEstadoPago() == EstadoPago.REALIZADO)
+        {
+            throw new IllegalStateException("Este alquiler ya se encuentra pagado.");
+        }
+
+        pagar(pago, metodo);
+    }
+
+    public boolean chequearMorosidadAlumno(int idAlumno) throws IdNoEncontradoException
+    {
+        List<Reserva> reservas = buscarReservasPorAlumnoId(idAlumno);
+
+        for (Reserva r : reservas)
+        {
+            if (r.getPago().esMoroso())
+            {
+                return true;
+            }
+        }
+
+        return false; // Si termina el bucle, significa que no encontró pagos morosos
+    }
+
+    public boolean chequearMorosidadCliente(int idCliente) throws IdNoEncontradoException
+    {
+        Cliente cliente = getRepoClientes().buscarPorId(idCliente);
+        if (cliente == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ningún cliente con el ID: " + idCliente);
+        }
+
+        for (Alquiler a : cliente.getAlquileres())
+        {
+            if (a.getPago().esMoroso())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<Alumno> mostrarAlumnosDeUnaClase(int idClase) throws IdNoEncontradoException
+    {
+        ClaseDeSurf clase = getRepoClases().buscarPorId(idClase);
+        if (clase == null)
+        {
+            throw new IdNoEncontradoException("No fue encontrada ninguna clase con ese ID: " + idClase);
+        }
+
+        List<Alumno> arrAlumnos = new ArrayList<>();
+
+        for (Reserva r : getRepoReservas().getTodos())
+        {
+            if (r.getClaseDeSurf().getIdClase() == idClase)
+            {
+                Alumno alumno = r.getAlumno();
+                arrAlumnos.add(alumno);
+            }
+        }
+
+        return arrAlumnos;
+    }
+
+    public void grabarRepositoriosAjson()
+    {
+        JsonUtiles.grabarRepositorioEnJson(repoAlumnos,
+                repoInstructores,
+                repoClases,
+                repoClientes,
+                repoReservas,
+                repoEquipos,
+                repoAlquileres,
+                repoPagos,
+                "escuelaDeSurf.json");
+
+        System.out.println("Repositorios grabados en escuelaDeSurf.json");
     }
 }
