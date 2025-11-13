@@ -49,7 +49,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("14. Chequear morosidad de alumno.");
             System.out.println("15. Chequear morosidad de cliente.");
             System.out.println("16. Grabar repositorios a json.");
-            System.out.println("17. Leer el archivo json de repositorios.");
+            System.out.println("17. Leer e importar el archivo json de repositorios.");
             System.out.println("18. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
@@ -77,8 +77,8 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 13 -> pagarUnAlquiler();
                     case 14 -> chequearMorosidadAlumno();
                     case 15 -> chequearMorosidadCliente();
-                    //case 16 -> leerYmostrarJsonDeRepositorios();
-                    //case 17 ->grabarRepositoriosAjson();
+                    case 16 -> grabarRepositoriosAjson();
+                    //case 17 -> leerJsonDeRepositorios();
                     case 18 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
@@ -638,5 +638,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         {
             System.out.println("Error inesperado: " + e.getMessage());
         }
+    }
+
+    public void grabarRepositoriosAjson()
+    {
+        escuela.grabarRepositoriosAjson();
     }
 }
