@@ -1,5 +1,6 @@
 package Clases;
 
+import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
@@ -43,10 +44,12 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("9. Mostrar reservas de un alumno.");
             System.out.println("10. Mostrar alumnos inscriptos en una clase.");
             System.out.println("11. Cancelar una reserva.");
-            System.out.println("12. Grabar repositorios a json.");
-            System.out.println("13. Leer el archivo json de repositorios.");
-            System.out.println("14. Mostrar todos los repositorios.");
-            System.out.println("15. Chequear morosidad de alumno y cliente.");
+            System.out.println("12. Pagar una reserva de clase.");
+            System.out.println("13. Pagar un alquiler de equipo.");
+            System.out.println("14. Chequear morosidad de alumno y cliente.");
+            System.out.println("15. Grabar repositorios a json.");
+            System.out.println("16. Leer el archivo json de repositorios.");
+            System.out.println("17. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -69,10 +72,12 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 9 -> mostrarReservasAlumno();
                     //case 10 -> mostrarAlumnosInscriptosEnClase();
                     //case 11 -> cancelarReserva();
-                    //case 12 -> grabarRepositoriosAjson();
-                    //case 13 -> leerYmostrarJsonDeRepositorios();
-                    case 14 -> mostrarTodosLosRepositorios();
-                    //case 15 -> chequearMorosidad();
+                    case 12 -> pagarUnaReserva();
+                    case 13 -> pagarUnAlquiler();
+                    //case 14 -> chequearMorosidad();
+                    //case 15 -> leerYmostrarJsonDeRepositorios();
+                    //case 16 ->grabarRepositoriosAjson();
+                    case 17 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -446,6 +451,85 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         catch (IdNoEncontradoException e)
         {
             System.out.println("❌ Error: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+        }
+    }
+
+    private MetodoPago seleccionarMetodoPago() throws IllegalArgumentException, InputMismatchException
+    {
+        System.out.println("Seleccione el método de pago:");
+        System.out.println("1. " + MetodoPago.EFECTIVO);
+        System.out.println("2. " + MetodoPago.TARJETA);
+        System.out.println("3. " + MetodoPago.TRANSFERENCIA);
+        System.out.print("Ingrese una opción: ");
+        int opcion = scanner.nextInt();
+        scanner.nextLine();
+
+        return switch (opcion)
+        {
+            case 1 -> MetodoPago.EFECTIVO;
+            case 2 -> MetodoPago.TARJETA;
+            case 3 -> MetodoPago.TRANSFERENCIA;
+            default -> throw new IllegalArgumentException("Opción de pago inválida.");
+        };
+    }
+
+    public void pagarUnaReserva()
+    {
+        try
+        {
+            System.out.println("PAGO DE RESERVA DE CLASE\n");
+            System.out.print("Ingrese el ID de la reserva que desea pagar: ");
+            int idReserva = scanner.nextInt();
+            scanner.nextLine();
+
+            MetodoPago metodo = seleccionarMetodoPago();
+
+            escuela.pagarReserva(idReserva, metodo);
+
+            System.out.println("✅ Pago de reserva: " + idReserva + " registrado exitosamente!");
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un número.");
+            scanner.nextLine();
+        }
+        catch (IdNoEncontradoException | IllegalStateException | IllegalArgumentException e)
+        {
+            System.out.println("❌ Error al procesar el pago: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+        }
+    }
+
+    public void pagarUnAlquiler()
+    {
+        try
+        {
+            System.out.println("PAGO DE ALQUILER DE EQUIPO\n");
+            System.out.print("Ingrese el ID del alquiler que desea pagar: ");
+            int idAlquiler = scanner.nextInt();
+            scanner.nextLine();
+
+            MetodoPago metodo = seleccionarMetodoPago();
+
+            escuela.pagarAlquiler(idAlquiler, metodo);
+
+            System.out.println("✅ Pago de alquiler: " + idAlquiler + " registrado exitosamente!");
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un número.");
+            scanner.nextLine();
+        }
+        catch (IdNoEncontradoException | IllegalStateException | IllegalArgumentException e)
+        {
+            System.out.println("❌ Error al procesar el pago: " + e.getMessage());
         }
         catch (Exception e)
         {

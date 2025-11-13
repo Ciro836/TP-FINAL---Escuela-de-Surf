@@ -146,7 +146,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         for (Reserva reserva : getRepoReservas().getTodos())
         {
-            if (reserva.getIdAlumno() == alumno.getIdAlumno()) //
+            if (reserva.getAlumno().getIdAlumno() == alumno.getIdAlumno())
             {
                 reservasDelAlumno.add(reserva);
             }
@@ -162,5 +162,37 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         pago.setEstadoPago(EstadoPago.REALIZADO);
     }
 
-    
+    public void pagarReserva(int idReserva, MetodoPago metodo) throws IdNoEncontradoException, IllegalStateException
+    {
+        Reserva reserva = getRepoReservas().buscarPorId(idReserva);
+        if (reserva == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ninguna reserva con el ID: " + idReserva);
+        }
+
+        Pago pago = reserva.getPago();
+        if (pago.getEstadoPago() == EstadoPago.REALIZADO)
+        {
+            throw new IllegalStateException("Esta reserva ya se encuentra pagada.");
+        }
+
+        pagar(pago, metodo);
+    }
+
+    public void pagarAlquiler(int idAlquiler, MetodoPago metodo) throws IdNoEncontradoException, IllegalStateException
+    {
+        Alquiler alquiler = getRepoAlquileres().buscarPorId(idAlquiler);
+        if (alquiler == null)
+        {
+            throw new IdNoEncontradoException("No se encontró ningún alquiler con el ID: " + idAlquiler);
+        }
+
+        Pago pago = alquiler.getPago();
+        if (pago.getEstadoPago() == EstadoPago.REALIZADO)
+        {
+            throw new IllegalStateException("Este alquiler ya se encuentra pagado.");
+        }
+
+        pagar(pago, metodo);
+    }
 }

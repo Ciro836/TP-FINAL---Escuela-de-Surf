@@ -22,14 +22,6 @@ public class Reserva implements InterfazJson
         this.pago = new Pago(); //se inicializa vacío
     }
 
-<<<<<<< HEAD
-    public Reserva(int idAlumno, int idClaseDeSurf)
-    {
-        this.idReserva = ++contador;
-        this.idAlumno = idAlumno;
-        this.idClaseDeSurf = idClaseDeSurf;
-        this.pago = new Pago();
-=======
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
     {
         if (alumno == null)
@@ -49,15 +41,9 @@ public class Reserva implements InterfazJson
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
         this.pago = pago;
->>>>>>> parent of f3fd2cc (Cambio Reserva para que guarde los id de alumno y de la clase de surf)
     }
 
     /// GETTERS Y SETTERS
-
-    public int getIdReserva()
-    {
-        return idReserva;
-    }
 
     public Alumno getAlumno()
     {
@@ -132,7 +118,7 @@ public class Reserva implements InterfazJson
 
     public void calcularMontoTotal()
     {
-        
+        pago.setMonto(claseDeSurf.getValorClase());
     }
 
     @Override
