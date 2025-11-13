@@ -267,4 +267,9 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         System.out.println("Repositorios grabados en escuelaDeSurf.json");
     }
+
+    public void leerJsonDeRepositorios()
+    {
+        
+    }
 }

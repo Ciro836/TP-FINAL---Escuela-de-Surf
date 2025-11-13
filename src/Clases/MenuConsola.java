@@ -78,7 +78,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 14 -> chequearMorosidadAlumno();
                     case 15 -> chequearMorosidadCliente();
                     case 16 -> grabarRepositoriosAjson();
-                    //case 17 -> leerJsonDeRepositorios();
+                    case 17 -> leerJsonDeRepositorios();
                     case 18 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
@@ -643,5 +643,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     public void grabarRepositoriosAjson()
     {
         escuela.grabarRepositoriosAjson();
+    }
+
+    public void leerJsonDeRepositorios()
+    {
+        escuela.leerJsonDeRepositorios();
     }
 }
