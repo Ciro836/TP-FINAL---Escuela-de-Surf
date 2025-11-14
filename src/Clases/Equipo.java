@@ -5,7 +5,7 @@ import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Equipo implements InterfazJson<Equipo>
+public class Equipo implements InterfazJson
 {
     private static int contador = 0;
     private final int idEquipo;
@@ -77,6 +77,8 @@ public class Equipo implements InterfazJson<Equipo>
         this.disponible = disponible;
     }
 
+    /// METODOS
+
     @Override
     public String toString()
     {
@@ -106,16 +108,5 @@ public class Equipo implements InterfazJson<Equipo>
         }
 
         return jObj;
-    }
-
-    @Override
-    public Equipo fromJSON(JSONObject objeto)
-    {
-        return new Equipo(NombreEquipo.valueOf(objeto.getString("nombre").toUpperCase()));
-    }
-
-    public int getID()
-    {
-        return idEquipo;
     }
 }

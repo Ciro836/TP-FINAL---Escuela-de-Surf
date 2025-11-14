@@ -4,7 +4,7 @@ import Interfaces.InterfazJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Reserva implements InterfazJson<Reserva>
+public class Reserva implements InterfazJson
 {
     private static int contador = 0;
     private final int idReserva;
@@ -22,7 +22,7 @@ public class Reserva implements InterfazJson<Reserva>
         this.pago = new Pago(); //se inicializa vacío
     }
 
-    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf, Pago pago)
+    public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf)
     {
         if (alumno == null)
         {
@@ -32,23 +32,15 @@ public class Reserva implements InterfazJson<Reserva>
         {
             throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
         }
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo");
-        }
 
         this.idReserva = ++contador;
         this.alumno = alumno;
         this.claseDeSurf = claseDeSurf;
-        this.pago = pago;
+        this.pago = new Pago();
+        calcularMontoTotal();
     }
 
     /// GETTERS Y SETTERS
-
-    public int getIdReserva()
-    {
-        return idReserva;
-    }
 
     public Alumno getAlumno()
     {
@@ -100,18 +92,6 @@ public class Reserva implements InterfazJson<Reserva>
         return alumno != null && claseDeSurf != null && pago != null;
     }
 
-    @Override
-    public String toString()
-    {
-        return "Reserva [" +
-                " IDReserva=" + idReserva +
-                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
-                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
-                ", Pago=" + pago +
-                ", Estado=" + pago.getEstadoPago() +
-                ']';
-    }
-
     public String mostrarReservaMejorada()
     {
         String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
@@ -133,6 +113,23 @@ public class Reserva implements InterfazJson<Reserva>
 
     }
 
+    public void calcularMontoTotal()
+    {
+        pago.setMonto(claseDeSurf.getValorClase());
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Reserva [" +
+                " IDReserva=" + idReserva +
+                ", Alumno=" + (alumno != null ? alumno.toString() : "No asignado") +
+                ", Clase=" + (claseDeSurf != null ? claseDeSurf.getIdClase() : "No asignada") +
+                ", Pago=" + pago +
+                ", Estado=" + pago.getEstadoPago() +
+                ']';
+    }
+
     @Override
     public JSONObject toJSON()
     {
@@ -152,15 +149,5 @@ public class Reserva implements InterfazJson<Reserva>
         }
 
         return jsonObj;
-    }
-
-    @Override
-    public Reserva fromJSON(JSONObject objeto)
-    {
-        return null;
-    }
-
-    public int getID(){
-        return idReserva;
     }
 }

@@ -1,28 +1,15 @@
 package Clases;
 
-import Enumeradores.EstadoPago;
-import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
-import Interfaces.InterfazJson;
-import Interfaces.Pagos;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class Alumno extends Persona implements Pagos
+public class Alumno extends Persona
 {
     private static int contador = 0;
     private final int idAlumno;
     private NivelDeSurf nivel;
     private int cantClasesTomadas;
-    private final List<Reserva> reservas;
-    private final List<Pago> pagos;
-
 
     /// CONSTRUCTORES
 
@@ -31,11 +18,9 @@ public class Alumno extends Persona implements Pagos
         this.idAlumno = ++contador;
         this.nivel = null;
         this.cantClasesTomadas = 0;
-        this.reservas = new ArrayList<>(); //incializa vacía, para que no tire una excepcion si luego quiero agregar una reserva al alumno
-        this.pagos = new ArrayList<>();
     }
 
-    public Alumno(int dni, String nombre, String apellido, int edad, int numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
+    public Alumno(String dni, String nombre, String apellido, int edad, String numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         if (nivel == null)
@@ -51,8 +36,6 @@ public class Alumno extends Persona implements Pagos
         this.idAlumno = ++contador;
         this.nivel = nivel;
         this.cantClasesTomadas = cantClasesTomadas;
-        this.reservas = new ArrayList<>();
-        this.pagos = new ArrayList<>();
     }
 
 
@@ -91,110 +74,14 @@ public class Alumno extends Persona implements Pagos
         this.cantClasesTomadas = cantClasesTomadas;
     }
 
-    public List<Reserva> getReservas()
-    {
-        return Collections.unmodifiableList(reservas);
-    }
-
-    public List<Pago> getPagos()
-    {
-        return Collections.unmodifiableList(pagos);
-    }
-
     /// METODOS
-
-    public boolean reservar(ClaseDeSurf clase, MetodoPago metodo)
-    {
-        //llamo a metodo inscribir alumno q esta en clase de surf, con las verificaciones necesarias
-        clase.inscribirAlumno(this);
-
-        //creo un pago, que será inicializado como pendiente, y el valor le paso el precio de la clase
-        Pago pago = new Pago(metodo, clase.getValorClase());
-
-        //creo una reserva y paso los valores
-        Reserva nueva = new Reserva(this, clase, pago);
-        //agrego la reserva a la list
-        reservas.add(nueva);
-        //agrego el pago a la list
-        pagos.add(pago);
-        return true; //retorto true, fue guardado con exito la reserva
-    }
-
-    public boolean cancelarReserva(Reserva reserva)
-    {
-        if (reserva == null)
-        {
-            throw new IllegalArgumentException("La reserva no puede ser nula.");
-        }
-        //guardo en clase, la clase reservada por el alumno
-        ClaseDeSurf clase = reserva.getClaseDeSurf();
-        //si no es nula, elimo el alumno de esa clase
-        if (clase != null)
-        {
-            clase.eliminarAlumno(this);
-        }
-        //ahora elimino la reserva y su pago
-        reservas.remove(reserva);
-        pagos.remove(reserva.getPago());
-
-        return true;
-    }
-
-
-    @Override
-    public boolean esMoroso()
-    {
-        for (Pago pago : pagos)
-        {
-            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean pagar(Pago pago, MetodoPago metodo)
-    {
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("El pago no puede ser nulo.");
-        }
-        // Si el pago no está en la lista de pagos del cliente, lo agrega
-        if (!this.pagos.contains(pago))
-        {
-            this.pagos.add(pago);
-        }
-        // Marca el pago como realizado
-        pago.setMetodoPago(metodo);
-        pago.setFechaPago(LocalDate.now());
-        pago.setEstadoPago(EstadoPago.REALIZADO);
-        return true;
-    }
-
-    public void mostrarReservas()
-    {
-        if (reservas.isEmpty())
-        {
-            System.out.println("No tiene hecha ninguna reserva");
-        }
-        else
-        {
-            for (Reserva reserva : reservas)
-            {
-                System.out.println(reserva.mostrarReservaMejorada());
-            }
-        }
-    }
 
     @Override
     public String toString()
     {
         return super.toString() + " IdAlumno: " + idAlumno +
                 "| Nivel de surf: " + nivel +
-                "| cantClasesTomadas: " + cantClasesTomadas +
-                "| Cantidad de reservas: " + reservas.size();
+                "| cantClasesTomadas: " + cantClasesTomadas;
     }
 
     @Override
@@ -206,21 +93,6 @@ public class Alumno extends Persona implements Pagos
             jsonObj.put("idAlumno", idAlumno);
             jsonObj.put("nivel", nivel);
             jsonObj.put("cantClasesTomadas", cantClasesTomadas);
-
-            JSONArray jsonArray = new JSONArray();
-            for (Reserva r : reservas)
-            {
-                jsonArray.put(r.getIdReserva());
-            }
-            jsonObj.put("idReservas", jsonArray);
-
-            JSONArray jsonArrayPagos = new JSONArray();
-            for (Pago p : pagos)
-            {
-                jsonArrayPagos.put(p.getIdPago());
-            }
-            jsonObj.put("idPagos", jsonArrayPagos);
-
         }
         catch (JSONException e)
         {
@@ -228,15 +100,5 @@ public class Alumno extends Persona implements Pagos
         }
 
         return jsonObj;
-    }
-
-    @Override
-    public Alumno fromJSON(JSONObject objeto)
-    {
-        return null;
-    }
-
-    public int getID(){
-        return idAlumno;
     }
 }

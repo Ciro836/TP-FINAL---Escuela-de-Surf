@@ -8,6 +8,7 @@ import java.util.Map;
 public class Repositorio<T>
 {
     private final Map<Integer, T> datos;
+    private int proximoId = 1; // genera IDs automáticos
 
     /// CONSTRUCTOR
 
@@ -32,34 +33,21 @@ public class Repositorio<T>
         return datos.values();
     }
 
-    public boolean agregar(int clave, T valor)
+    public void agregar(T valor)
     {
-        if (datos.containsKey(clave))
-        { //si ya contiene la clase, devuelvo falso. Lo verifico porque sino el put sobreescribe sobre una clave ya existente.
-            return false;
-        }
-        datos.put(clave, valor); //sino lo agrego y devuelvo true.
-        return true;
+        datos.put(proximoId++, valor);
     }
 
     public boolean eliminar(int clave)
     {
         if (!datos.containsKey(clave))
         {
-            return false;
+            throw new IllegalArgumentException("No se encontro el registro con la misma clave.");
         }
         else
         {
             datos.remove(clave);
             return true;
-        }
-    }
-
-    public void mostrarTodos()
-    {
-        for (Map.Entry<Integer, T> entry : datos.entrySet())
-        {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
         }
     }
 

@@ -11,36 +11,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alquiler implements InterfazJson<Alquiler>
+public class Alquiler implements InterfazJson
 {
     private static int contador = 0;
     private final int idAlquiler;
-    private Cliente cliente;
     private final List<Equipo> equiposAlquilados;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private double montoTotal;
     private boolean estaActivo;
+    private Pago pago;
 
     /// CONSTRUCTORES
 
     public Alquiler()
     {
         this.idAlquiler = ++contador;
-        this.cliente = new Cliente();
         this.equiposAlquilados = new ArrayList<>();
         this.fechaInicio = null;
         this.fechaFin = null;
         this.montoTotal = 0;
         this.estaActivo = false;
+        this.pago = new Pago();
     }
 
-    public Alquiler(Cliente cliente, LocalDate fechaFin)
+    public Alquiler(LocalDate fechaFin)
     {
-        if (cliente == null)
-        {
-            throw new IllegalArgumentException("⚠️: El cliente no puede ser nulo.");
-        }
         if (fechaFin == null)
         {
             throw new IllegalArgumentException("⚠️: La Fecha de Fin no puede ser nula.");
@@ -51,29 +47,13 @@ public class Alquiler implements InterfazJson<Alquiler>
         }
 
         this.idAlquiler = ++contador;
-        this.cliente = cliente;
         this.equiposAlquilados = new ArrayList<>();
         this.fechaInicio = LocalDate.now();
         this.fechaFin = fechaFin;
         this.estaActivo = true;
         this.montoTotal = 0;
+        this.pago = new Pago();
     }
-    // constructor para JSON
-    public Alquiler(int idAlquiler, Cliente cliente, List<Equipo> equiposAlquilados, LocalDate fechaInicio, LocalDate fechaFin, double monto, boolean estaActivo)
-    {
-        this.idAlquiler = idAlquiler;
-        this.cliente = cliente;
-        this.equiposAlquilados = equiposAlquilados;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.montoTotal = monto;
-        this.estaActivo = estaActivo;
-
-        if (idAlquiler > contador){
-            contador = idAlquiler;
-        }
-    }
-
 
     /// GETTERS Y SETTERS
 
@@ -85,20 +65,6 @@ public class Alquiler implements InterfazJson<Alquiler>
     public int getIdAlquiler()
     {
         return idAlquiler;
-    }
-
-    public Cliente getCliente()
-    {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente)
-    {
-        if (cliente == null)
-        {
-            throw new IllegalArgumentException("El cliente no puede ser nulo.");
-        }
-        this.cliente = cliente;
     }
 
     public List<Equipo> getEquiposAlquilados()
@@ -157,6 +123,16 @@ public class Alquiler implements InterfazJson<Alquiler>
         this.estaActivo = estaActivo;
     }
 
+    public Pago getPago()
+    {
+        return pago;
+    }
+
+    public void setPago(Pago pago)
+    {
+        this.pago = pago;
+    }
+
     /// METODOS
 
     public int contarDiasDeAlquiler()
@@ -175,6 +151,7 @@ public class Alquiler implements InterfazJson<Alquiler>
         }
 
         this.montoTotal = total;
+        pago.setMonto(total);
     }
 
     public void finalizarAlquiler()
@@ -223,7 +200,6 @@ public class Alquiler implements InterfazJson<Alquiler>
     public String toString()
     {
         return "ALQUILER: ID=" + idAlquiler +
-                " | Cliente: " + cliente.getNombre() +
                 " | Periodo: " + fechaInicio + " a " + fechaFin +
                 " | Monto: $" + montoTotal +
                 " | Activo: " + estaActivo +
@@ -239,7 +215,6 @@ public class Alquiler implements InterfazJson<Alquiler>
         {
 
             jObj.put("idAlquiler", idAlquiler);
-            jObj.put("cliente", cliente != null ? cliente.getIdCliente() : JSONObject.NULL);
 
             JSONArray jArray = new JSONArray();
             for (Equipo e : equiposAlquilados)
@@ -260,43 +235,5 @@ public class Alquiler implements InterfazJson<Alquiler>
         }
 
         return jObj;
-    }
-
-    @Override
-    public Alquiler fromJSON(JSONObject objeto)
-    {
-        int id = objeto.getInt("idAlquiler");
-
-        Cliente cliente = null;
-        if (!objeto.isNull("cliente")) {
-            int idCliente = objeto.getInt("cliente");
-        }
-
-        //solo paso los id de los equipos alquilados, en vez del objeto completo. Lo mismo hice con cliente
-
-        List<Equipo> equiposAlquilados = new ArrayList<>();
-        JSONArray jsonArrayEquipos =  objeto.getJSONArray("idEquiposAlquilados");
-        for (int i = 0; i < jsonArrayEquipos.length(); i++){
-                int idEquipos = jsonArrayEquipos.getInt(i);
-        }
-
-        LocalDate fechaInicio = null;
-        if (!objeto.isNull("fechaInicio")) {
-            fechaInicio = LocalDate.parse(objeto.getString("fechaInicio"));
-        }
-
-        LocalDate fechaFin = null;
-        if (!objeto.isNull("fechaFin")) {
-            fechaFin = LocalDate.parse(objeto.getString("fechaFin"));
-        }
-
-        double montoTotal = objeto.getDouble("montoTotal");
-        boolean estaActivo = objeto.getBoolean("estaActivo");
-
-        return new Alquiler(id, cliente, equiposAlquilados, fechaInicio, fechaInicio, montoTotal, estaActivo);
-    }
-
-    public int getID(){
-        return idAlquiler;
     }
 }

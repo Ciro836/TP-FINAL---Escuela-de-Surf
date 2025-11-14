@@ -1,6 +1,6 @@
-package ExcepcionesPersonalizadas.ExcepcionesClaseDeSurf;
+package ExcepcionesPersonalizadas;
 
-public class FechaInvalidaException extends RuntimeException
+public class FechaInvalidaException extends Exception
 {
     public FechaInvalidaException()
     {

@@ -1,22 +1,17 @@
 package Clases;
 
-import Enumeradores.EstadoPago;
-import Enumeradores.MetodoPago;
-import Interfaces.Pagos;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cliente extends Persona implements Pagos
+public class Cliente extends Persona
 {
     private static int contador = 0;
     private final int idCliente;
-    private final List<Pago> pagos;
     private final List<Alquiler> alquileres;
 
     /// CONSTRUCTORES
@@ -24,30 +19,14 @@ public class Cliente extends Persona implements Pagos
     public Cliente()
     {
         this.idCliente = ++contador;
-        this.pagos = new ArrayList<>();
         this.alquileres = new ArrayList<>();
     }
 
-    public Cliente(int dni, String nombre, String apellido, int edad, int numeroTel)
+    public Cliente(String dni, String nombre, String apellido, int edad, String numeroTel)
     {
         super(dni, nombre, apellido, edad, numeroTel);
         this.idCliente = ++contador;
-        this.pagos = new ArrayList<>();
         this.alquileres = new ArrayList<>();
-    }
-
-    //constructor para JSON
-    public Cliente(int dni, String nombre, String apellido, int edad, int numeroTel, int idCliente, List<Pago> pagos, List<Alquiler> alquileres)
-    {
-        super(dni, nombre, apellido, edad, numeroTel);
-        this.idCliente = idCliente;
-        this.pagos = pagos;
-        this.alquileres = alquileres;
-
-        if (idCliente > contador)
-        {
-            contador = idCliente;
-        }
     }
 
     /// GETTERS Y SETTERS
@@ -62,55 +41,12 @@ public class Cliente extends Persona implements Pagos
         return idCliente;
     }
 
-    public List<Pago> getPagos()
-    {
-        return Collections.unmodifiableList(pagos);
-    }
-
     public List<Alquiler> getAlquileres()
     {
         return Collections.unmodifiableList(alquileres);
     }
 
     /// METODOS
-
-    @Override
-    public boolean esMoroso()
-    {
-        for (Pago pago : pagos)
-        {
-            if (pago.getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(pago.getFechaLimite()))
-            {
-                return true;// es moroso.
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean pagar(Pago pago, MetodoPago metodo)
-    {
-        if (pago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
-        }
-        // Si el pago no está en la lista de pagos del cliente, lo agrega
-        if (!this.pagos.contains(pago))
-        {
-            this.pagos.add(pago);
-        }
-        // Marca el pago como realizado
-        pago.setMetodoPago(metodo);
-        pago.setFechaPago(LocalDate.now());
-        pago.setEstadoPago(EstadoPago.REALIZADO);
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return super.toString() + " idCliente: " + idCliente;
-    }
 
     public void agregarAlquiler(Alquiler alquiler)
     {
@@ -122,6 +58,12 @@ public class Cliente extends Persona implements Pagos
     }
 
     @Override
+    public String toString()
+    {
+        return super.toString() + " idCliente: " + idCliente;
+    }
+
+    @Override
     public JSONObject toJSON()
     {
         JSONObject jsonObject = super.toJSON();
@@ -129,13 +71,6 @@ public class Cliente extends Persona implements Pagos
         try
         {
             jsonObject.put("idCliente", idCliente);
-
-            JSONArray jArray = new JSONArray();
-            for (Pago p : pagos)
-            {
-                jArray.put(p.getIdPago());
-            }
-            jsonObject.put("idPagos", jArray);
 
             JSONArray jArrayAlquileres = new JSONArray();
             for (Alquiler a : alquileres)
@@ -152,40 +87,5 @@ public class Cliente extends Persona implements Pagos
         }
 
         return jsonObject;
-    }
-
-    @Override
-    public Cliente fromJSON(JSONObject objeto)
-    {
-        int dni = objeto.getInt("dni");
-        String nombre = objeto.getString("nombre");
-        String apellido = objeto.getString("apellido");
-        int edad = objeto.getInt("edad");
-        int numeroTel = objeto.getInt("numeroTel");
-
-        int id = objeto.getInt("idCliente");
-
-        List<Pago> pagos = new ArrayList<>();
-
-        if (objeto.has("idPagos")){
-            JSONArray jsonArrayPagos = objeto.getJSONArray("idPagos");
-            for(int i = 0; i < jsonArrayPagos.length(); i++){
-                int idPago = jsonArrayPagos.getInt(i);
-            }
-        }
-
-        List<Alquiler> alquileres = new ArrayList<>();
-        if (objeto.has("idAlquiler")){
-            JSONArray jsonArrayAlquileres = objeto.getJSONArray("idAlquiler");
-            for(int i = 0; i < jsonArrayAlquileres.length(); i++){
-                int idAlquiler = jsonArrayAlquileres.getInt(i);
-            }
-        }
-
-        return new Cliente(dni, nombre, apellido, edad, numeroTel, id, pagos, alquileres);
-    }
-
-    public int getID(){
-        return idCliente;
     }
 }

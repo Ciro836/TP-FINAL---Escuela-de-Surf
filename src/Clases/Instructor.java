@@ -17,7 +17,7 @@ public class Instructor extends Persona
         this.aniosExperiencia = 0;
     }
 
-    public Instructor(int dni, String nombre, String apellido, int edad, int numeroTel, int aniosExperiencia)
+    public Instructor(String dni, String nombre, String apellido, int edad, String numeroTel, int aniosExperiencia)
     {
         super(dni, nombre, apellido, edad, numeroTel);
 
@@ -28,18 +28,6 @@ public class Instructor extends Persona
 
         this.idInstructor = ++contador;
         this.aniosExperiencia = aniosExperiencia;
-    }
-
-    //NUEVO CONSTRUCTOR PARA UTILIZAR EN EL FROMJSON, PARA MANEJAR EL CONTADOR
-    public Instructor(int idInstructor, int dni, String nombre, String apellido, int edad, int numeroTel, int  aniosExperiencia){
-        super(dni, nombre, apellido, edad, numeroTel);
-        this.idInstructor = idInstructor;
-        this.aniosExperiencia = aniosExperiencia;
-
-        //actualizo el contador, si el ID que lee es mayor
-        if (idInstructor > contador){
-            contador = idInstructor;
-        }
     }
 
     /// GETTERS Y SETTERS
@@ -92,22 +80,5 @@ public class Instructor extends Persona
         }
 
         return objeto;
-    }
-
-    @Override
-    public Instructor fromJSON(JSONObject objeto)
-    {
-        return new Instructor(
-                objeto.getInt("idInstructor"),
-                objeto.getInt("dni"),
-                objeto.getString("nombre"),
-                objeto.getString("apellido"),
-                objeto.getInt("edad"),
-                objeto.getInt("numeroTel"),
-                objeto.getInt("aniosExperiencia"));
-    }
-
-    public int getID(){
-        return idInstructor;
     }
 }

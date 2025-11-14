@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 
-public class Pago implements InterfazJson<Pago>
+public class Pago implements InterfazJson
 {
     private static int contador = 0;
     private final int idPago;
@@ -111,16 +111,21 @@ public class Pago implements InterfazJson<Pago>
 
     /// METODOS
 
+    public boolean esMoroso()
+    {
+        return getEstadoPago() == EstadoPago.PENDIENTE && LocalDate.now().isAfter(getFechaLimite());
+    }
+
     @Override
     public String toString()
     {
         String estadoActual;
 
-        if (estadoPago == EstadoPago.REALIZADO)
+        if (!esMoroso())
         {
             estadoActual = "Pagado";
         }
-        else if (LocalDate.now().isAfter(fechaLimite)) // Si está PENDIENTE y venció la fecha
+        else if (esMoroso())
         {
             estadoActual = "Pendiente (Vencido)";
         }
@@ -174,16 +179,5 @@ public class Pago implements InterfazJson<Pago>
             e.printStackTrace();
         }
         return jsonObj;
-    }
-
-    @Override
-    public Pago fromJSON(JSONObject objeto)
-    {
-        return new Pago(MetodoPago.valueOf(objeto.getString("metodoPago").toUpperCase()), objeto.getDouble("monto"));
-    }
-
-    public int getID()
-    {
-        return idPago;
     }
 }
