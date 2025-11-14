@@ -17,7 +17,7 @@ public class ClaseDeSurf implements InterfazJson
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
     private int cupoMax;
-    private final double valorClase;
+    private double valorClase;
 
     /// CONSTRUCTORES
 
@@ -125,7 +125,11 @@ public class ClaseDeSurf implements InterfazJson
 
     public double getValorClase()
     {
-        return valorClase;
+        if (this.tipoDeClase == null)
+        {
+            return 0.0;
+        }
+        return this.tipoDeClase.getValorClase();
     }
 
     /// METODOS

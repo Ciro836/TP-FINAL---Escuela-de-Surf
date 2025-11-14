@@ -187,6 +187,7 @@ public class Alquiler implements InterfazJson
     public boolean eliminarEquipo(Equipo equipo)
     {
         boolean removido = this.equiposAlquilados.remove(equipo);
+        equipo.setDisponible(true);
 
         // Solo se recalcula el monto si realmente se eliminó algo
         if (removido)

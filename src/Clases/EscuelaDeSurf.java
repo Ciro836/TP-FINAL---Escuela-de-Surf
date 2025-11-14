@@ -115,6 +115,14 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoClases().agregar(clase);
     }
 
+    public void registrarNuevaReserva(Reserva reserva)
+    {
+        if (reserva == null){
+            throw new IllegalArgumentException("La reserva no puede ser nula");
+        }
+        getRepoReservas().agregar(reserva);
+    }
+
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
     {
         Alumno a = getRepoAlumnos().buscarPorId(id);
@@ -266,5 +274,10 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
                 "escuelaDeSurf.json");
 
         System.out.println("Repositorios grabados en escuelaDeSurf.json");
+    }
+
+    public void leerJsonDeRepositorios()
+    {
+        
     }
 }

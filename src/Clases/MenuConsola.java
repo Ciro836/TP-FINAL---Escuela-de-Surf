@@ -11,6 +11,7 @@ import ExcepcionesPersonalizadas.IdNoEncontradoException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -78,7 +79,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 14 -> chequearMorosidadAlumno();
                     case 15 -> chequearMorosidadCliente();
                     case 16 -> grabarRepositoriosAjson();
-                    //case 17 -> leerJsonDeRepositorios();
+                    case 17 -> leerJsonDeRepositorios();
                     case 18 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
@@ -382,6 +383,112 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         } while (deseaContinuar("Desea seguir cargando clases de surf?"));
     }
 
+    public void agregarReserva()
+    {
+        System.out.println("CARGA DE DATOS A UNA RESERVA\n");
+
+        //Elijo si es una reserva para un alumno nuevo o ya existe
+        System.out.println("1) Seleccionar un alumno ya existente");
+        System.out.println("2) Registrar un nuevo alumno");
+        System.out.println("Ingrese la opción: ");
+        int opcionAlumno = scanner.nextInt();
+        scanner.nextLine();
+
+        Alumno alumno = null;
+
+        //listar alumno ya existente para que elija
+        if (opcionAlumno == 1){
+            if (escuela.getRepoAlumnos().getDatos().isEmpty()){
+                System.out.println("No hay alumnos previamente cargados.");
+                opcionAlumno = 2; //fuerzo la creación de uno nuevo
+            }else{
+                System.out.println("Listado de alumnos existente: ");
+                escuela.getRepoAlumnos().getTodos();
+
+                System.out.println("Ingrese el ID del alumno: ");
+                int idAlumno = scanner.nextInt();
+                scanner.nextLine();
+
+                alumno = escuela.getRepoAlumnos().buscarPorId(idAlumno);
+                if (alumno == null){
+                    System.out.println("No existe un alumno con ese ID.");
+                    return;
+                }
+            }
+        }
+         if (opcionAlumno == 2){
+            scanner.nextLine();
+
+            agregarAlumno();
+            //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso alumnos para ponerles un indica y obtener el ultimo
+            List<Alumno> alumnos = new ArrayList<>(escuela.getRepoAlumnos().getTodos());
+
+            if (alumnos.isEmpty()){
+                System.out.println("ERROR: No se pudo crear correctamente el alumno.");
+                return;
+            }
+
+            alumno = alumnos.get(alumnos.size() - 1); //obtengo el alumno cargado mas reciente
+            System.out.println("Alumno seleccionado correctamente.");
+
+        }
+
+         //Elijo si selec. una clase existente o una nueva
+
+        System.out.println("1) Seleccionar una clase ya existente");
+        System.out.println("2) Registrar una nueva clase");
+        System.out.println("Ingrese la opción: ");
+        int opcionClase = scanner.nextInt();
+        scanner.nextLine();
+
+        ClaseDeSurf clase = null;
+
+        if (opcionClase == 1){
+            if (escuela.getRepoClases().getDatos().isEmpty()){
+                System.out.println("No hay clases previamente cargadas.");
+                opcionClase = 2; //fuerzo la creación de uno nuevo
+            }else{
+                System.out.println("Listado de clases existentes: ");
+                escuela.getRepoClases().getTodos();
+
+                System.out.println("Ingrese el ID de la clase: ");
+                int idClase = scanner.nextInt();
+                scanner.nextLine();
+
+                clase = escuela.getRepoClases().buscarPorId(idClase);
+                if (clase == null){
+                    System.out.println("No existe una clase con ese ID.");
+                    return;
+                }
+            }
+        }
+
+        if (opcionClase == 2){
+            scanner.nextLine();
+
+            agregarClaseDeSurf();
+            //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso clase de surf para ponerles un indica y obtener el ultimo
+            List<ClaseDeSurf> clases = new ArrayList<>(escuela.getRepoClases().getTodos());
+
+            if (clases.isEmpty()){
+                System.out.println("ERROR: No se pudo crear correctamente la clase.");
+                return;
+            }
+
+            clase = clases.get(clases.size() - 1); //obtengo el alumno cargado mas reciente
+            System.out.println("Clase seleccionada correctamente.");
+        }
+
+        do {
+            try{
+                Reserva  reserva = new Reserva(alumno, clase);
+                escuela.registrarNuevaReserva(reserva);
+                System.out.println("Reserva registrada correctamente.");
+            }catch (Exception e){
+
+            }
+        }
+    }
     public void buscarAlumnoPorId()
     {
         //Pedimos que el usuario ingrese el id
@@ -643,5 +750,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     public void grabarRepositoriosAjson()
     {
         escuela.grabarRepositoriosAjson();
+    }
+
+    public void leerJsonDeRepositorios()
+    {
+        escuela.leerJsonDeRepositorios();
     }
 }
