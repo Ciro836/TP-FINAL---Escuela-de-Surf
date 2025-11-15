@@ -496,6 +496,47 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         }while(deseaContinuar("Desea seguir cargando reservas?"));
     }
 
+    public void agregarCliente()
+    {
+        do {
+            try {
+                System.out.println("CARGA DE DATOS DE CLIENTES\n");
+
+                System.out.print("Ingrese el numero de DNI: ");
+                String dni = scanner.nextLine().trim();
+
+                System.out.print("Ingrese el nombre del alumno: ");
+                String nombre = scanner.nextLine().trim();
+
+                System.out.print("Ingrese el apellido del alumno: ");
+                String apellido = scanner.nextLine().trim();
+
+                System.out.print("Ingrese la edad del alumno: ");
+                int edad = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Ingrese el numero de telefono: ");
+                String telefono = scanner.nextLine().trim();
+
+                Cliente cliente = new  Cliente(dni, nombre, apellido, edad, telefono);
+                escuela.registrarNuevoCliente(cliente);
+                }catch (InputMismatchException e)
+                {
+                    System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+                    scanner.nextLine();
+                }
+                catch (IllegalArgumentException e)
+                {
+                    System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
+                }
+            catch (Exception e)
+            {
+               System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+            }
+
+        } while (deseaContinuar("Desea seguir cargando alumnos?"));
+    }
+
     public void buscarAlumnoPorId()
     {
         //Pedimos que el usuario ingrese el id
