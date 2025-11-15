@@ -66,7 +66,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 1 -> agregarAlumno();
                     case 2 -> agregarInstructor();
                     case 3 -> agregarClaseDeSurf();
-                    //case 4 -> agregarReserva();
+                    case 4 -> agregarReserva();
                     //case 5 -> agregarCliente();
                     case 6 -> agregarEquipo();
                     //case 7 -> agregarAlquiler();
@@ -397,11 +397,15 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         Alumno alumno = null;
 
         //listar alumno ya existente para que elija
-        if (opcionAlumno == 1){
-            if (escuela.getRepoAlumnos().getDatos().isEmpty()){
+        if (opcionAlumno == 1)
+        {
+            if (escuela.getRepoAlumnos().getDatos().isEmpty())
+            {
                 System.out.println("No hay alumnos previamente cargados.");
                 opcionAlumno = 2; //fuerzo la creación de uno nuevo
-            }else{
+            }
+            else
+            {
                 System.out.println("Listado de alumnos existente: ");
                 escuela.getRepoAlumnos().getTodos();
 
@@ -409,31 +413,36 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 int idAlumno = scanner.nextInt();
                 scanner.nextLine();
 
-                alumno = escuela.getRepoAlumnos().buscarPorId(idAlumno);
-                if (alumno == null){
-                    System.out.println("No existe un alumno con ese ID.");
-                    return;
+                try
+                {
+                    alumno = escuela.buscarAlumnoPorId(idAlumno);
+                }
+                catch (IdNoEncontradoException e)
+                {
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
         }
-         if (opcionAlumno == 2){
+        if (opcionAlumno == 2)
+        {
             scanner.nextLine();
 
             agregarAlumno();
             //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso alumnos para ponerles un indica y obtener el ultimo
             List<Alumno> alumnos = new ArrayList<>(escuela.getRepoAlumnos().getTodos());
 
-            if (alumnos.isEmpty()){
+            if (alumnos.isEmpty())
+            {
                 System.out.println("ERROR: No se pudo crear correctamente el alumno.");
                 return;
             }
 
-            alumno = alumnos.get(alumnos.size() - 1); //obtengo el alumno cargado mas reciente
+            alumno = alumnos.getLast(); //obtengo el alumno cargado mas reciente
             System.out.println("Alumno seleccionado correctamente.");
 
         }
 
-         //Elijo si selec. una clase existente o una nueva
+        //Elijo si selec. una clase existente o una nueva
 
         System.out.println("1) Seleccionar una clase ya existente");
         System.out.println("2) Registrar una nueva clase");
@@ -443,11 +452,15 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
         ClaseDeSurf clase = null;
 
-        if (opcionClase == 1){
-            if (escuela.getRepoClases().getDatos().isEmpty()){
+        if (opcionClase == 1)
+        {
+            if (escuela.getRepoClases().getDatos().isEmpty())
+            {
                 System.out.println("No hay clases previamente cargadas.");
                 opcionClase = 2; //fuerzo la creación de uno nuevo
-            }else{
+            }
+            else
+            {
                 System.out.println("Listado de clases existentes: ");
                 escuela.getRepoClases().getTodos();
 
@@ -455,38 +468,48 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 int idClase = scanner.nextInt();
                 scanner.nextLine();
 
-                clase = escuela.getRepoClases().buscarPorId(idClase);
-                if (clase == null){
-                    System.out.println("No existe una clase con ese ID.");
-                    return;
+                try
+                {
+                    clase = escuela.buscarClasePorId(idClase);
+                }
+                catch (IdNoEncontradoException e)
+                {
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
         }
 
-        if (opcionClase == 2){
+        if (opcionClase == 2)
+        {
             scanner.nextLine();
 
             agregarClaseDeSurf();
             //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso clase de surf para ponerles un indica y obtener el ultimo
             List<ClaseDeSurf> clases = new ArrayList<>(escuela.getRepoClases().getTodos());
 
-            if (clases.isEmpty()){
+            if (clases.isEmpty())
+            {
                 System.out.println("ERROR: No se pudo crear correctamente la clase.");
                 return;
             }
 
-            clase = clases.get(clases.size() - 1); //obtengo el alumno cargado mas reciente
+            clase = clases.getLast(); //obtengo el alumno cargado mas reciente
             System.out.println("Clase seleccionada correctamente.");
         }
 
-        do {
-            try{
-                Reserva  reserva = new Reserva(alumno, clase);
-                escuela.registrarNuevaReserva(reserva);
-                System.out.println("Reserva registrada correctamente.");
-            }catch (Exception e){
-
-            }
+        try
+        {
+            Reserva reserva = new Reserva(alumno, clase);
+            escuela.registrarNuevaReserva(reserva);
+            System.out.println("Reserva registrada correctamente.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error al crear la reserva: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.out.println("❌ Error inesperado al registrar la reserva: " + e.getMessage());
         }
     }
 
