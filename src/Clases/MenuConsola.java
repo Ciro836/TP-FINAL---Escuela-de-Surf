@@ -489,6 +489,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             }
         }
     }
+
     public void buscarAlumnoPorId()
     {
         //Pedimos que el usuario ingrese el id
