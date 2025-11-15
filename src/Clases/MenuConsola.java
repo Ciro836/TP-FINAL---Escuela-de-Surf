@@ -506,13 +506,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.print("Ingrese el numero de DNI: ");
                 String dni = scanner.nextLine().trim();
 
-                System.out.print("Ingrese el nombre del alumno: ");
+                System.out.print("Ingrese el nombre del cliente: ");
                 String nombre = scanner.nextLine().trim();
 
-                System.out.print("Ingrese el apellido del alumno: ");
+                System.out.print("Ingrese el apellido del cliente: ");
                 String apellido = scanner.nextLine().trim();
 
-                System.out.print("Ingrese la edad del alumno: ");
+                System.out.print("Ingrese la edad del ciente: ");
                 int edad = scanner.nextInt();
                 scanner.nextLine();
 
@@ -528,20 +528,22 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 catch (IllegalArgumentException e)
                 {
-                    System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
+                    System.out.println("❌ Error de datos al crear el cliente: " + e.getMessage());
                 }
             catch (Exception e)
             {
-               System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+               System.out.println("⚠️ Error inesperado al procesar el cliente: " + e.getMessage());
             }
 
-        } while (deseaContinuar("Desea seguir cargando alumnos?"));
+        } while (deseaContinuar("Desea seguir cargando clientes?"));
     }
 
     public void agregarAlquiler()
     {
         do {
             try {
+                System.out.println("CARGA DE DATOS DE ALQUILERES\n");
+
                 System.out.println("Ingrese la fecha de fin del alquier (formato: YYYY-MM-DD): ");
                 String fecha = scanner.nextLine();
                 //uso un catch para indicar si la fecha tiene formato incorrecto
