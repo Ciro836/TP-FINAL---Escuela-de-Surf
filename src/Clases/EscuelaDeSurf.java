@@ -178,6 +178,18 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         return c;
     }
 
+    public Cliente buscarClientePorId(int id) throws IdNoEncontradoException
+    {
+        Cliente c = getRepoClientes().buscarPorId(id);
+
+        if (c == null)
+        {
+            throw new IdNoEncontradoException("No se ha encontrado ningun cliente con el id ingresado: " + id);
+        }
+
+        return c;
+    }
+
     public List<Reserva> buscarReservasPorAlumnoId(int idAlumno) throws IdNoEncontradoException
     {
         Alumno alumno = buscarAlumnoPorId(idAlumno);
