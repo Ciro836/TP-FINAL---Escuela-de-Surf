@@ -8,6 +8,7 @@ import ExcepcionesPersonalizadas.CupoInvalidoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -537,6 +538,30 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         } while (deseaContinuar("Desea seguir cargando alumnos?"));
     }
 
+    public void agregarAlquiler()
+    {
+        do {
+            try {
+                System.out.println("Ingrese la fecha de fin del alquier (formato: YYYY-MM-DD): ");
+                String fecha = scanner.nextLine();
+                //uso un catch para indicar si la fecha tiene formato incorrecto
+                LocalDate fechaFin = LocalDate.parse(fecha);
+
+                //CREO EL ALQUILER
+                Alquiler alquiler = new Alquiler(fechaFin);
+
+                escuela.registrarNuevoAlquiler(alquiler);
+                System.out.println("Alquiler regitrado crrectamente");
+                }catch (DateTimeParseException e) {
+                    System.out.println("❌ Error en el formato de fecha. Use YYYY-MM-DD");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("❌ Error de datos: " + e.getMessage());
+            }catch (Exception e)
+            {
+                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            }
+        }while(deseaContinuar("Desea seguir cargando alquilers?"));
+    }
     public void buscarAlumnoPorId()
     {
         //Pedimos que el usuario ingrese el id

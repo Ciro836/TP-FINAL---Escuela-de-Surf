@@ -133,6 +133,14 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoClientes().agregar(cliente);
     }
 
+    public void registrarNuevoAlquiler(Alquiler alquiler)
+    {
+        if (alquiler == null)
+        {
+            throw new IllegalArgumentException("El alquiler no puede ser nulo");
+        }
+    }
+
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
     {
         Alumno a = getRepoAlumnos().buscarPorId(id);
