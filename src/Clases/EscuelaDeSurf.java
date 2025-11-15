@@ -139,6 +139,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El alquiler no puede ser nulo");
         }
+        getRepoAlquileres().agregar(alquiler);
     }
 
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
@@ -309,6 +310,6 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
     public void leerJsonDeRepositorios()
     {
 
-        
+
     }
 }
