@@ -46,14 +46,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("8. Buscar alumno por su id.");
             System.out.println("9. Mostrar reservas de un alumno.");
             System.out.println("10. Mostrar alumnos inscriptos en una clase.");
-            System.out.println("11. Cancelar una reserva.");
-            System.out.println("12. Pagar una reserva de clase.");
-            System.out.println("13. Pagar un alquiler de equipo.");
-            System.out.println("14. Chequear morosidad de alumno.");
-            System.out.println("15. Chequear morosidad de cliente.");
-            System.out.println("16. Grabar repositorios a json.");
-            System.out.println("17. Leer e importar el archivo json de repositorios.");
-            System.out.println("18. Mostrar todos los repositorios.");
+            System.out.println("11. Pagar una reserva de clase.");
+            System.out.println("12. Pagar un alquiler de equipo.");
+            System.out.println("13. Chequear morosidad de alumno.");
+            System.out.println("14. Chequear morosidad de cliente.");
+            System.out.println("15. Grabar repositorios a json.");
+            System.out.println("16. Leer e importar el archivo json de repositorios.");
+            System.out.println("17. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -75,14 +74,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 8 -> buscarAlumnoPorId();
                     case 9 -> mostrarReservasAlumno();
                     case 10 -> mostrarAlumnosInscriptosEnClase();
-                    case 11 -> cancelarReserva();
-                    case 12 -> pagarUnaReserva();
-                    case 13 -> pagarUnAlquiler();
-                    case 14 -> chequearMorosidadAlumno();
-                    case 15 -> chequearMorosidadCliente();
-                    case 16 -> grabarRepositoriosAjson();
-                    case 17 -> leerJsonDeRepositorios();
-                    case 18 -> mostrarTodosLosRepositorios();
+                    case 11 -> pagarUnaReserva();
+                    case 12 -> pagarUnAlquiler();
+                    case 13 -> chequearMorosidadAlumno();
+                    case 14 -> chequearMorosidadCliente();
+                    case 15 -> grabarRepositoriosAjson();
+                    case 16 -> leerJsonDeRepositorios();
+                    case 17 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -934,10 +932,5 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     public void leerJsonDeRepositorios()
     {
         escuela.leerJsonDeRepositorios();
-    }
-
-    public void cancelarReserva()
-    {
-
     }
 }
