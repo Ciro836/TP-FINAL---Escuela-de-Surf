@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
@@ -94,12 +93,16 @@ public class JsonUtiles
                                                 Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
                                                 Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
                                                 Repositorio<Alquiler> repoAlquiler,
-                                                Repositorio<Pago> repoPago, String archivo){
-        try{
+                                                Repositorio<Pago> repoPago, String archivo)
+    {
+        try
+        {
             StringBuilder contenidoJson = new StringBuilder();
-            try(BufferedReader lector = new BufferedReader(new FileReader(archivo))){
+            try (BufferedReader lector = new BufferedReader(new FileReader(archivo)))
+            {
                 String linea;
-                while((linea = lector.readLine()) != null){
+                while ((linea = lector.readLine()) != null)
+                {
                     contenidoJson.append(linea);
                 }
             }
@@ -124,36 +127,45 @@ public class JsonUtiles
                 JsonArray_a_Repositorio(jObject.getJSONArray("repoPagos"), repoPago, Pago.class);
 
             System.out.println("Repositorios cargados correcamente desde " + archivo);
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("Error al leer los datos del archivo" + e.getMessage());
         }
     }
 
 
     // paso por paramentro class<t> clase, para luego poder hacer clase.get para que sepa que tipo de instancias debe crear
-    public static <T> void JsonArray_a_Repositorio (JSONArray jsonArray, Repositorio <T> repositorio, Class<? extends T> clase)
+    public static <T> void JsonArray_a_Repositorio(JSONArray jsonArray, Repositorio<T> repositorio, Class<? extends T> clase)
     {
-        for(int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-            try {
+            try
+            {
 
                 Object objeto = clase.getDeclaredConstructor().newInstance();
 
-                if (objeto instanceof InterfazJson) {
+                if (objeto instanceof InterfazJson)
+                {
                     @SuppressWarnings("unchecked")
                     InterfazJson<T> jObject = (InterfazJson<T>) objeto;
 
-                   //guardo en obj porque el constructor de fromJson devuelve un objeto armado
-                   T obj = jObject.fromJSON(jsonObject);
-                  //utilizo el metodo getID de la interface implementado en las clases, para pasarle al metodo agregar el id correspondiente de cada instancia
-                    repositorio.agregar(jObject.getID(),obj);
-                }else{
+                    //guardo en obj porque el constructor de fromJson devuelve un objeto armado
+                    T obj = jObject.fromJSON(jsonObject);
+                    //utilizo el metodo getID de la interface implementado en las clases, para pasarle al metodo agregar el id correspondiente de cada instancia
+                    repositorio.agregar(jObject.getID(), obj);
+                }
+                else
+                {
                     System.out.println("La clase " + clase.getSimpleName() + "no implementa la InterfazJson");
                 }
-//agrego excepciones de la clase
-            } catch (JSONException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException | InvocationTargetException e ) {
+                //agrego excepciones de la clase
+            }
+            catch (JSONException | NoSuchMethodException | InstantiationException |
+                   IllegalAccessException | InvocationTargetException e)
+            {
                 System.out.println("Error creando el objeto" + clase.getSimpleName() + ": " + e.getMessage());
             }
         }

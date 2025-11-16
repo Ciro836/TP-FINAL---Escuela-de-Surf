@@ -2,6 +2,7 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
+import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 import Utiles.JsonUtiles;
 
@@ -115,13 +116,23 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoClases().agregar(clase);
     }
 
-    public void registrarNuevaReserva(Reserva reserva)
+    public void registrarNuevaReserva(Reserva reserva) throws CupoLlenoException, IdNoEncontradoException
     {
         if (reserva == null)
         {
             throw new IllegalArgumentException("La reserva no puede ser nula");
         }
+
+        ClaseDeSurf clase = reserva.getClaseDeSurf();
+        List<Alumno> alumnosInscritos = mostrarAlumnosDeUnaClase(clase.getIdClase());//este metodo lanza IdNoEncontradoException
+
+        if (alumnosInscritos.size() >= clase.getCupoMax())
+        {
+            throw new CupoLlenoException("La clase ID " + clase.getIdClase() + " ya está llena.");
+        }
+
         getRepoReservas().agregar(reserva);
+        getRepoPagos().agregar(reserva.getPago());
     }
 
     public void registrarNuevoCliente(Cliente cliente)
@@ -139,6 +150,8 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El alquiler no puede ser nulo");
         }
+        getRepoAlquileres().agregar(alquiler);
+        getRepoPagos().agregar(alquiler.getPago());
     }
 
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
@@ -175,6 +188,30 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         }
 
         return c;
+    }
+
+    public Cliente buscarClientePorId(int id) throws IdNoEncontradoException
+    {
+        Cliente c = getRepoClientes().buscarPorId(id);
+
+        if (c == null)
+        {
+            throw new IdNoEncontradoException("No se ha encontrado ningun cliente con el id ingresado: " + id);
+        }
+
+        return c;
+    }
+
+    public Equipo buscarEquipoPorId(int id) throws IdNoEncontradoException
+    {
+        Equipo e = getRepoEquipos().buscarPorId(id);
+
+        if (e == null)
+        {
+            throw new IdNoEncontradoException("No se ha encontrado ningun equipo con el id ingresado: " + id);
+        }
+
+        return e;
     }
 
     public List<Reserva> buscarReservasPorAlumnoId(int idAlumno) throws IdNoEncontradoException
@@ -308,6 +345,6 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
     public void leerJsonDeRepositorios()
     {
-
+        JsonUtiles.leerRepositorioDesdeJson(repoAlumnos, repoInstructores, repoClases, repoClientes, repoReservas, repoEquipos, repoAlquileres, repoPagos, "escuelaDeSurf.json");
     }
 }
