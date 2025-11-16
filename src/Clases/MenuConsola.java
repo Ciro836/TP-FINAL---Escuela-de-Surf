@@ -584,12 +584,73 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 //CREO EL ALQUILER
                 Alquiler alquiler = new Alquiler(fechaFin);
 
+                //ASIGNAMOS UN CLIENTE
+                System.out.println("\nListado de Clientes:");
+                escuela.getRepoClientes().getTodos().forEach(System.out::println);
+
+                System.out.print("\nIngrese el ID del cliente que realiza el alquiler: ");
+                int idCliente = scanner.nextInt();
+                scanner.nextLine();
+                Cliente cliente = escuela.buscarClientePorId(idCliente);
+
+                boolean seguirAgregandoEquipos = true;
+                do
+                {
+                    System.out.println("\nEquipos Disponibles:");
+                    // Muestra solo equipos disponibles
+                    escuela.getRepoEquipos().getTodos().stream()
+                            .filter(Equipo::isDisponible) // Filtra solo los disponibles
+                            .forEach(System.out::println);
+
+                    System.out.print("\nIngrese el ID del equipo a agregar (o 0 para terminar): ");
+                    int idEquipo = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (idEquipo == 0)
+                    {
+                        seguirAgregandoEquipos = false;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Equipo equipo = escuela.buscarEquipoPorId(idEquipo);
+                            if (equipo.isDisponible())
+                            {
+                                alquiler.agregarEquipo(equipo);
+                                System.out.println("✅ Equipo agregado: " + equipo.getNombre());
+                            }
+                            else
+                            {
+                                System.out.println("Error: el equipo seleccionado no esta disponible.");
+                            }
+                        }
+                        catch (IdNoEncontradoException e)
+                        {
+                            System.out.println("Error: " + e.getMessage());
+                        }
+                    }
+                } while (seguirAgregandoEquipos);
+
+                if (alquiler.getEquiposAlquilados().isEmpty())
+                {
+                    System.out.println("No se seleccionó ningún equipo. Se cancela el alquiler.");
+                    continue; // Vuelve al inicio del bucle "desea continuar"
+                }
+
+                //AGREGAMOS EL ALQUILER AL REPO Y A LA LISTA DE ALQUILERES DEL CLIENTE
+                cliente.agregarAlquiler(alquiler);
                 escuela.registrarNuevoAlquiler(alquiler);
                 System.out.println("Alquiler regitrado correctamente");
             }
             catch (DateTimeParseException e)
             {
                 System.out.println("❌ Error en el formato de fecha. Use YYYY-MM-DD");
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+                scanner.nextLine();
             }
             catch (IllegalArgumentException e)
             {
