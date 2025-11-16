@@ -2,6 +2,7 @@ package Clases;
 
 import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
+import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 import Utiles.JsonUtiles;
 
@@ -115,12 +116,21 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         getRepoClases().agregar(clase);
     }
 
-    public void registrarNuevaReserva(Reserva reserva)
+    public void registrarNuevaReserva(Reserva reserva) throws CupoLlenoException, IdNoEncontradoException
     {
         if (reserva == null)
         {
             throw new IllegalArgumentException("La reserva no puede ser nula");
         }
+
+        ClaseDeSurf clase = reserva.getClaseDeSurf();
+        List<Alumno> alumnosInscritos = mostrarAlumnosDeUnaClase(clase.getIdClase());//este metodo lanza IdNoEncontradoException
+
+        if (alumnosInscritos.size() >= clase.getCupoMax())
+        {
+            throw new CupoLlenoException("La clase ID " + clase.getIdClase() + " ya está llena.");
+        }
+
         getRepoReservas().agregar(reserva);
         getRepoPagos().agregar(reserva.getPago());
     }

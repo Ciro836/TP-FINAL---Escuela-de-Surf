@@ -5,6 +5,7 @@ import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.CupoInvalidoException;
+import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
 
@@ -507,6 +508,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     Reserva reserva = new Reserva(alumno, clase);
                     escuela.registrarNuevaReserva(reserva);
                     System.out.println("Reserva registrada correctamente.");
+                }
+                catch (IdNoEncontradoException | CupoLlenoException e)
+                {
+                    System.out.println("Error: " + e.getMessage());
                 }
                 catch (IllegalArgumentException e)
                 {
