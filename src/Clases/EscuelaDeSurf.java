@@ -122,6 +122,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
             throw new IllegalArgumentException("La reserva no puede ser nula");
         }
         getRepoReservas().agregar(reserva);
+        getRepoPagos().agregar(reserva.getPago());
     }
 
     public void registrarNuevoCliente(Cliente cliente)
@@ -140,6 +141,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
             throw new IllegalArgumentException("El alquiler no puede ser nulo");
         }
         getRepoAlquileres().agregar(alquiler);
+        getRepoPagos().agregar(alquiler.getPago());
     }
 
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException
@@ -333,7 +335,6 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
     public void leerJsonDeRepositorios()
     {
-
-
+        JsonUtiles.leerRepositorioDesdeJson(repoAlumnos, repoInstructores, repoClases, repoClientes, repoReservas, repoEquipos, repoAlquileres, repoPagos, "escuelaDeSurf.json");
     }
 }
