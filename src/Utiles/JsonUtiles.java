@@ -1,6 +1,7 @@
 package Utiles;
 
 import Clases.*;
+import Enumeradores.*;
 import Interfaces.InterfazJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +9,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 public class JsonUtiles
@@ -133,9 +136,194 @@ public class JsonUtiles
     }
 
 
-    
+    private static void cargarPagos(JSONArray jsonArray, Repositorio<Pago> repositorio)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Pago pago = new Pago();
 
+            // Asignamos campos desde el obj JSON
+            pago.setMonto(obj.getDouble("monto"));
+            pago.setEstadoPago(EstadoPago.valueOf(obj.getString("estadoPago")));
+            if (!obj.isNull("metodoPago"))
+            {
+                pago.setMetodoPago(MetodoPago.valueOf(obj.getString("metodoPago")));
+            }
+            if (!obj.isNull("fechaPago"))
+            {
+                pago.setFechaPago(LocalDate.parse(obj.getString("fechaPago")));
+            }
 
+            repositorio.agregar(obj.getInt("idPago"), pago);
+        }
+    }
+
+    private static void cargarEquipos(JSONArray jsonArray, Repositorio<Equipo> repositorio)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Equipo equipo = new Equipo(NombreEquipo.valueOf(obj.getString("nombre")));
+
+            equipo.setDisponible(obj.getBoolean("disponible"));
+
+            repositorio.agregar(obj.getInt("idEquipo"), equipo);
+        }
+    }
+
+    private static void cargarInstructores(JSONArray jsonArray, Repositorio<Instructor> repositorio)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Instructor instructor = new Instructor(
+                    obj.getString("dni"),
+                    obj.getString("nombre"),
+                    obj.getString("apellido"),
+                    obj.getInt("edad"),
+                    obj.getString("numeroTel"),
+                    obj.getInt("aniosExperiencia")
+            );
+            repositorio.agregar(obj.getInt("idInstructor"), instructor);
+        }
+    }
+
+    private static void cargarAlumnos(JSONArray jsonArray, Repositorio<Alumno> repositorio)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Alumno alumno = new Alumno(
+                    obj.getString("dni"),
+                    obj.getString("nombre"),
+                    obj.getString("apellido"),
+                    obj.getInt("edad"),
+                    obj.getString("numeroTel"),
+                    NivelDeSurf.valueOf(obj.getString("nivel")),
+                    obj.getInt("cantClasesTomadas")
+            );
+            repositorio.agregar(obj.getInt("idAlumno"), alumno);
+        }
+    }
+
+    private static void cargarClientes(JSONArray jsonArray, Repositorio<Cliente> repositorio)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Cliente cliente = new Cliente(
+                    obj.getString("dni"),
+                    obj.getString("nombre"),
+                    obj.getString("apellido"),
+                    obj.getInt("edad"),
+                    obj.getString("numeroTel")
+            );
+            repositorio.agregar(obj.getInt("idCliente"), cliente);
+        }
+    }
+
+    private static void cargarClases(JSONArray jsonArray, Repositorio<ClaseDeSurf> repoClase, Repositorio<Instructor> repoInstructor)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+
+            // Buscamos el instructor que ya cargamos
+            Instructor instructor = repoInstructor.buscarPorId(obj.getInt("Instructor"));
+
+            try
+            {
+                ClaseDeSurf clase = new ClaseDeSurf(
+                        instructor,
+                        TipoClase.valueOf(obj.getString("TipoDeClase")),
+                        LocalDateTime.parse(obj.getString("fechaYhora")),
+                        obj.getInt("cupoMax")
+                );
+                repoClase.agregar(obj.getInt("idClase"), clase);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Omitiendo clase con fecha inválida (pasada).");
+            }
+        }
+    }
+
+    private static void cargarAlquileres(JSONArray jsonArray, Repositorio<Alquiler> repoAlquiler, Repositorio<Equipo> repoEquipo, Repositorio<Cliente> repoCliente, Repositorio<Pago> repoPago)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+
+            Alquiler alquiler = new Alquiler(LocalDate.parse(obj.getString("fechaFin")));
+            alquiler.setFechaInicio(LocalDate.parse(obj.getString("fechaInicio")));
+            alquiler.setEstaActivo(obj.getBoolean("estaActivo"));
+
+            // Vinculamos equipos
+            JSONArray equiposArr = obj.getJSONArray("idEquiposAlquilados");
+            for (int j = 0; j < equiposArr.length(); j++)
+            {
+                Equipo equipo = repoEquipo.buscarPorId(equiposArr.getInt(j));
+                if (equipo != null)
+                {
+                    alquiler.agregarEquipo(equipo);
+                }
+            }
+
+            // Vinculamos al cliente
+            Cliente cliente = repoCliente.buscarPorId(obj.getInt("cliente"));
+            if (cliente != null)
+            {
+                cliente.agregarAlquiler(alquiler);
+            }
+
+            // Vinculamos el pago
+            if (!obj.isNull("idPago"))
+            {
+                int idPago = obj.getInt("idPago");
+                Pago pago = repoPago.buscarPorId(idPago);
+                if (pago != null)
+                {
+                    alquiler.setPago(pago);
+                }
+            }
+
+            repoAlquiler.agregar(obj.getInt("idAlquiler"), alquiler);
+        }
+    }
+
+    private static void cargarReservas(JSONArray jsonArray, Repositorio<Reserva> repoReserva, Repositorio<Alumno> repoAlumno, Repositorio<ClaseDeSurf> repoClase, Repositorio<Pago> repoPago)
+    {
+        if (jsonArray == null) return;
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+
+            // Buscamos los objetos que ya cargamos
+            Alumno alumno = repoAlumno.buscarPorId(obj.getInt("idAlumno"));
+            ClaseDeSurf clase = repoClase.buscarPorId(obj.getInt("idClase"));
+            Pago pago = repoPago.buscarPorId(obj.getInt("idPago"));
+
+            if (alumno != null && clase != null)
+            {
+                Reserva reserva = new Reserva(alumno, clase);
+
+                if (pago != null)
+                {
+                    reserva.setPago(pago);
+                }
+
+                repoReserva.agregar(obj.getInt("idReserva"), reserva);
+            }
+        }
+    }
 
 
     /*
