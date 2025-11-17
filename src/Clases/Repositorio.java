@@ -38,6 +38,22 @@ public class Repositorio<T>
         datos.put(proximoId++, valor);
     }
 
+    // para cargar desde JSON con un ID existente
+    public void agregar(int clave, T valor)
+    {
+        datos.put(clave, valor);
+        actualizarProximoId(clave);
+    }
+
+    // para asegurar que el proximoId sea mayor que cualquier ID cargado
+    private void actualizarProximoId(int clave)
+    {
+        if (clave >= proximoId)
+        {
+            proximoId = clave + 1;
+        }
+    }
+
     public boolean eliminar(int clave)
     {
         if (!datos.containsKey(clave))
