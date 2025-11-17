@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 public class JsonUtiles
@@ -109,32 +108,37 @@ public class JsonUtiles
 
             JSONObject jObject = new JSONObject(contenidoJson.toString());
 
-            if (jObject.has("repoAlumnos"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoAlumnos"), repoAlumno, Alumno.class);
-            if (jObject.has("repoInstructores"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoInstructores"), repoInstructor, Instructor.class);
-            if (jObject.has("repoClases"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoClases"), repoClase, ClaseDeSurf.class);
-            if (jObject.has("repoClientes"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoClientes"), repoCliente, Cliente.class);
-            if (jObject.has("repoReservas"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoReservas"), repoReserva, Reserva.class);
-            if (jObject.has("repoEquipos"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoEquipos"), repoEquipo, Equipo.class);
-            if (jObject.has("repoAlquileres"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoAlquileres"), repoAlquiler, Alquiler.class);
-            if (jObject.has("repoPagos"))
-                JsonArray_a_Repositorio(jObject.getJSONArray("repoPagos"), repoPago, Pago.class);
+            // ORDEN DE CARGA
+            // 1. Cargamos lo que NO depende de otros objetos
+            cargarPagos(jObject.optJSONArray("repoPagos"), repoPago);
+            cargarEquipos(jObject.optJSONArray("repoEquipos"), repoEquipo);
+            cargarInstructores(jObject.optJSONArray("repoInstructores"), repoInstructor);
+            cargarAlumnos(jObject.optJSONArray("repoAlumnos"), repoAlumno);
+            cargarClientes(jObject.optJSONArray("repoClientes"), repoCliente);
 
-            System.out.println("Repositorios cargados correcamente desde " + archivo);
+            // 2. Cargamos lo que depende de lo anterior
+            cargarClases(jObject.optJSONArray("repoClases"), repoClase, repoInstructor);
+
+            // 3. Cargamos las relaciones
+            cargarAlquileres(jObject.optJSONArray("repoAlquileres"), repoAlquiler, repoEquipo, repoCliente, repoPago);
+            cargarReservas(jObject.optJSONArray("repoReservas"), repoReserva, repoAlumno, repoClase, repoPago);
+
+            System.out.println("Repositorios cargados correctamente desde " + archivo);
         }
         catch (Exception e)
         {
-            System.out.println("Error al leer los datos del archivo" + e.getMessage());
+            System.out.println("Error al leer los datos del archivo: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
 
+    
+
+
+
+
+    /*
     // paso por paramentro class<t> clase, para luego poder hacer clase.get para que sepa que tipo de instancias debe crear
     public static <T> void JsonArray_a_Repositorio(JSONArray jsonArray, Repositorio<T> repositorio, Class<? extends T> clase)
     {
@@ -170,6 +174,7 @@ public class JsonUtiles
             }
         }
     }
+     */
 
 
 }
