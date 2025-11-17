@@ -4,7 +4,6 @@ import Enumeradores.MetodoPago;
 import Enumeradores.NivelDeSurf;
 import Enumeradores.NombreEquipo;
 import Enumeradores.TipoClase;
-import ExcepcionesPersonalizadas.CupoInvalidoException;
 import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
@@ -391,7 +390,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("❌ Error: " + e.getMessage());
             return null;
         }
-        catch (FechaInvalidaException | CupoInvalidoException e)
+        catch (FechaInvalidaException e)
         {
             System.out.println("❌ Error al crear la clase: " + e.getMessage());
             return null;
