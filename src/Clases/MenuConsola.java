@@ -437,21 +437,16 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 if (opcionAlumno == 2)
                 {
-                    scanner.nextLine();
+                    alumno = crearNuevoAlumno();
 
-                    agregarAlumno();
-                    //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso alumnos para ponerles un indica y obtener el ultimo
-                    List<Alumno> alumnos = new ArrayList<>(escuela.getRepoAlumnos().getTodos());
-
-                    if (alumnos.isEmpty())
+                    if (alumno == null)
                     {
-                        System.out.println("ERROR: No se pudo crear correctamente el alumno.");
+                        System.out.println("❌ Error al crear el alumno. Abortando la creación de la reserva.");
                         return;
                     }
 
-                    alumno = alumnos.getLast(); //obtengo el alumno cargado mas reciente
-                    System.out.println("Alumno seleccionado correctamente.");
-
+                    escuela.registrarNuevoAlumno(alumno);
+                    System.out.println("✅ Alumno nuevo registrado.");
                 }
 
                 //Elijo si selec. una clase existente o una nueva
