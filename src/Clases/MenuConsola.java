@@ -370,14 +370,9 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, formatter);
 
-            //CUPO MÁXIMO
-            System.out.print("Ingrese el cupo máximo de alumnos: ");
-            int cupoMax = scanner.nextInt();
-            scanner.nextLine();
-
             //CREACION DE CLASE
 
-            return new ClaseDeSurf(instructor, tipoClase, fechaHora, cupoMax);
+            return new ClaseDeSurf(instructor, tipoClase, fechaHora);
 
         }
         catch (InputMismatchException e)
