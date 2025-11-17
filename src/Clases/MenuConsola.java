@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -150,61 +149,69 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            Alumno alumno = crearNuevoAlumno();
+
+            if (alumno != null)
             {
-                System.out.println("CARGA DE DATOS DE ALUMNOS\n");
-
-                System.out.print("Ingrese el numero de DNI: ");
-                String dni = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nombre del alumno: ");
-                String nombre = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el apellido del alumno: ");
-                String apellido = scanner.nextLine().trim();
-
-                System.out.print("Ingrese la edad del alumno: ");
-                int edad = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.print("Ingrese el numero de telefono: ");
-                String telefono = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
-                String nivelTexto = scanner.nextLine().trim().toUpperCase();
-                NivelDeSurf nivel;
-                try
-                {
-                    nivel = NivelDeSurf.valueOf(nivelTexto);
-                }
-                catch (IllegalArgumentException ex)
-                {
-                    throw new IllegalArgumentException("Nivel de surf inválido. Use: Principiante, Intermedio o Avanzado.");
-                }
-
-                System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
-                int cantDeClases = scanner.nextInt();
-                scanner.nextLine();
-
-                Alumno alumno = new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
                 escuela.registrarNuevoAlumno(alumno);
                 System.out.println("Alumno agregado correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+                System.out.println("Creación de alumno cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando alumnos?"));
+    }
+
+    private Alumno crearNuevoAlumno() //para crear un solo alumno
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE ALUMNO\n");
+
+            System.out.print("Ingrese el numero de DNI: ");
+            String dni = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nombre del alumno: ");
+            String nombre = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el apellido del alumno: ");
+            String apellido = scanner.nextLine().trim();
+
+            System.out.print("Ingrese la edad del alumno: ");
+            int edad = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Ingrese el numero de telefono: ");
+            String telefono = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
+            String nivelTexto = scanner.nextLine().trim().toUpperCase();
+            NivelDeSurf nivel = NivelDeSurf.valueOf(nivelTexto);
+
+            System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
+            int cantDeClases = scanner.nextInt();
+            scanner.nextLine();
+
+            return new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarEquipo()
@@ -227,7 +234,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 int seleccion = scanner.nextInt();
                 scanner.nextLine();
 
-                if (seleccion < 0 || seleccion > tiposDeEquipo.length)
+                if (seleccion < 0 || seleccion >= tiposDeEquipo.length)
                 {
                     throw new IllegalArgumentException("Selección inválida. Ingrese un número entre 0 y " + tiposDeEquipo.length + ".");
                 }
@@ -308,79 +315,97 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            ClaseDeSurf clase = crearNuevaClaseDeSurf();
+
+            if (clase != null)
             {
-                System.out.println("CARGA DE DATOS DE CLASES DE SURF\n");
-
-                //INSTRUCTOR
-                System.out.print("Ingrese el id del instructor que dictará la clase: ");
-                int idInstructor = scanner.nextInt();
-                scanner.nextLine();
-                Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
-
-                //TIPO DE CLASE
-                System.out.println("Ingrese el tipo de clase: ");
-                System.out.println("1. Clase grupal");
-                System.out.println("2. Clase particular");
-                int respuesta = scanner.nextInt();
-                scanner.nextLine();
-
-                TipoClase tipoClase = null;
-                switch (respuesta)
-                {
-                    case 1 -> tipoClase = TipoClase.GRUPAL;
-                    case 2 -> tipoClase = TipoClase.PARTICULAR;
-                    default -> throw new IllegalArgumentException("Opción de tipo de clase no válida.");
-                }
-
-                //FECHA Y HORA
-                System.out.print("Ingrese la fecha de la clase (formato YYYY-MM-DD): ");
-                String fechaStr = scanner.nextLine().trim();
-                System.out.print("Ingrese la hora de la clase (formato HH:MM, 24hs): ");
-                String horaStr = scanner.nextLine().trim();
-
-                // Combinamos la fecha y la hora
-                String fechaHoraStr = fechaStr + " " + horaStr;
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, formatter);
-
-                //CUPO MÁXIMO
-                System.out.print("Ingrese el cupo máximo de alumnos: ");
-                int cupoMax = scanner.nextInt();
-                scanner.nextLine();
-
-                //CREACION DE CLASE y ademas se agrega al repo de clases.
-                ClaseDeSurf clase = new ClaseDeSurf(instructor, tipoClase, fechaHora, cupoMax);
                 escuela.registrarNuevaClase(clase);
                 System.out.println("Clase agregada correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (DateTimeParseException e)
-            {
-                System.out.println("❌ Error en el formato de fecha u hora. Use YYYY-MM-DD y HH:MM.");
-            }
-            catch (IdNoEncontradoException e)
-            {
-                System.out.println("❌ Error: " + e.getMessage()); //
-            }
-            catch (FechaInvalidaException | CupoInvalidoException e)
-            {
-                System.out.println("❌ Error al crear la clase: " + e.getMessage()); //
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+                System.out.println("Creación de clase cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando clases de surf?"));
+    }
+
+    private ClaseDeSurf crearNuevaClaseDeSurf()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE UNA CLASE DE SURF\n");
+
+            //INSTRUCTOR
+            System.out.print("Ingrese el id del instructor que dictará la clase: ");
+            int idInstructor = scanner.nextInt();
+            scanner.nextLine();
+
+            Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
+
+            //TIPO DE CLASE
+            System.out.println("Ingrese el tipo de clase: ");
+            System.out.println("1. Clase grupal");
+            System.out.println("2. Clase particular");
+            System.out.print("Opción: ");
+            int respuesta = scanner.nextInt();
+            scanner.nextLine();
+
+            TipoClase tipoClase = null;
+            switch (respuesta)
+            {
+                case 1 -> tipoClase = TipoClase.GRUPAL;
+                case 2 -> tipoClase = TipoClase.PARTICULAR;
+                default -> throw new IllegalArgumentException("Opción de tipo de clase no válida.");
+            }
+
+            //FECHA Y HORA
+            System.out.print("Ingrese la fecha de la clase (formato YYYY-MM-DD): ");
+            String fechaStr = scanner.nextLine().trim();
+            System.out.print("Ingrese la hora de la clase (formato HH:MM, 24hs): ");
+            String horaStr = scanner.nextLine().trim();
+
+            String fechaHoraStr = fechaStr + " " + horaStr;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, formatter);
+
+            //CREACION DE CLASE
+
+            return new ClaseDeSurf(instructor, tipoClase, fechaHora);
+
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (DateTimeParseException e)
+        {
+            System.out.println("❌ Error en el formato de fecha u hora. Use YYYY-MM-DD y HH:MM.");
+            return null;
+        }
+        catch (IdNoEncontradoException e)
+        {
+            System.out.println("❌ Error: " + e.getMessage());
+            return null;
+        }
+        catch (FechaInvalidaException | CupoInvalidoException e)
+        {
+            System.out.println("❌ Error al crear la clase: " + e.getMessage());
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarReserva()
@@ -429,21 +454,16 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 }
                 if (opcionAlumno == 2)
                 {
-                    scanner.nextLine();
+                    alumno = crearNuevoAlumno();
 
-                    agregarAlumno();
-                    //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso alumnos para ponerles un indica y obtener el ultimo
-                    List<Alumno> alumnos = new ArrayList<>(escuela.getRepoAlumnos().getTodos());
-
-                    if (alumnos.isEmpty())
+                    if (alumno == null)
                     {
-                        System.out.println("ERROR: No se pudo crear correctamente el alumno.");
+                        System.out.println("❌ Error al crear el alumno. Abortando la creación de la reserva.");
                         return;
                     }
 
-                    alumno = alumnos.getLast(); //obtengo el alumno cargado mas reciente
-                    System.out.println("Alumno seleccionado correctamente.");
-
+                    escuela.registrarNuevoAlumno(alumno);
+                    System.out.println("✅ Alumno nuevo registrado.");
                 }
 
                 //Elijo si selec. una clase existente o una nueva
@@ -485,20 +505,16 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
                 if (opcionClase == 2)
                 {
-                    scanner.nextLine();
+                    clase = crearNuevaClaseDeSurf();
 
-                    agregarClaseDeSurf();
-                    //paso la coleccione de valores que devuelve getTodos a un arrayList, en este caso clase de surf para ponerles un indica y obtener el ultimo
-                    List<ClaseDeSurf> clases = new ArrayList<>(escuela.getRepoClases().getTodos());
-
-                    if (clases.isEmpty())
+                    if (clase == null)
                     {
-                        System.out.println("ERROR: No se pudo crear correctamente la clase.");
+                        System.out.println("❌ Error al crear la clase. Abortando creación de reserva.");
                         return;
                     }
 
-                    clase = clases.getLast(); //obtengo el alumno cargado mas reciente
-                    System.out.println("Clase seleccionada correctamente.");
+                    escuela.registrarNuevaClase(clase);
+                    System.out.println("✅ Clase nueva registrada.");
                 }
 
                 try

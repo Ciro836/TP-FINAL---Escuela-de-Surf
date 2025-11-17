@@ -1,7 +1,6 @@
 package Clases;
 
 import Enumeradores.TipoClase;
-import ExcepcionesPersonalizadas.CupoInvalidoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import Interfaces.InterfazJson;
 import org.json.JSONException;
@@ -16,8 +15,8 @@ public class ClaseDeSurf implements InterfazJson
     private Instructor instructor;
     private TipoClase tipoDeClase;
     private LocalDateTime fechaHora;
-    private int cupoMax;
-    private double valorClase;
+    private final int cupoMax;
+    private final double valorClase;
 
     /// CONSTRUCTORES
 
@@ -27,11 +26,11 @@ public class ClaseDeSurf implements InterfazJson
         this.instructor = null;
         this.tipoDeClase = null;
         this.fechaHora = null;
-        this.cupoMax = 1;
+        this.cupoMax = -1;
         valorClase = 0.0;
     }
 
-    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora, int cupoMax) throws FechaInvalidaException, CupoInvalidoException
+    public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora) throws FechaInvalidaException
     {
         if (instructor == null)
         {
@@ -45,16 +44,12 @@ public class ClaseDeSurf implements InterfazJson
         {
             throw new FechaInvalidaException();
         }
-        if (cupoMax <= 0)
-        {
-            throw new CupoInvalidoException();
-        }
 
         this.idClase = ++contador;
         this.instructor = instructor;
         this.tipoDeClase = tipoDeClase;
         this.fechaHora = fechaHora;
-        this.cupoMax = cupoMax;
+        this.cupoMax = tipoDeClase.getCupoMaximo();
         this.valorClase = tipoDeClase.getValorClase();
     }
 
@@ -112,15 +107,6 @@ public class ClaseDeSurf implements InterfazJson
     public int getCupoMax()
     {
         return cupoMax;
-    }
-
-    public void setCupoMax(int cupoMax) throws CupoInvalidoException
-    {
-        if (cupoMax <= 0)
-        {
-            throw new CupoInvalidoException();
-        }
-        this.cupoMax = cupoMax;
     }
 
     public double getValorClase()

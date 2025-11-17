@@ -214,7 +214,6 @@ public class Alquiler implements InterfazJson
 
         try
         {
-
             jObj.put("idAlquiler", idAlquiler);
 
             JSONArray jArray = new JSONArray();
@@ -228,7 +227,7 @@ public class Alquiler implements InterfazJson
             jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);
             jObj.put("montoTotal", montoTotal);
             jObj.put("estaActivo", estaActivo);
-
+            jObj.put("idPago", pago != null ? pago.getIdPago() : JSONObject.NULL);
         }
         catch (JSONException e)
         {
