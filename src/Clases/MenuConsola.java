@@ -435,7 +435,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     else
                     {
                         System.out.println("Listado de alumnos existente: ");
-                        escuela.getRepoAlumnos().getTodos();
+                        escuela.getRepoAlumnos().getTodos().forEach(System.out::println);
 
                         System.out.println("Ingrese el ID del alumno: ");
                         int idAlumno = scanner.nextInt();
@@ -485,7 +485,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     else
                     {
                         System.out.println("Listado de clases existentes: ");
-                        escuela.getRepoClases().getTodos();
+                        escuela.getRepoClases().getTodos().forEach(System.out::println);
 
                         System.out.println("Ingrese el ID de la clase: ");
                         int idClase = scanner.nextInt();
