@@ -150,61 +150,69 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            Alumno alumno = crearNuevoAlumno();
+
+            if (alumno != null)
             {
-                System.out.println("CARGA DE DATOS DE ALUMNOS\n");
-
-                System.out.print("Ingrese el numero de DNI: ");
-                String dni = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nombre del alumno: ");
-                String nombre = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el apellido del alumno: ");
-                String apellido = scanner.nextLine().trim();
-
-                System.out.print("Ingrese la edad del alumno: ");
-                int edad = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.print("Ingrese el numero de telefono: ");
-                String telefono = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
-                String nivelTexto = scanner.nextLine().trim().toUpperCase();
-                NivelDeSurf nivel;
-                try
-                {
-                    nivel = NivelDeSurf.valueOf(nivelTexto);
-                }
-                catch (IllegalArgumentException ex)
-                {
-                    throw new IllegalArgumentException("Nivel de surf inválido. Use: Principiante, Intermedio o Avanzado.");
-                }
-
-                System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
-                int cantDeClases = scanner.nextInt();
-                scanner.nextLine();
-
-                Alumno alumno = new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
                 escuela.registrarNuevoAlumno(alumno);
                 System.out.println("Alumno agregado correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+                System.out.println("Creación de alumno cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando alumnos?"));
+    }
+
+    private Alumno crearNuevoAlumno() //para crear un solo alumno
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE ALUMNO\n");
+
+            System.out.print("Ingrese el numero de DNI: ");
+            String dni = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nombre del alumno: ");
+            String nombre = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el apellido del alumno: ");
+            String apellido = scanner.nextLine().trim();
+
+            System.out.print("Ingrese la edad del alumno: ");
+            int edad = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Ingrese el numero de telefono: ");
+            String telefono = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nivel de surf(Principiante/Intermedio/Avanzado): ");
+            String nivelTexto = scanner.nextLine().trim().toUpperCase();
+            NivelDeSurf nivel = NivelDeSurf.valueOf(nivelTexto);
+
+            System.out.print("Ingrese la cant de clases tomadas por el alumno: ");
+            int cantDeClases = scanner.nextInt();
+            scanner.nextLine();
+
+            return new Alumno(dni, nombre, apellido, edad, telefono, nivel, cantDeClases);
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos al crear el alumno: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado al procesar el alumno: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarEquipo()
@@ -227,7 +235,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 int seleccion = scanner.nextInt();
                 scanner.nextLine();
 
-                if (seleccion < 0 || seleccion > tiposDeEquipo.length)
+                if (seleccion < 0 || seleccion >= tiposDeEquipo.length)
                 {
                     throw new IllegalArgumentException("Selección inválida. Ingrese un número entre 0 y " + tiposDeEquipo.length + ".");
                 }
