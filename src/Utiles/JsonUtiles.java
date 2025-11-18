@@ -241,10 +241,8 @@ public class JsonUtiles
             try
             {
                 ClaseDeSurf clase = new ClaseDeSurf(
-                        instructor,
-                        TipoClase.valueOf(obj.getString("TipoDeClase")),
-                        LocalDateTime.parse(obj.getString("fechaYhora")),
-                        obj.getInt("cupoMax")
+                        instructor, TipoClase.valueOf(obj.getString("TipoDeClase")),
+                        LocalDateTime.parse(obj.getString("fechaYhora"))
                 );
                 repoClase.agregar(obj.getInt("idClase"), clase);
             }
