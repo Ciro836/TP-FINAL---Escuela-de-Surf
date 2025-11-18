@@ -142,12 +142,23 @@ public class JsonUtiles
         for (int i = 0; i < jsonArray.length(); i++)
         {
             JSONObject obj = jsonArray.getJSONObject(i);
+
+            MetodoPago metodo = null;
+            if (!obj.isNull("metodoPago"))
+            {
+                metodo = MetodoPago.valueOf(obj.getString("metodoPago"));
+            }
+
             Pago pago = new Pago(obj.getInt("idPago"),
-                    MetodoPago.valueOf(obj.getString("metodoPago")),
+                    metodo,
                     obj.getDouble("monto"));
 
             pago.setEstadoPago(EstadoPago.valueOf(obj.getString("estadoPago")));
-            pago.setFechaPago(LocalDate.parse(obj.getString("fechaPago")));
+
+            if (!obj.isNull("fechaPago"))
+            {
+                pago.setFechaPago(LocalDate.parse(obj.getString("fechaPago")));
+            }
 
             repositorio.agregar(obj.getInt("idPago"), pago);
         }
