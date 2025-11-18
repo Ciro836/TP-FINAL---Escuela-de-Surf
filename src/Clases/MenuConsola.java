@@ -7,6 +7,7 @@ import Enumeradores.TipoClase;
 import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.FechaInvalidaException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
+import Utiles.JsonUtiles;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -1248,6 +1249,6 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void grabarRepositoriosAjson()
     {
-        escuela.grabarRepositoriosAjson();
+        JsonUtiles.grabarUnJson(escuela.toJSON(), "escuelaDeSurf.json");
     }
 }

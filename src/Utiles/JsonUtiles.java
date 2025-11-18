@@ -16,6 +16,20 @@ import java.util.Collection;
 public class JsonUtiles
 {
 
+    public static void grabarUnJson(JSONObject jsonObject, String archivo)
+    {
+        try
+        {
+            FileWriter file = new FileWriter(archivo);
+            file.write(jsonObject.toString(4));
+            file.close();
+        }
+        catch (IOException | JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public static void grabarUnJson(JSONArray jsonArray, String archivo)
     {
         try
@@ -48,35 +62,6 @@ public class JsonUtiles
 
     //METODOS PROPIOS
 
-    public static void grabarRepositorioEnJson(Repositorio<Alumno> repoAlumno, Repositorio<Instructor> repoInstructor,
-                                               Repositorio<ClaseDeSurf> repoClase, Repositorio<Cliente> repoCliente,
-                                               Repositorio<Reserva> repoReserva, Repositorio<Equipo> repoEquipo,
-                                               Repositorio<Alquiler> repoAlquiler,
-                                               Repositorio<Pago> repoPago, String archivo)
-    {
-        try
-        {
-            JSONObject json = new JSONObject();
-
-            json.put("repoAlumnos", coleccion_a_JsonArray(repoAlumno.getTodos()));
-            json.put("repoInstructores", coleccion_a_JsonArray(repoInstructor.getTodos()));
-            json.put("repoClases", coleccion_a_JsonArray(repoClase.getTodos()));
-            json.put("repoClientes", coleccion_a_JsonArray(repoCliente.getTodos()));
-            json.put("repoReservas", coleccion_a_JsonArray(repoReserva.getTodos()));
-            json.put("repoEquipos", coleccion_a_JsonArray(repoEquipo.getTodos()));
-            json.put("repoAlquileres", coleccion_a_JsonArray(repoAlquiler.getTodos()));
-            json.put("repoPagos", coleccion_a_JsonArray(repoPago.getTodos()));
-
-            try (FileWriter file = new FileWriter(archivo))
-            {
-                file.write(json.toString(4));
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
     public static JSONArray coleccion_a_JsonArray(Collection<?> coleccion)
     {
