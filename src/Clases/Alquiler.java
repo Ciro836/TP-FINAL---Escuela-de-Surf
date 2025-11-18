@@ -272,24 +272,23 @@ public class Alquiler implements InterfazJson
 
     public void cancelarAlquiler()
     {
-        this.estaActivo = true;
+
+        if (!estaActivo)
         {
-            if (!estaActivo)
-            {
-                throw new IllegalStateException("El alquiler ya esta cancelado o finalizado.");
-            }
-
-            //libero el equipo
-            for (Equipo equipo : equiposAlquilados)
-            {
-                equipo.setDisponible(true);
-            }
-
-            this.estaActivo = false;
-            this.montoTotal = 0.0;
-
-            System.out.println("El alquiler ha sido cancelado correctamente.");
+            throw new IllegalStateException("El alquiler ya esta cancelado o finalizado.");
         }
+
+        //libero el equipo
+        for (Equipo equipo : equiposAlquilados)
+        {
+            equipo.setDisponible(true);
+        }
+
+        this.estaActivo = false;
+        this.montoTotal = 0.0;
+
+        System.out.println("El alquiler ha sido cancelado correctamente.");
+
     }
 
     @Override
