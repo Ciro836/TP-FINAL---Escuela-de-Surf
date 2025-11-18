@@ -68,7 +68,13 @@ public class Reserva implements InterfazJson
         }
     }
 
+
     /// GETTERS Y SETTERS
+
+    public int getIdReserva()
+    {
+        return idReserva;
+    }
 
     public Alumno getAlumno()
     {
