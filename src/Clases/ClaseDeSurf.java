@@ -66,10 +66,6 @@ public class ClaseDeSurf implements InterfazJson
         {
             throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
         }
-        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
-        {
-            throw new FechaInvalidaException();
-        }
 
         this.idClase = idClase;
         this.instructor = instructor;
