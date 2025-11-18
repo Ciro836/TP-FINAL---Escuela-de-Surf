@@ -673,7 +673,27 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
+            Alquiler alquiler = crearNuevoAlquiler();
 
+            if (alquiler != null)
+            {
+                try
+                {
+                    escuela.registrarNuevoAlquiler(alquiler);
+
+                    alquiler.getCliente().agregarAlquiler(alquiler);
+
+                    System.out.println("✅ Alquiler registrado y vinculado al cliente correctamente.");
+                }
+                catch (Exception e)
+                {
+                    System.out.println("❌ Error al guardar el alquiler: " + e.getMessage());
+                }
+            }
+            else
+            {
+                System.out.println("⚠️ La carga del alquiler fue cancelada.");
+            }
 
         } while (deseaContinuar("Desea seguir cargando alquilers?"));
     }
@@ -772,13 +792,10 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             if (alquiler.getEquiposAlquilados().isEmpty())
             {
                 System.out.println("No se seleccionó ningún equipo. Se cancela el alquiler.");
-                continue; // Vuelve al inicio del bucle "desea continuar"
+                return null;
             }
 
-            //AGREGAMOS EL ALQUILER AL REPO Y A LA LISTA DE ALQUILERES DEL CLIENTE
-            cliente.agregarAlquiler(alquiler);
-            escuela.registrarNuevoAlquiler(alquiler);
-            System.out.println("Alquiler regitrado correctamente");
+            return alquiler;
         }
         catch (DateTimeParseException e)
         {
