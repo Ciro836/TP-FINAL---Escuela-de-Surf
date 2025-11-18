@@ -155,6 +155,7 @@ public class Alquiler implements InterfazJson
         this.montoTotal = total;
         pago.setMonto(total);
     }
+
     public void finalizarAlquiler()
     {
         if (!this.estaActivo)
@@ -213,25 +214,32 @@ public class Alquiler implements InterfazJson
         System.out.println("────────── DETALLE DEL ALQUILER ──────────");
         System.out.println("ID: " + idAlquiler);
         System.out.println("Periodo: " + fechaInicio + " a " + fechaFin);
-        System.out.println("Estado: " + (estaActivo? "Activo" : "Finalizado"));
+        System.out.println("Estado: " + (estaActivo ? "Activo" : "Finalizado"));
         System.out.println("Monto: $" + montoTotal);
 
         System.out.println("Equipos alquilados: ");
-            if (equiposAlquilados == null || equiposAlquilados.isEmpty()){
+        if (equiposAlquilados == null || equiposAlquilados.isEmpty())
+        {
             System.out.println("No se cargaron equipos");
-            }else{
-                 for (Equipo equipo : equiposAlquilados){
-                System.out.println(" . ID" +  equipo.getIdEquipo() + " - " + equipo.getNombre());
-                }
+        }
+        else
+        {
+            for (Equipo equipo : equiposAlquilados)
+            {
+                System.out.println(" . ID" + equipo.getIdEquipo() + " - " + equipo.getNombre());
             }
+        }
         System.out.println("\nPago: ");
-             if (pago != null) {
-                System.out.println("  - Método: " + pago.getMetodoPago());
-                System.out.println("  - Monto pagado: $" + pago.getMonto());
-                System.out.println("  - Fecha de pago: " + pago.getFechaPago());
-            } else {
-                System.out.println("  - No se registró pago aún.");
-            }
+        if (pago != null)
+        {
+            System.out.println("  - Método: " + pago.getMetodoPago());
+            System.out.println("  - Monto pagado: $" + pago.getMonto());
+            System.out.println("  - Fecha de pago: " + pago.getFechaPago());
+        }
+        else
+        {
+            System.out.println("  - No se registró pago aún.");
+        }
         System.out.println("──────────────────────────────────────────────\n");
     }
 
@@ -239,13 +247,14 @@ public class Alquiler implements InterfazJson
     {
         this.estaActivo = true;
         {
-            if(!estaActivo)
+            if (!estaActivo)
             {
                 throw new IllegalStateException("El alquiler ya esta cancelado o finalizado.");
             }
 
             //libero el equipo
-            for (Equipo equipo : equiposAlquilados){
+            for (Equipo equipo : equiposAlquilados)
+            {
                 equipo.setDisponible(true);
             }
 
