@@ -46,7 +46,8 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("10. Buscar alumno por su id.");
             System.out.println("11. Mostrar reservas de un alumno.");
             System.out.println("12. Mostrar alumnos inscriptos en una clase.");
-            System.out.println("13. Mostrar alquileres");
+            System.out.println("13. Mostrar los alquileres");
+            System.out.println("14. Mostrar las reservas");
             System.out.println("14. Pagar una reserva de clase.");
             System.out.println("15. Pagar un alquiler de equipo.");
             System.out.println("16. Chequear morosidad de alumno.");
@@ -78,13 +79,14 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 11 -> mostrarReservasAlumno();
                     case 12 -> mostrarAlumnosInscriptosEnClase();
                     case 13 -> mostrarAlquileres();
-                    case 14 -> pagarUnaReserva();
-                    case 15 -> pagarUnAlquiler();
-                    case 16 -> chequearMorosidadAlumno();
-                    case 17 -> chequearMorosidadCliente();
-                    case 18 -> grabarRepositoriosAjson();
-                    case 19 -> leerJsonDeRepositorios();
-                    case 20 -> mostrarTodosLosRepositorios();
+                    case 14 -> mostrarReservas();
+                    case 15 -> pagarUnaReserva();
+                    case 16 -> pagarUnAlquiler();
+                    case 17 -> chequearMorosidadAlumno();
+                    case 18 -> chequearMorosidadCliente();
+                    case 19 -> grabarRepositoriosAjson();
+                    case 20 -> leerJsonDeRepositorios();
+                    case 21 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -812,7 +814,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         try{
             opcion = Integer.parseInt(scanner.nextLine());
         }catch (NumberFormatException e){
-            System.out.println("⚠️ Debes ingresar un n{umero válido.");
+            System.out.println("⚠️ Debes ingresar un número válido.");
             return;
         }
 
@@ -887,6 +889,57 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("Error al cancelar la reserva " + e.getMessage());
         }
 
+    }
+
+    public void mostrarReservas()
+    {
+        if(escuela.getRepoReservas().getTodos().isEmpty()){
+            System.out.println("⚠️ No se encuentrar reservas registradas.");
+            return;
+        }
+
+        System.out.println("════════════ MOSTRAR RESERVAS ════════════");
+        System.out.println("1) MOSTRAR SOLO ACTIVAS");
+        System.out.println("2) MOSTRAR SOLO FINALIZADAS");
+        System.out.println("3) MOSTRAR TODAS");
+        System.out.println("Seleccione una opción: ");
+
+        int opcion;
+
+        try{
+            opcion = Integer.parseInt(scanner.nextLine());
+        }catch (NumberFormatException e){
+            System.out.println("⚠️ Debes ingresar un número válido.");
+            return;
+        }
+
+        System.out.println("════════════ RESULTADO ════════════");
+        switch (opcion)
+        {
+            case 1:
+                System.out.println("RESERVAS ACTIVAS: ");
+                escuela.getRepoReservas().getTodos().stream()
+                        .filter(Reserva::isEstaActiva)
+                        .forEach(Reserva::mostrarReservaMejorada);
+                break;
+
+            case 2:
+                System.out.println("RESERVAS FINALIZADAS: ");
+                escuela.getRepoReservas().getTodos().stream()
+                        .filter(reserva -> !reserva.isEstaActiva())
+                        .forEach(Reserva::mostrarReservaMejorada);
+                break;
+
+            case 3:
+                System.out.println("TODOS LAS RESERVAS: ");
+                escuela.getRepoReservas().getTodos().forEach(Reserva::mostrarReservaMejorada);
+                break;
+
+            default:
+                System.out.println("Opción no válida.");
+
+        }
+        System.out.println("═══════════════════════════════════════════════\n");
     }
     private MetodoPago seleccionarMetodoPago() throws IllegalArgumentException, InputMismatchException
     {

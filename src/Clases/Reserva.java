@@ -110,11 +110,13 @@ public class Reserva implements InterfazJson
         String estadopago = pago.getEstadoPago().toString();
         String fechaLimite = pago.getFechaLimite().toString();
         String fechaPago = (pago.getFechaPago() == null) ? "No pagó aún" : pago.getFechaPago().toString();
+        String estado = isEstaActiva() ? "Activa" : "Finalizada";
 
         return "\n──────── RESERVA #" + idReserva + " ────────" +
                 "\nAlumno: " + alumnoNombre +
                 "\n" + claseInfo +
                 "\nEstado del pago: " + estadopago +
+                "\nEstado: " + estado +
                 "\n--------------------------------" +
                 "\n\nPAGO" +
                 "\nMonto: $" + pago.getMonto() +
