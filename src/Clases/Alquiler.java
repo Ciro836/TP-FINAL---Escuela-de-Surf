@@ -162,6 +162,11 @@ public class Alquiler implements InterfazJson
         this.pago = pago;
     }
 
+    public Cliente getCliente()
+    {
+        return cliente;
+    }
+
     /// METODOS
 
     public int contarDiasDeAlquiler()
