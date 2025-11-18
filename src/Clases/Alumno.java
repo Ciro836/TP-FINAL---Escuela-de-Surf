@@ -38,6 +38,22 @@ public class Alumno extends Persona
         this.cantClasesTomadas = cantClasesTomadas;
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Alumno(int idAlumno, String dni, String nombre, String apellido, int edad, String numeroTel, NivelDeSurf nivel, int cantClasesTomadas)
+    {
+        super(dni, nombre, apellido, edad, numeroTel);
+
+        this.idAlumno = idAlumno; // Asignamos el ID viejo
+        this.nivel = nivel;
+        this.cantClasesTomadas = cantClasesTomadas;
+
+        // Actualizamos el contador estático si el ID cargado es mayor
+        // Esto evita que se repitan IDs al crear nuevos alumnos
+        if (idAlumno > contador)
+        {
+            contador = idAlumno;
+        }
+    }
 
     /// GETTERS Y SETTERS
 

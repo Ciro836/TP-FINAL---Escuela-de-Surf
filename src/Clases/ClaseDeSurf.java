@@ -29,7 +29,7 @@ public class ClaseDeSurf implements InterfazJson
         this.fechaHora = null;
         this.cupoMax = -1;
         valorClase = 0.0;
-        this.cuposOcupados =0;
+        this.cuposOcupados = 0;
     }
 
     public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora) throws FechaInvalidaException
@@ -53,6 +53,31 @@ public class ClaseDeSurf implements InterfazJson
         this.fechaHora = fechaHora;
         this.cupoMax = tipoDeClase.getCupoMaximo();
         this.valorClase = tipoDeClase.getValorClase();
+    }
+
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public ClaseDeSurf(int idClase, Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora) throws FechaInvalidaException
+    {
+        if (instructor == null)
+        {
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
+        }
+        if (tipoDeClase == null)
+        {
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
+        }
+
+        this.idClase = idClase;
+        this.instructor = instructor;
+        this.tipoDeClase = tipoDeClase;
+        this.fechaHora = fechaHora;
+        this.cupoMax = tipoDeClase.getCupoMaximo();
+        this.valorClase = tipoDeClase.getValorClase();
+
+        if (idClase > contador)
+        {
+            contador = idClase;
+        }
     }
 
     /// GETTERS Y SETTERS
@@ -120,12 +145,15 @@ public class ClaseDeSurf implements InterfazJson
         return this.tipoDeClase.getValorClase();
     }
 
-    public int getCuposOcupados() {
+    public int getCuposOcupados()
+    {
         return cuposOcupados;
     }
 
-    public void setCuposOcupados(int cuposOcupados) {
-        if (cuposOcupados < 0 || cuposOcupados > cupoMax){
+    public void setCuposOcupados(int cuposOcupados)
+    {
+        if (cuposOcupados < 0 || cuposOcupados > cupoMax)
+        {
             throw new IllegalArgumentException("Cantidad de cupos inválidas. ");
         }
         this.cuposOcupados = cuposOcupados;

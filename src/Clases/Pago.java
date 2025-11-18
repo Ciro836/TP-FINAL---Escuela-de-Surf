@@ -49,6 +49,31 @@ public class Pago implements InterfazJson
         this.estadoPago = EstadoPago.PENDIENTE;
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Pago(int idPago, MetodoPago metodoPago, double monto)
+    {
+        if (metodoPago == null)
+        {
+            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
+        }
+        if (monto < 0.0)
+        {
+            throw new IllegalArgumentException("⚠️: El monto no puede ser negativo.");
+        }
+
+        this.idPago = idPago;
+        this.metodoPago = metodoPago;
+        this.monto = monto;
+        this.fechaLimite = LocalDate.now().plusDays(30);
+        this.fechaPago = null;
+        this.estadoPago = EstadoPago.PENDIENTE;
+
+        if (idPago > contador)
+        {
+            contador = idPago;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public int getIdPago()

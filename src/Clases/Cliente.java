@@ -29,6 +29,19 @@ public class Cliente extends Persona
         this.alquileres = new ArrayList<>();
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Cliente(int idCliente, String dni, String nombre, String apellido, int edad, String numeroTel)
+    {
+        super(dni, nombre, apellido, edad, numeroTel);
+        this.idCliente = idCliente;
+        this.alquileres = new ArrayList<>();
+
+        if (idCliente > contador)
+        {
+            contador = idCliente;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public static int getContador()

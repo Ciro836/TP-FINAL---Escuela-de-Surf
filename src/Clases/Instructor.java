@@ -30,6 +30,25 @@ public class Instructor extends Persona
         this.aniosExperiencia = aniosExperiencia;
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Instructor(int idInstructor, String dni, String nombre, String apellido, int edad, String numeroTel, int aniosExperiencia)
+    {
+        super(dni, nombre, apellido, edad, numeroTel);
+
+        if (aniosExperiencia < 0)
+        {
+            throw new IllegalArgumentException("⚠️: Los años de experiencia no puede ser negativos");
+        }
+
+        this.idInstructor = idInstructor;
+        this.aniosExperiencia = aniosExperiencia;
+
+        if (idInstructor > contador)
+        {
+            contador = idInstructor;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public static int getContador()

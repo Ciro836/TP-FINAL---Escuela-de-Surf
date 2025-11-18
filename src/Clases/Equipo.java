@@ -36,6 +36,25 @@ public class Equipo implements InterfazJson
         this.disponible = true;
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Equipo(int idEquipo, NombreEquipo nombre)
+    {
+        if (nombre == null)
+        {
+            throw new IllegalArgumentException("⚠️: El nombre no puede ser nulo");
+        }
+
+        this.idEquipo = idEquipo;
+        this.nombre = nombre;
+        this.precioPorDia = nombre.getValorDelEquipoPorDia();
+        this.disponible = true;
+
+        if (idEquipo > contador)
+        {
+            contador = idEquipo;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public static int getContador()
