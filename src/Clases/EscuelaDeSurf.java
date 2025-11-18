@@ -86,7 +86,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El alumno no puede ser nulo");
         }
-        getRepoAlumnos().agregar(alumno);
+        getRepoAlumnos().agregar(alumno.getIdAlumno(), alumno);
     }
 
     public void registrarNuevoEquipo(Equipo equipo)
@@ -95,7 +95,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El equipo no puede ser nulo");
         }
-        getRepoEquipos().agregar(equipo);
+        getRepoEquipos().agregar(equipo.getIdEquipo(), equipo);
     }
 
     public void registrarNuevoInstructor(Instructor instructor)
@@ -104,7 +104,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El instructor no puede ser nulo");
         }
-        getRepoInstructores().agregar(instructor);
+        getRepoInstructores().agregar(instructor.getIdInstructor(), instructor);
     }
 
     public void registrarNuevaClase(ClaseDeSurf clase)
@@ -113,7 +113,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("La clase no puede ser nula");
         }
-        getRepoClases().agregar(clase);
+        getRepoClases().agregar(clase.getIdClase(), clase);
     }
 
     public void registrarNuevaReserva(Reserva reserva) throws CupoLlenoException, IdNoEncontradoException
@@ -131,8 +131,8 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
             throw new CupoLlenoException("La clase ID " + clase.getIdClase() + " ya está llena.");
         }
 
-        getRepoReservas().agregar(reserva);
-        getRepoPagos().agregar(reserva.getPago());
+        getRepoReservas().agregar(reserva.getIdReserva(), reserva);
+        getRepoPagos().agregar(reserva.getPago().getIdPago(), reserva.getPago());
     }
 
     public void registrarNuevoCliente(Cliente cliente)
@@ -141,7 +141,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El alumno no puede ser nulo");
         }
-        getRepoClientes().agregar(cliente);
+        getRepoClientes().agregar(cliente.getIdCliente(), cliente);
     }
 
     public void registrarNuevoAlquiler(Alquiler alquiler)
@@ -150,8 +150,8 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         {
             throw new IllegalArgumentException("El alquiler no puede ser nulo");
         }
-        getRepoAlquileres().agregar(alquiler);
-        getRepoPagos().agregar(alquiler.getPago());
+        getRepoAlquileres().agregar(alquiler.getIdAlquiler(), alquiler);
+        getRepoPagos().agregar(alquiler.getPago().getIdPago(), alquiler.getPago());
     }
 
     public Alumno buscarAlumnoPorId(int id) throws IdNoEncontradoException

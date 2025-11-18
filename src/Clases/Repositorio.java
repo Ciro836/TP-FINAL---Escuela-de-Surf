@@ -8,7 +8,6 @@ import java.util.Map;
 public class Repositorio<T>
 {
     private final Map<Integer, T> datos;
-    private int proximoId = 1; // genera IDs automáticos
 
     /// CONSTRUCTOR
 
@@ -33,25 +32,9 @@ public class Repositorio<T>
         return datos.values();
     }
 
-    public void agregar(T valor)
-    {
-        datos.put(proximoId++, valor);
-    }
-
-    // para cargar desde JSON con un ID existente
     public void agregar(int clave, T valor)
     {
         datos.put(clave, valor);
-        actualizarProximoId(clave);
-    }
-
-    // para asegurar que el proximoId sea mayor que cualquier ID cargado
-    private void actualizarProximoId(int clave)
-    {
-        if (clave >= proximoId)
-        {
-            proximoId = clave + 1;
-        }
     }
 
     public boolean eliminar(int clave)
