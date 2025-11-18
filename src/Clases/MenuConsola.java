@@ -1250,9 +1250,4 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         escuela.grabarRepositoriosAjson();
     }
-
-    public void leerJsonDeRepositorios()
-    {
-        escuela.leerJsonDeRepositorios();
-    }
 }
