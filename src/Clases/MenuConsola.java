@@ -426,7 +426,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 //Elijo si es una reserva para un alumno nuevo o ya existe
                 System.out.println("1) Seleccionar un alumno ya existente");
                 System.out.println("2) Registrar un nuevo alumno");
-                System.out.println("Ingrese la opción: ");
+                System.out.print("Ingrese la opción: ");
                 int opcionAlumno = scanner.nextInt();
                 scanner.nextLine();
 
@@ -445,7 +445,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                         System.out.println("Listado de alumnos existente: ");
                         escuela.getRepoAlumnos().getTodos().forEach(System.out::println);
 
-                        System.out.println("Ingrese el ID del alumno: ");
+                        System.out.print("Ingrese el ID del alumno: ");
                         int idAlumno = scanner.nextInt();
                         scanner.nextLine();
 
@@ -477,7 +477,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
                 System.out.println("1) Seleccionar una clase ya existente");
                 System.out.println("2) Registrar una nueva clase");
-                System.out.println("Ingrese la opción: ");
+                System.out.print("Ingrese la opción: ");
                 int opcionClase = scanner.nextInt();
                 scanner.nextLine();
 
@@ -495,7 +495,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                         System.out.println("Listado de clases existentes: ");
                         escuela.getRepoClases().getTodos().forEach(System.out::println);
 
-                        System.out.println("Ingrese el ID de la clase: ");
+                        System.out.print("Ingrese el ID de la clase: ");
                         int idClase = scanner.nextInt();
                         scanner.nextLine();
 
@@ -864,7 +864,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         try
         {
 
-            System.out.println("Ingrese el ID del alquiler a cancelar: ");
+            System.out.print("Ingrese el ID del alquiler a cancelar: ");
             int id = scanner.nextInt();
             scanner.nextLine();
 
@@ -888,7 +888,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 return;
             }
 
-            System.out.println("Ingrese el id de la reserva a cancelar: ");
+            System.out.print("Ingrese el id de la reserva a cancelar: ");
             int id = scanner.nextInt();
             scanner.nextLine();
 

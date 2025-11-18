@@ -15,11 +15,42 @@
             "idPago": 3,
             "estadoPago": "PENDIENTE",
             "fechaPago": null
+        },
+        {
+            "metodoPago": null,
+            "monto": 200,
+            "fechaLimite": "2025-12-18",
+            "idPago": 6,
+            "estadoPago": "PENDIENTE",
+            "fechaPago": null
         }
     ],
-    "repoClases": [],
-    "repoAlumnos": [],
-    "repoReservas": [],
+    "repoClases": [{
+        "valorClase": 200,
+        "TipoDeClase": "PARTICULAR",
+        "Instructor": 1,
+        "idClase": 1,
+        "cuposOcupados": 1,
+        "fechaYhora": "2025-11-19T15:30",
+        "cupoMax": 1
+    }],
+    "repoAlumnos": [{
+        "idAlumno": 1,
+        "cantClasesTomadas": 40,
+        "numeroTel": "2235479165",
+        "apellido": "Schot",
+        "nombre": "Ciro",
+        "edad": 19,
+        "nivel": "AVANZADO",
+        "dni": "47559600"
+    }],
+    "repoReservas": [{
+        "idAlumno": 1,
+        "idPago": 6,
+        "idClase": 1,
+        "estaActiva": true,
+        "idReserva": 1
+    }],
     "repoAlquileres": [
         {
             "idCliente": 1,
@@ -29,7 +60,7 @@
             "estaActivo": false,
             "idEquiposAlquilados": [1],
             "fechaFin": "2025-11-30",
-            "montoTotal": 0
+            "montoTotal": 1300
         },
         {
             "idCliente": 1,
@@ -68,5 +99,13 @@
             "disponible": false
         }
     ],
-    "repoInstructores": []
+    "repoInstructores": [{
+        "numeroTel": "22373648",
+        "aniosExperiencia": 9,
+        "idInstructor": 1,
+        "apellido": "Papurri",
+        "nombre": "Facha",
+        "edad": 23,
+        "dni": "37293740"
+    }]
 }
