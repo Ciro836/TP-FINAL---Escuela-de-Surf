@@ -272,7 +272,7 @@ public class JsonUtiles
             }
 
             //CREO EL ALQUILER
-            LocalDate fechaFin =  LocalDate.parse(obj.getString("fechaFin"));
+            LocalDate fechaFin = LocalDate.parse(obj.getString("fechaFin"));
             Alquiler alquiler = new Alquiler(fechaFin, cliente);
 
             alquiler.setFechaInicio(LocalDate.parse(obj.getString("fechaInicio")));
