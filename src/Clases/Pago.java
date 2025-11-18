@@ -52,10 +52,6 @@ public class Pago implements InterfazJson
     // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
     public Pago(int idPago, MetodoPago metodoPago, double monto)
     {
-        if (metodoPago == null)
-        {
-            throw new IllegalArgumentException("⚠️: El pago no puede ser nulo.");
-        }
         if (monto < 0.0)
         {
             throw new IllegalArgumentException("⚠️: El monto no puede ser negativo.");
