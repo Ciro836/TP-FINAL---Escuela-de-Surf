@@ -142,19 +142,12 @@ public class JsonUtiles
         for (int i = 0; i < jsonArray.length(); i++)
         {
             JSONObject obj = jsonArray.getJSONObject(i);
-            Pago pago = new Pago();
+            Pago pago = new Pago(obj.getInt("idPago"),
+                    MetodoPago.valueOf(obj.getString("metodoPago")),
+                    obj.getDouble("monto"));
 
-            // Asignamos campos desde el obj JSON
-            pago.setMonto(obj.getDouble("monto"));
             pago.setEstadoPago(EstadoPago.valueOf(obj.getString("estadoPago")));
-            if (!obj.isNull("metodoPago"))
-            {
-                pago.setMetodoPago(MetodoPago.valueOf(obj.getString("metodoPago")));
-            }
-            if (!obj.isNull("fechaPago"))
-            {
-                pago.setFechaPago(LocalDate.parse(obj.getString("fechaPago")));
-            }
+            pago.setFechaPago(LocalDate.parse(obj.getString("fechaPago")));
 
             repositorio.agregar(obj.getInt("idPago"), pago);
         }
@@ -166,7 +159,9 @@ public class JsonUtiles
         for (int i = 0; i < jsonArray.length(); i++)
         {
             JSONObject obj = jsonArray.getJSONObject(i);
-            Equipo equipo = new Equipo(NombreEquipo.valueOf(obj.getString("nombre")));
+            Equipo equipo = new Equipo(
+                    obj.getInt("idEquipo"),
+                    NombreEquipo.valueOf(obj.getString("nombre")));
 
             equipo.setDisponible(obj.getBoolean("disponible"));
 
@@ -181,6 +176,7 @@ public class JsonUtiles
         {
             JSONObject obj = jsonArray.getJSONObject(i);
             Instructor instructor = new Instructor(
+                    obj.getInt("idInstructor"),
                     obj.getString("dni"),
                     obj.getString("nombre"),
                     obj.getString("apellido"),
@@ -199,6 +195,7 @@ public class JsonUtiles
         {
             JSONObject obj = jsonArray.getJSONObject(i);
             Alumno alumno = new Alumno(
+                    obj.getInt("idAlumno"), // Usamos el nuevo contructor que recibe el id
                     obj.getString("dni"),
                     obj.getString("nombre"),
                     obj.getString("apellido"),
@@ -218,6 +215,7 @@ public class JsonUtiles
         {
             JSONObject obj = jsonArray.getJSONObject(i);
             Cliente cliente = new Cliente(
+                    obj.getInt("idCliente"),
                     obj.getString("dni"),
                     obj.getString("nombre"),
                     obj.getString("apellido"),
@@ -241,7 +239,9 @@ public class JsonUtiles
             try
             {
                 ClaseDeSurf clase = new ClaseDeSurf(
-                        instructor, TipoClase.valueOf(obj.getString("TipoDeClase")),
+                        obj.getInt("idClase"),
+                        instructor,
+                        TipoClase.valueOf(obj.getString("TipoDeClase")),
                         LocalDateTime.parse(obj.getString("fechaYhora"))
                 );
                 //seteo el atributo cupoOcupados desde el json para reconsturirlo
@@ -273,7 +273,9 @@ public class JsonUtiles
 
             //CREO EL ALQUILER
             LocalDate fechaFin = LocalDate.parse(obj.getString("fechaFin"));
-            Alquiler alquiler = new Alquiler(fechaFin, cliente);
+
+            int idAlquiler = obj.getInt("idAlquiler");
+            Alquiler alquiler = new Alquiler(idAlquiler, fechaFin, cliente); // Usamos el nuevo contructor que recibe el id
 
             alquiler.setFechaInicio(LocalDate.parse(obj.getString("fechaInicio")));
             alquiler.setEstaActivo(obj.getBoolean("estaActivo"));
@@ -325,7 +327,10 @@ public class JsonUtiles
 
             if (alumno != null && clase != null)
             {
-                Reserva reserva = new Reserva(alumno, clase);
+                Reserva reserva = new Reserva(
+                        obj.getInt("idReserva"),
+                        alumno,
+                        clase);
 
                 if (pago != null)
                 {

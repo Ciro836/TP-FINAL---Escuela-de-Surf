@@ -57,6 +57,33 @@ public class Alquiler implements InterfazJson
         this.pago = new Pago();
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Alquiler(int idAlquiler, LocalDate fechaFin, Cliente cliente)
+    {
+        if (fechaFin == null)
+        {
+            throw new IllegalArgumentException("⚠️: La Fecha de Fin no puede ser nula.");
+        }
+        if (fechaFin.isBefore(LocalDate.now()))
+        {
+            throw new IllegalArgumentException("⚠️: La fecha de fin (" + fechaFin + ") no puede ser anterior a la fecha de inicio (" + LocalDate.now() + ").");
+        }
+
+        this.idAlquiler = idAlquiler;
+        this.equiposAlquilados = new ArrayList<>();
+        this.cliente = cliente;
+        this.fechaInicio = LocalDate.now();
+        this.fechaFin = fechaFin;
+        this.estaActivo = true;
+        this.montoTotal = 0;
+        this.pago = new Pago();
+
+        if (idAlquiler > contador)
+        {
+            contador = idAlquiler;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public static int getContador()

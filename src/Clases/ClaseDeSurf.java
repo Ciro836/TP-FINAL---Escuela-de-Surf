@@ -55,6 +55,35 @@ public class ClaseDeSurf implements InterfazJson
         this.valorClase = tipoDeClase.getValorClase();
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public ClaseDeSurf(int idClase, Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora) throws FechaInvalidaException
+    {
+        if (instructor == null)
+        {
+            throw new IllegalArgumentException("⚠️: El instructor no puede ser nulo.");
+        }
+        if (tipoDeClase == null)
+        {
+            throw new IllegalArgumentException("⚠️: El tipo de clase no puede ser nulo.");
+        }
+        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now()))
+        {
+            throw new FechaInvalidaException();
+        }
+
+        this.idClase = idClase;
+        this.instructor = instructor;
+        this.tipoDeClase = tipoDeClase;
+        this.fechaHora = fechaHora;
+        this.cupoMax = tipoDeClase.getCupoMaximo();
+        this.valorClase = tipoDeClase.getValorClase();
+
+        if (idClase > contador)
+        {
+            contador = idClase;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
     public int getIdClase()

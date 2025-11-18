@@ -43,9 +43,34 @@ public class Reserva implements InterfazJson
         this.estaActiva = true;
     }
 
+    // Constructor para cargar desde JSON (recibe el ID y actualiza el contador)
+    public Reserva(int idReserva, Alumno alumno, ClaseDeSurf claseDeSurf)
+    {
+        if (alumno == null)
+        {
+            throw new IllegalArgumentException("⚠️: El alumno no puede ser nulo");
+        }
+        if (claseDeSurf == null)
+        {
+            throw new IllegalArgumentException("⚠️: La clase de surf no puede ser nula");
+        }
+
+        this.idReserva = idReserva;
+        this.alumno = alumno;
+        this.claseDeSurf = claseDeSurf;
+        this.pago = new Pago();
+        calcularMontoTotal();
+        this.estaActiva = true;
+
+        if (idReserva > contador)
+        {
+            contador = idReserva;
+        }
+    }
+
     /// GETTERS Y SETTERS
 
-     public Alumno getAlumno()
+    public Alumno getAlumno()
     {
         return alumno;
     }
@@ -87,11 +112,13 @@ public class Reserva implements InterfazJson
         this.pago = pago;
     }
 
-    public boolean isEstaActiva() {
+    public boolean isEstaActiva()
+    {
         return estaActiva;
     }
 
-    public void setEstaActiva(boolean estaActiva) {
+    public void setEstaActiva(boolean estaActiva)
+    {
         this.estaActiva = estaActiva;
     }
 
