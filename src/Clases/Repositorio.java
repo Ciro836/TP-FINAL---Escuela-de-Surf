@@ -1,11 +1,14 @@
 package Clases;
 
+import Interfaces.InterfazJson;
+import org.json.JSONArray;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repositorio<T>
+public class Repositorio<T extends InterfazJson>
 {
     private final Map<Integer, T> datos;
 
@@ -59,5 +62,15 @@ public class Repositorio<T>
     public String toString()
     {
         return datos.toString();
+    }
+
+    public JSONArray toJSON()
+    {
+        JSONArray jArray = new JSONArray();
+        for (Map.Entry<Integer, T> entry : datos.entrySet())
+        {
+            jArray.put(entry.getValue().toJSON());
+        }
+        return jArray;
     }
 }

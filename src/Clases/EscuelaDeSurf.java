@@ -4,14 +4,16 @@ import Enumeradores.EstadoPago;
 import Enumeradores.MetodoPago;
 import ExcepcionesPersonalizadas.CupoLlenoException;
 import ExcepcionesPersonalizadas.IdNoEncontradoException;
+import Interfaces.InterfazJson;
 import Utiles.JsonUtiles;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y lógica de negocio
+public class EscuelaDeSurf implements InterfazJson //Clase para encargarse de la gestión de datos y lógica de negocio
 {
     private final Repositorio<Instructor> repoInstructores;
     private final Repositorio<ClaseDeSurf> repoClases;
@@ -328,23 +330,24 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
         return arrAlumnos;
     }
 
-    public void grabarRepositoriosAjson()
-    {
-        JsonUtiles.grabarRepositorioEnJson(repoAlumnos,
-                repoInstructores,
-                repoClases,
-                repoClientes,
-                repoReservas,
-                repoEquipos,
-                repoAlquileres,
-                repoPagos,
-                "escuelaDeSurf.json");
-
-        System.out.println("Repositorios grabados en escuelaDeSurf.json");
-    }
 
     public void leerJsonDeRepositorios()
     {
         JsonUtiles.leerRepositorioDesdeJson(repoAlumnos, repoInstructores, repoClases, repoClientes, repoReservas, repoEquipos, repoAlquileres, repoPagos, "escuelaDeSurf.json");
+    }
+
+    @Override
+    public JSONObject toJSON()
+    {
+        JSONObject escuelaJSON = new JSONObject();
+        escuelaJSON.put("repoAlumnos", repoAlumnos.toJSON());
+        escuelaJSON.put("repoInstructores", repoInstructores.toJSON());
+        escuelaJSON.put("repoClases", repoClases.toJSON());
+        escuelaJSON.put("repoClientes", repoClientes.toJSON());
+        escuelaJSON.put("repoReservas", repoReservas.toJSON());
+        escuelaJSON.put("repoEquipos", repoEquipos.toJSON());
+        escuelaJSON.put("repoAlquileres", repoAlquileres.toJSON());
+        escuelaJSON.put("repoPagos", repoPagos.toJSON());
+        return escuelaJSON;
     }
 }
