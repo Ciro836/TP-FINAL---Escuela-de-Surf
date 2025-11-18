@@ -530,7 +530,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     throw new CupoLlenoException();
                 }
 
-                clase.setCuposOcupados(clase.getCuposOcupados()+1);
+                clase.setCuposOcupados(clase.getCuposOcupados() + 1);
 
                 try
                 {
@@ -618,12 +618,16 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 //ASIGNAMOS UN CLIENTE
                 System.out.println("\nListado de Clientes:");
                 //VALIDO QUE YA EXISTA UN CLIENTE
-                if (escuela.getRepoClientes().getTodos().isEmpty()) {
+                if (escuela.getRepoClientes().getTodos().isEmpty())
+                {
                     System.out.println("⚠ No hay cliente registrados.");
 
-                    if (deseaContinuar("¿Desea registrar un nuevo cliente?")) {
+                    if (deseaContinuar("¿Desea registrar un nuevo cliente?"))
+                    {
                         agregarCliente();
-                    } else {
+                    }
+                    else
+                    {
                         System.out.println("❌ No es posible realizar un alquiler sin un cliente.");
                     }
                 }
@@ -636,15 +640,19 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 Cliente cliente = escuela.buscarClientePorId(idCliente);
 
                 //CREO EL ALQUILER
-                Alquiler alquiler = new Alquiler(fechaFin,cliente);
+                Alquiler alquiler = new Alquiler(fechaFin, cliente);
 
                 //VALIDACION DE EQUIPOS DISPONIBLES
-                if(escuela.getRepoEquipos().getTodos().stream().noneMatch(Equipo::isDisponible)){
+                if (escuela.getRepoEquipos().getTodos().stream().noneMatch(Equipo::isDisponible))
+                {
                     System.out.println("⚠ No hay equipos disponibles.");
 
-                    if (deseaContinuar("¿Desea registrar nuevos equipos?")){
+                    if (deseaContinuar("¿Desea registrar nuevos equipos?"))
+                    {
                         agregarEquipo();
-                    }else{
+                    }
+                    else
+                    {
                         System.out.println("❌ No es posible realizar un alquiler sin equipos.");
                     }
                 }
@@ -798,7 +806,8 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void mostrarAlquileres()
     {
-        if(escuela.getRepoAlquileres().getTodos().isEmpty()){
+        if (escuela.getRepoAlquileres().getTodos().isEmpty())
+        {
             System.out.println("⚠️ No se encuentrar alquileres registrados.");
             return;
         }
@@ -811,9 +820,12 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
         int opcion;
 
-        try{
+        try
+        {
             opcion = Integer.parseInt(scanner.nextLine());
-        }catch (NumberFormatException e){
+        }
+        catch (NumberFormatException e)
+        {
             System.out.println("⚠️ Debes ingresar un número válido.");
             return;
         }
@@ -849,8 +861,9 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void cancelarAlquiler()
     {
-        try{
-            
+        try
+        {
+
             System.out.println("Ingrese el ID del alquiler a cancelar: ");
             int id = scanner.nextInt();
             scanner.nextLine();
@@ -858,15 +871,19 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             Alquiler alquiler = escuela.getRepoAlquileres().buscarPorId(id);
             alquiler.cancelarAlquiler();
 
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("⚠️ Error al cancelar el alquiler " + e.getMessage());
         }
     }
 
     public void cancelarReserva()
     {
-        try{
-            if (escuela.getRepoReservas().getTodos().isEmpty()){
+        try
+        {
+            if (escuela.getRepoReservas().getTodos().isEmpty())
+            {
                 System.out.println("⚠️ No hay reservas cargadas.");
                 return;
             }
@@ -877,7 +894,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             Reserva reserva = escuela.getRepoReservas().buscarPorId(id);
 
-            if(reserva == null)
+            if (reserva == null)
             {
                 System.out.println("⚠️ No existe una reserva con ese id.");
                 return;
@@ -885,7 +902,9 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             reserva.cancelarReserva();
 
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("Error al cancelar la reserva " + e.getMessage());
         }
 
@@ -893,7 +912,8 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
     public void mostrarReservas()
     {
-        if(escuela.getRepoReservas().getTodos().isEmpty()){
+        if (escuela.getRepoReservas().getTodos().isEmpty())
+        {
             System.out.println("⚠️ No se encuentrar reservas registradas.");
             return;
         }
@@ -906,9 +926,12 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
         int opcion;
 
-        try{
+        try
+        {
             opcion = Integer.parseInt(scanner.nextLine());
-        }catch (NumberFormatException e){
+        }
+        catch (NumberFormatException e)
+        {
             System.out.println("⚠️ Debes ingresar un número válido.");
             return;
         }
@@ -941,6 +964,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         }
         System.out.println("═══════════════════════════════════════════════\n");
     }
+
     private MetodoPago seleccionarMetodoPago() throws IllegalArgumentException, InputMismatchException
     {
         System.out.println("Seleccione el método de pago:");
