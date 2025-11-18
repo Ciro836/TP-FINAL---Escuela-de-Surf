@@ -299,7 +299,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
                 Instructor instructor = new Instructor(dni, nombre, apellido, edad, telefono, aniosExp);
                 escuela.registrarNuevoInstructor(instructor);
-                System.out.println("Alumno agregado correctamente.");
+                System.out.println("Instructor agregado correctamente.");
             }
             catch (InputMismatchException e)
             {
@@ -790,7 +790,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 System.out.println("Mostrando " + reservas.size() + " reserva(s) del alumno ID " + id + ":");
                 for (Reserva r : reservas)
                 {
-                    System.out.println(r.mostrarReservaMejorada());
+                    r.mostrarReservaMejorada();
                 }
             }
         }
@@ -936,13 +936,19 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             return;
         }
 
+        System.out.println("--- DEBUG: VERIFICANDO ESTADO INICIAL ---");
+        escuela.getRepoReservas().getTodos().forEach(reserva -> {
+            System.out.println("ID Reserva: " + reserva.getIdReserva() + " | Activa: " + reserva.isEstaActiva());
+        });
+        System.out.println("------------------------------------------");
+
         System.out.println("════════════ RESULTADO ════════════");
         switch (opcion)
         {
             case 1:
                 System.out.println("RESERVAS ACTIVAS: ");
                 escuela.getRepoReservas().getTodos().stream()
-                        .filter(Reserva::isEstaActiva)
+                        .filter(reserva-> reserva.isEstaActiva())
                         .forEach(Reserva::mostrarReservaMejorada);
                 break;
 
