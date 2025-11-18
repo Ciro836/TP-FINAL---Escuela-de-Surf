@@ -21,7 +21,7 @@ public class Reserva implements InterfazJson
         this.alumno = null; //todavía no se le asigno un alumno, con esto podemos detectar si la reserva tiene o no un alumno o clase ya asignado
         this.claseDeSurf = null; //todavía no se le asigno una clase
         this.pago = new Pago(); //se inicializa vacío
-        this.estaActiva = false;
+        this.estaActiva = true;
     }
 
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf)
@@ -136,26 +136,27 @@ public class Reserva implements InterfazJson
         return alumno != null && claseDeSurf != null && pago != null;
     }
 
-    public String mostrarReservaMejorada()
-    {
-        String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
-        String claseInfo = "Clase ID: " + claseDeSurf.getIdClase();
-        String estadopago = pago.getEstadoPago().toString();
-        String fechaLimite = pago.getFechaLimite().toString();
-        String fechaPago = (pago.getFechaPago() == null) ? "No pagó aún" : pago.getFechaPago().toString();
-        String estado = isEstaActiva() ? "Activa" : "Finalizada";
+        public void mostrarReservaMejorada()
+        {
+            String alumnoNombre = alumno.getNombre() + " " + alumno.getApellido();
+            String claseInfo = "Clase ID: " + claseDeSurf.getIdClase();
+            String estadopago = pago.getEstadoPago().toString();
+            String fechaLimite = pago.getFechaLimite().toString();
+            String fechaPago = (pago.getFechaPago() == null) ? "No pagó aún" : pago.getFechaPago().toString();
+            String estado = isEstaActiva() ? "Activa" : "Finalizada";
 
-        return "\n──────── RESERVA #" + idReserva + " ────────" +
-                "\nAlumno: " + alumnoNombre +
-                "\n" + claseInfo +
-                "\nEstado del pago: " + estadopago +
-                "\nEstado: " + estado +
-                "\n--------------------------------" +
-                "\n\nPAGO" +
-                "\nMonto: $" + pago.getMonto() +
-                "\nFecha límite: " + fechaLimite +
-                "\nFecha del pago: " + fechaPago +
-                "\n─────────────────────────────\n";
+            System.out.println("\n──────── RESERVA #" + idReserva + " ────────" +
+                    "\nAlumno: " + alumnoNombre +
+                    "\n" + claseInfo +
+                    "\nEstado del pago: " + estadopago +
+                    "\nEstado: " + estado +
+                    "\n--------------------------------" +
+                    "\n\nPAGO" +
+                    "\nMonto: $" + pago.getMonto() +
+                    "\nFecha límite: " + fechaLimite +
+                    "\nFecha del pago: " + fechaPago +
+                    "\n─────────────────────────────\n"
+            );
 
     }
 
