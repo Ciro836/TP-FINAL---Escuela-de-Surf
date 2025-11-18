@@ -864,7 +864,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         try
         {
 
-            System.out.println("Ingrese el ID del alquiler a cancelar: ");
+            System.out.print("Ingrese el ID del alquiler a cancelar: ");
             int id = scanner.nextInt();
             scanner.nextLine();
 
@@ -888,7 +888,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 return;
             }
 
-            System.out.println("Ingrese el id de la reserva a cancelar: ");
+            System.out.print("Ingrese el id de la reserva a cancelar: ");
             int id = scanner.nextInt();
             scanner.nextLine();
 
