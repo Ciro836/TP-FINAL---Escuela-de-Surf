@@ -223,48 +223,64 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            Equipo equipo = crearNuevoEquipo();
+
+            if (equipo != null)
             {
-                System.out.println("CARGA DE DATOS DE EQUIPOS\n");
-
-                NombreEquipo[] tiposDeEquipo = NombreEquipo.values();
-
-                System.out.println("Seleccione el tipo de equipo:");
-                for (int i = 0; i < tiposDeEquipo.length; i++)
-                {
-                    System.out.println((i) + ". " + tiposDeEquipo[i].getNombreEquipo());
-                }
-                System.out.print("Ingrese el número de la opción: ");
-
-                int seleccion = scanner.nextInt();
-                scanner.nextLine();
-
-                if (seleccion < 0 || seleccion >= tiposDeEquipo.length)
-                {
-                    throw new IllegalArgumentException("Selección inválida. Ingrese un número entre 0 y " + tiposDeEquipo.length + ".");
-                }
-
-                NombreEquipo nombreEnum = tiposDeEquipo[seleccion];
-
-                Equipo equipo = new Equipo(nombreEnum);
                 escuela.registrarNuevoEquipo(equipo);
                 System.out.println("Equipo agregado correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+                System.out.println("Creación de equipo cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando equipos?"));
+    }
+
+    private Equipo crearNuevoEquipo()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE EQUIPOS\n");
+
+            NombreEquipo[] tiposDeEquipo = NombreEquipo.values();
+
+            System.out.println("Seleccione el tipo de equipo:");
+            for (int i = 0; i < tiposDeEquipo.length; i++)
+            {
+                System.out.println((i) + ". " + tiposDeEquipo[i].getNombreEquipo());
+            }
+            System.out.print("Ingrese el número de la opción: ");
+
+            int seleccion = scanner.nextInt();
+            scanner.nextLine();
+
+            if (seleccion < 0 || seleccion >= tiposDeEquipo.length)
+            {
+                throw new IllegalArgumentException("Selección inválida. Ingrese un número entre 0 y " + tiposDeEquipo.length + ".");
+            }
+
+            NombreEquipo nombreEnum = tiposDeEquipo[seleccion];
+
+            return new Equipo(nombreEnum);
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarInstructor()
