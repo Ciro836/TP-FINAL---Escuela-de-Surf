@@ -287,7 +287,9 @@ public class JsonUtiles
                 Equipo equipo = repoEquipo.buscarPorId(equiposArr.getInt(j));
                 if (equipo != null)
                 {
-                    alquiler.agregarEquipo(equipo);
+                    boolean estabaDisponible = equipo.isDisponible();
+                    alquiler.agregarEquipo(equipo); // Este metodo fuerza equipo.setDisponible(false) siempre.
+                    equipo.setDisponible(estabaDisponible); //por eso aca restauro el estado como estaba.
                 }
             }
 
