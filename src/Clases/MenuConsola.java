@@ -48,13 +48,13 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("12. Mostrar alumnos inscriptos en una clase.");
             System.out.println("13. Mostrar los alquileres");
             System.out.println("14. Mostrar las reservas");
-            System.out.println("14. Pagar una reserva de clase.");
-            System.out.println("15. Pagar un alquiler de equipo.");
-            System.out.println("16. Chequear morosidad de alumno.");
-            System.out.println("17. Chequear morosidad de cliente.");
-            System.out.println("18. Grabar repositorios a json.");
-            System.out.println("19. Leer e importar el archivo json de repositorios.");
-            System.out.println("20. Mostrar todos los repositorios.");
+            System.out.println("15. Pagar una reserva de clase.");
+            System.out.println("16. Pagar un alquiler de equipo.");
+            System.out.println("17. Chequear morosidad de alumno.");
+            System.out.println("18. Chequear morosidad de cliente.");
+            System.out.println("19. Grabar repositorios a json.");
+            System.out.println("20. Leer e importar el archivo json de repositorios.");
+            System.out.println("21. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
