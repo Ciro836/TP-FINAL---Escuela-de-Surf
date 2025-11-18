@@ -287,49 +287,65 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            Instructor instructor = crearNuevoInstructor();
+
+            if (instructor != null)
             {
-                System.out.println("CARGA DE DATOS DE INSTRUCTORES\n");
-
-                System.out.print("Ingrese el numero de DNI: ");
-                String dni = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nombre del instructor: ");
-                String nombre = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el apellido del instructor: ");
-                String apellido = scanner.nextLine().trim();
-
-                System.out.print("Ingrese la edad del instructor: ");
-                int edad = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.print("Ingrese el numero de telefono: ");
-                String telefono = scanner.nextLine().trim();
-
-                System.out.print("Ingrese los años de experiencia del instructor: ");
-                int aniosExp = scanner.nextInt();
-                scanner.nextLine();
-
-                Instructor instructor = new Instructor(dni, nombre, apellido, edad, telefono, aniosExp);
                 escuela.registrarNuevoInstructor(instructor);
                 System.out.println("Instructor agregado correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+                System.out.println("Creación de instructor cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando instructores?"));
+    }
+
+    public Instructor crearNuevoInstructor()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE INSTRUCTOR\n");
+
+            System.out.print("Ingrese el numero de DNI: ");
+            String dni = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nombre del instructor: ");
+            String nombre = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el apellido del instructor: ");
+            String apellido = scanner.nextLine().trim();
+
+            System.out.print("Ingrese la edad del instructor: ");
+            int edad = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Ingrese el numero de telefono: ");
+            String telefono = scanner.nextLine().trim();
+
+            System.out.print("Ingrese los años de experiencia del instructor: ");
+            int aniosExp = scanner.nextInt();
+            scanner.nextLine();
+
+            return new Instructor(dni, nombre, apellido, edad, telefono, aniosExp);
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarClaseDeSurf()
@@ -433,143 +449,160 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
+            Reserva reserva = crearNuevaReserva();
+
+            if (reserva != null)
+            {
+                escuela.registrarNuevaReserva(reserva);
+                System.out.println("Reserva agregada correctamente.");
+            }
+            else
+            {
+                System.out.println("Creación de reserva cancelada o fallida.");
+            }
+
+        } while (deseaContinuar("Desea seguir cargando reservas?"));
+    }
+
+    public Reserva crearNuevaReserva()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS A UNA RESERVA\n");
+
+            //Elijo si es una reserva para un alumno nuevo o ya existe
+            System.out.println("1) Seleccionar un alumno ya existente");
+            System.out.println("2) Registrar un nuevo alumno");
+            System.out.print("Ingrese la opción: ");
+            int opcionAlumno = scanner.nextInt();
+            scanner.nextLine();
+
+            Alumno alumno = null;
+
+            //listar alumno ya existente para que elija
+            if (opcionAlumno == 1)
+            {
+                if (escuela.getRepoAlumnos().getDatos().isEmpty())
+                {
+                    System.out.println("No hay alumnos previamente cargados.");
+                    opcionAlumno = 2; //fuerzo la creación de uno nuevo
+                }
+                else
+                {
+                    System.out.println("Listado de alumnos existente: ");
+                    escuela.getRepoAlumnos().getTodos().forEach(System.out::println);
+
+                    System.out.print("Ingrese el ID del alumno: ");
+                    int idAlumno = scanner.nextInt();
+                    scanner.nextLine();
+
+                    try
+                    {
+                        alumno = escuela.buscarAlumnoPorId(idAlumno);
+                    }
+                    catch (IdNoEncontradoException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+            }
+            if (opcionAlumno == 2)
+            {
+                alumno = crearNuevoAlumno();
+
+                if (alumno == null)
+                {
+                    System.out.println("❌ Error al crear el alumno. Abortando la creación de la reserva.");
+                    return null;
+                }
+
+                escuela.registrarNuevoAlumno(alumno);
+                System.out.println("✅ Alumno nuevo registrado.");
+            }
+
+            //Elijo si selec. una clase existente o una nueva
+
+            System.out.println("1) Seleccionar una clase ya existente");
+            System.out.println("2) Registrar una nueva clase");
+            System.out.print("Ingrese la opción: ");
+            int opcionClase = scanner.nextInt();
+            scanner.nextLine();
+
+            ClaseDeSurf clase = null;
+
+            if (opcionClase == 1)
+            {
+                if (escuela.getRepoClases().getDatos().isEmpty())
+                {
+                    System.out.println("No hay clases previamente cargadas.");
+                    opcionClase = 2; //fuerzo la creación de uno nuevo
+                }
+                else
+                {
+                    System.out.println("Listado de clases existentes: ");
+                    escuela.getRepoClases().getTodos().forEach(System.out::println);
+
+                    System.out.print("Ingrese el ID de la clase: ");
+                    int idClase = scanner.nextInt();
+                    scanner.nextLine();
+
+                    try
+                    {
+                        clase = escuela.buscarClasePorId(idClase);
+                    }
+                    catch (IdNoEncontradoException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+            }
+
+            if (opcionClase == 2)
+            {
+                clase = crearNuevaClaseDeSurf();
+
+                if (clase == null)
+                {
+                    System.out.println("❌ Error al crear la clase. Abortando creación de reserva.");
+                    return null;
+                }
+
+                escuela.registrarNuevaClase(clase);
+                System.out.println("✅ Clase nueva registrada.");
+            }
+
+            //verifico el cupo de la clase
+            if (!clase.hayCuposDisponible())
+            {
+                throw new CupoLlenoException();
+            }
+
+            clase.setCuposOcupados(clase.getCuposOcupados() + 1);
+
             try
             {
-                System.out.println("CARGA DE DATOS A UNA RESERVA\n");
-
-                //Elijo si es una reserva para un alumno nuevo o ya existe
-                System.out.println("1) Seleccionar un alumno ya existente");
-                System.out.println("2) Registrar un nuevo alumno");
-                System.out.print("Ingrese la opción: ");
-                int opcionAlumno = scanner.nextInt();
-                scanner.nextLine();
-
-                Alumno alumno = null;
-
-                //listar alumno ya existente para que elija
-                if (opcionAlumno == 1)
-                {
-                    if (escuela.getRepoAlumnos().getDatos().isEmpty())
-                    {
-                        System.out.println("No hay alumnos previamente cargados.");
-                        opcionAlumno = 2; //fuerzo la creación de uno nuevo
-                    }
-                    else
-                    {
-                        System.out.println("Listado de alumnos existente: ");
-                        escuela.getRepoAlumnos().getTodos().forEach(System.out::println);
-
-                        System.out.print("Ingrese el ID del alumno: ");
-                        int idAlumno = scanner.nextInt();
-                        scanner.nextLine();
-
-                        try
-                        {
-                            alumno = escuela.buscarAlumnoPorId(idAlumno);
-                        }
-                        catch (IdNoEncontradoException e)
-                        {
-                            System.out.println("Error: " + e.getMessage());
-                        }
-                    }
-                }
-                if (opcionAlumno == 2)
-                {
-                    alumno = crearNuevoAlumno();
-
-                    if (alumno == null)
-                    {
-                        System.out.println("❌ Error al crear el alumno. Abortando la creación de la reserva.");
-                        return;
-                    }
-
-                    escuela.registrarNuevoAlumno(alumno);
-                    System.out.println("✅ Alumno nuevo registrado.");
-                }
-
-                //Elijo si selec. una clase existente o una nueva
-
-                System.out.println("1) Seleccionar una clase ya existente");
-                System.out.println("2) Registrar una nueva clase");
-                System.out.print("Ingrese la opción: ");
-                int opcionClase = scanner.nextInt();
-                scanner.nextLine();
-
-                ClaseDeSurf clase = null;
-
-                if (opcionClase == 1)
-                {
-                    if (escuela.getRepoClases().getDatos().isEmpty())
-                    {
-                        System.out.println("No hay clases previamente cargadas.");
-                        opcionClase = 2; //fuerzo la creación de uno nuevo
-                    }
-                    else
-                    {
-                        System.out.println("Listado de clases existentes: ");
-                        escuela.getRepoClases().getTodos().forEach(System.out::println);
-
-                        System.out.print("Ingrese el ID de la clase: ");
-                        int idClase = scanner.nextInt();
-                        scanner.nextLine();
-
-                        try
-                        {
-                            clase = escuela.buscarClasePorId(idClase);
-                        }
-                        catch (IdNoEncontradoException e)
-                        {
-                            System.out.println("Error: " + e.getMessage());
-                        }
-                    }
-                }
-
-                if (opcionClase == 2)
-                {
-                    clase = crearNuevaClaseDeSurf();
-
-                    if (clase == null)
-                    {
-                        System.out.println("❌ Error al crear la clase. Abortando creación de reserva.");
-                        return;
-                    }
-
-                    escuela.registrarNuevaClase(clase);
-                    System.out.println("✅ Clase nueva registrada.");
-                }
-
-                //verifico el cupo de la clase
-                if (!clase.hayCuposDisponible())
-                {
-                    throw new CupoLlenoException();
-                }
-
-                clase.setCuposOcupados(clase.getCuposOcupados() + 1);
-
-                try
-                {
-                    Reserva reserva = new Reserva(alumno, clase);
-                    escuela.registrarNuevaReserva(reserva);
-                    System.out.println("Reserva registrada correctamente.");
-                }
-                catch (IdNoEncontradoException | CupoLlenoException e)
-                {
-                    System.out.println("Error: " + e.getMessage());
-                }
-                catch (IllegalArgumentException e)
-                {
-                    System.out.println("❌ Error al crear la reserva: " + e.getMessage());
-                }
-                catch (Exception e)
-                {
-                    System.out.println("❌ Error inesperado al registrar la reserva: " + e.getMessage());
-                }
+                return new Reserva(alumno, clase);
+            }
+            catch (CupoLlenoException e | IdNoEncontradoException e)
+            {
+                System.out.println("❌ Error: " + e.getMessage());
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("❌ Error al crear la reserva: " + e.getMessage());
+                return null;
             }
             catch (Exception e)
             {
-                System.out.println("⚠️ Error inesperado: " + e.getMessage());
+                System.out.println("❌ Error inesperado al registrar la reserva: " + e.getMessage());
+                return null;
             }
-        } while (deseaContinuar("Desea seguir cargando reservas?"));
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarCliente()
