@@ -343,45 +343,4 @@ public class JsonUtiles
             }
         }
     }
-
-
-    /*
-    // paso por paramentro class<t> clase, para luego poder hacer clase.get para que sepa que tipo de instancias debe crear
-    public static <T> void JsonArray_a_Repositorio(JSONArray jsonArray, Repositorio<T> repositorio, Class<? extends T> clase)
-    {
-        for (int i = 0; i < jsonArray.length(); i++)
-        {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-            try
-            {
-
-                Object objeto = clase.getDeclaredConstructor().newInstance();
-
-                if (objeto instanceof InterfazJson)
-                {
-                    @SuppressWarnings("unchecked")
-                    InterfazJson<T> jObject = (InterfazJson<T>) objeto;
-
-                    //guardo en obj porque el constructor de fromJson devuelve un objeto armado
-                    T obj = jObject.fromJSON(jsonObject);
-                    //utilizo el metodo getID de la interface implementado en las clases, para pasarle al metodo agregar el id correspondiente de cada instancia
-                    repositorio.agregar(jObject.getID(), obj);
-                }
-                else
-                {
-                    System.out.println("La clase " + clase.getSimpleName() + "no implementa la InterfazJson");
-                }
-                //agrego excepciones de la clase
-            }
-            catch (JSONException | NoSuchMethodException | InstantiationException |
-                   IllegalAccessException | InvocationTargetException e)
-            {
-                System.out.println("Error creando el objeto" + clase.getSimpleName() + ": " + e.getMessage());
-            }
-        }
-    }
-     */
-
-
 }
