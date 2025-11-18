@@ -16,6 +16,7 @@ public class Alquiler implements InterfazJson
     private static int contador = 0;
     private final int idAlquiler;
     private final List<Equipo> equiposAlquilados;
+    private Cliente cliente;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private double montoTotal;
@@ -35,7 +36,7 @@ public class Alquiler implements InterfazJson
         this.pago = new Pago();
     }
 
-    public Alquiler(LocalDate fechaFin)
+    public Alquiler(LocalDate fechaFin, Cliente cliente)
     {
         if (fechaFin == null)
         {
@@ -48,6 +49,7 @@ public class Alquiler implements InterfazJson
 
         this.idAlquiler = ++contador;
         this.equiposAlquilados = new ArrayList<>();
+        this.cliente = cliente;
         this.fechaInicio = LocalDate.now();
         this.fechaFin = fechaFin;
         this.estaActivo = true;
@@ -153,7 +155,6 @@ public class Alquiler implements InterfazJson
         this.montoTotal = total;
         pago.setMonto(total);
     }
-
     public void finalizarAlquiler()
     {
         if (!this.estaActivo)
@@ -207,6 +208,54 @@ public class Alquiler implements InterfazJson
                 " | Equipos: " + equiposAlquilados.size();
     }
 
+    public void mostrarAlquiler()
+    {
+        System.out.println("────────── DETALLE DEL ALQUILER ──────────");
+        System.out.println("ID: " + idAlquiler);
+        System.out.println("Periodo: " + fechaInicio + " a " + fechaFin);
+        System.out.println("Estado: " + (estaActivo? "Activo" : "Finalizado"));
+        System.out.println("Monto: $" + montoTotal);
+
+        System.out.println("Equipos alquilados: ");
+            if (equiposAlquilados == null || equiposAlquilados.isEmpty()){
+            System.out.println("No se cargaron equipos");
+            }else{
+                 for (Equipo equipo : equiposAlquilados){
+                System.out.println(" . ID" +  equipo.getIdEquipo() + " - " + equipo.getNombre());
+                }
+            }
+        System.out.println("\nPago: ");
+             if (pago != null) {
+                System.out.println("  - Método: " + pago.getMetodoPago());
+                System.out.println("  - Monto pagado: $" + pago.getMonto());
+                System.out.println("  - Fecha de pago: " + pago.getFechaPago());
+            } else {
+                System.out.println("  - No se registró pago aún.");
+            }
+        System.out.println("──────────────────────────────────────────────\n");
+    }
+
+    public void cancelarAlquiler()
+    {
+        this.estaActivo = true;
+        {
+            if(!estaActivo)
+            {
+                throw new IllegalStateException("El alquiler ya esta cancelado o finalizado.");
+            }
+
+            //libero el equipo
+            for (Equipo equipo : equiposAlquilados){
+                equipo.setDisponible(true);
+            }
+
+            this.estaActivo = false;
+            this.montoTotal = 0.0;
+
+            System.out.println("El alquiler ha sido cancelado correctamente.");
+        }
+    }
+
     @Override
     public JSONObject toJSON()
     {
@@ -223,6 +272,7 @@ public class Alquiler implements InterfazJson
             }
             jObj.put("idEquiposAlquilados", jArray);
 
+            jObj.put("idCliente", cliente.getIdCliente());
             jObj.put("fechaInicio", fechaInicio != null ? fechaInicio.toString() : JSONObject.NULL);
             jObj.put("fechaFin", fechaFin != null ? fechaFin.toString() : JSONObject.NULL);
             jObj.put("montoTotal", montoTotal);
