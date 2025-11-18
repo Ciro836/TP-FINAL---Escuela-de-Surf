@@ -11,6 +11,7 @@ public class Reserva implements InterfazJson
     private Alumno alumno;
     private ClaseDeSurf claseDeSurf;
     private Pago pago;
+    private boolean estaActiva;
 
     /// CONSTRUCTORES
 
@@ -20,6 +21,7 @@ public class Reserva implements InterfazJson
         this.alumno = null; //todavía no se le asigno un alumno, con esto podemos detectar si la reserva tiene o no un alumno o clase ya asignado
         this.claseDeSurf = null; //todavía no se le asigno una clase
         this.pago = new Pago(); //se inicializa vacío
+        this.estaActiva = false;
     }
 
     public Reserva(Alumno alumno, ClaseDeSurf claseDeSurf)
@@ -38,11 +40,12 @@ public class Reserva implements InterfazJson
         this.claseDeSurf = claseDeSurf;
         this.pago = new Pago();
         calcularMontoTotal();
+        this.estaActiva = true;
     }
 
     /// GETTERS Y SETTERS
 
-    public Alumno getAlumno()
+     public Alumno getAlumno()
     {
         return alumno;
     }
@@ -84,6 +87,14 @@ public class Reserva implements InterfazJson
         this.pago = pago;
     }
 
+    public boolean isEstaActiva() {
+        return estaActiva;
+    }
+
+    public void setEstaActiva(boolean estaActiva) {
+        this.estaActiva = estaActiva;
+    }
+
     /// METODOS
 
     //retorna si una reserva esta completa
@@ -118,6 +129,21 @@ public class Reserva implements InterfazJson
         pago.setMonto(claseDeSurf.getValorClase());
     }
 
+    public void cancelarReserva()
+    {
+        if (!estaActiva)
+        {
+            throw new IllegalStateException("La reserva ya se encuentra cancelada.");
+        }
+
+        this.estaActiva = false;
+        if (this.claseDeSurf != null)
+        {
+            this.claseDeSurf.setCuposOcupados(this.claseDeSurf.getCuposOcupados() - 1);
+        }
+        System.out.println("Reserva cancelada con éxito.");
+    }
+
     @Override
     public String toString()
     {
@@ -141,6 +167,7 @@ public class Reserva implements InterfazJson
             jsonObj.put("idAlumno", alumno != null ? alumno.getIdAlumno() : JSONObject.NULL); //compruebo que exista un id sino null en object json
             jsonObj.put("idClase", claseDeSurf != null ? claseDeSurf.getIdClase() : JSONObject.NULL); //hago lo mismo q con alumno, aca solo guardo los id referenciales, para que no haga un bucle de inf repetida
             jsonObj.put("idPago", pago != null ? pago.getIdPago() : JSONObject.NULL);
+            jsonObj.put("estaActiva", estaActiva);
 
         }
         catch (JSONException e)

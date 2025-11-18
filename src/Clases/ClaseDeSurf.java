@@ -17,6 +17,7 @@ public class ClaseDeSurf implements InterfazJson
     private LocalDateTime fechaHora;
     private final int cupoMax;
     private final double valorClase;
+    private int cuposOcupados;
 
     /// CONSTRUCTORES
 
@@ -28,6 +29,7 @@ public class ClaseDeSurf implements InterfazJson
         this.fechaHora = null;
         this.cupoMax = -1;
         valorClase = 0.0;
+        this.cuposOcupados =0;
     }
 
     public ClaseDeSurf(Instructor instructor, TipoClase tipoDeClase, LocalDateTime fechaHora) throws FechaInvalidaException
@@ -118,6 +120,22 @@ public class ClaseDeSurf implements InterfazJson
         return this.tipoDeClase.getValorClase();
     }
 
+    public int getCuposOcupados() {
+        return cuposOcupados;
+    }
+
+    public void setCuposOcupados(int cuposOcupados) {
+        if (cuposOcupados < 0 || cuposOcupados > cupoMax){
+            throw new IllegalArgumentException("Cantidad de cupos inválidas. ");
+        }
+        this.cuposOcupados = cuposOcupados;
+    }
+
+    public boolean hayCuposDisponible()
+    {
+        return cuposOcupados < cupoMax;
+    }
+
     /// METODOS
 
     @Override
@@ -139,6 +157,7 @@ public class ClaseDeSurf implements InterfazJson
             jObj.put("fechaYhora", fechaHora != null ? fechaHora.toString() : JSONObject.NULL);
             jObj.put("cupoMax", cupoMax);
             jObj.put("valorClase", valorClase);
+            jObj.put("cuposOcupados", cuposOcupados);
 
         }
         catch (JSONException e)

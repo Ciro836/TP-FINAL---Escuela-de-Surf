@@ -318,7 +318,7 @@ public class EscuelaDeSurf //Clase para encargarse de la gestión de datos y ló
 
         for (Reserva r : getRepoReservas().getTodos())
         {
-            if (r.getClaseDeSurf().getIdClase() == idClase)
+            if (r.getClaseDeSurf().getIdClase() == idClase && r.isEstaActiva())
             {
                 Alumno alumno = r.getAlumno();
                 arrAlumnos.add(alumno);

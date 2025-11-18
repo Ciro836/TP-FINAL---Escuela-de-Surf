@@ -42,17 +42,18 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("6. Agregar Equipo.");
             System.out.println("7. Agregar Alquiler.");
             System.out.println("8. Cancelar Alquiler.");
-            System.out.println("9. Buscar alumno por su id.");
-            System.out.println("10. Mostrar reservas de un alumno.");
-            System.out.println("11. Mostrar alumnos inscriptos en una clase.");
-            System.out.println("12. Mostrar alquileres");
-            System.out.println("13. Pagar una reserva de clase.");
-            System.out.println("14. Pagar un alquiler de equipo.");
-            System.out.println("15. Chequear morosidad de alumno.");
-            System.out.println("16. Chequear morosidad de cliente.");
-            System.out.println("17. Grabar repositorios a json.");
-            System.out.println("18. Leer e importar el archivo json de repositorios.");
-            System.out.println("19. Mostrar todos los repositorios.");
+            System.out.println("9. Cancelar Reserva.");
+            System.out.println("10. Buscar alumno por su id.");
+            System.out.println("11. Mostrar reservas de un alumno.");
+            System.out.println("12. Mostrar alumnos inscriptos en una clase.");
+            System.out.println("13. Mostrar alquileres");
+            System.out.println("14. Pagar una reserva de clase.");
+            System.out.println("15. Pagar un alquiler de equipo.");
+            System.out.println("16. Chequear morosidad de alumno.");
+            System.out.println("17. Chequear morosidad de cliente.");
+            System.out.println("18. Grabar repositorios a json.");
+            System.out.println("19. Leer e importar el archivo json de repositorios.");
+            System.out.println("20. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -72,17 +73,18 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 6 -> agregarEquipo();
                     case 7 -> agregarAlquiler();
                     case 8 -> cancelarAlquiler();
-                    case 9 -> buscarAlumnoPorId();
-                    case 10 -> mostrarReservasAlumno();
-                    case 11 -> mostrarAlumnosInscriptosEnClase();
-                    case 12 -> mostrarAlquileres();
-                    case 13 -> pagarUnaReserva();
-                    case 14 -> pagarUnAlquiler();
-                    case 15 -> chequearMorosidadAlumno();
-                    case 16 -> chequearMorosidadCliente();
-                    case 17 -> grabarRepositoriosAjson();
-                    case 18 -> leerJsonDeRepositorios();
-                    case 19 -> mostrarTodosLosRepositorios();
+                    case 9 -> cancelarReserva();
+                    case 10 -> buscarAlumnoPorId();
+                    case 11 -> mostrarReservasAlumno();
+                    case 12 -> mostrarAlumnosInscriptosEnClase();
+                    case 13 -> mostrarAlquileres();
+                    case 14 -> pagarUnaReserva();
+                    case 15 -> pagarUnAlquiler();
+                    case 16 -> chequearMorosidadAlumno();
+                    case 17 -> chequearMorosidadCliente();
+                    case 18 -> grabarRepositoriosAjson();
+                    case 19 -> leerJsonDeRepositorios();
+                    case 20 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -520,6 +522,14 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     System.out.println("✅ Clase nueva registrada.");
                 }
 
+                //verifico el cupo de la clase
+                if (!clase.hayCuposDisponible())
+                {
+                    throw new CupoLlenoException();
+                }
+
+                clase.setCuposOcupados(clase.getCuposOcupados()+1);
+
                 try
                 {
                     Reserva reserva = new Reserva(alumno, clase);
@@ -850,6 +860,34 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("⚠️ Error al cancelar el alquiler " + e.getMessage());
         }
     }
+
+    public void cancelarReserva()
+    {
+        try{
+            if (escuela.getRepoReservas().getTodos().isEmpty()){
+                System.out.println("⚠️ No hay reservas cargadas.");
+                return;
+            }
+
+            System.out.println("Ingrese el id de la reserva a cancelar: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+
+            Reserva reserva = escuela.getRepoReservas().buscarPorId(id);
+
+            if(reserva == null)
+            {
+                System.out.println("⚠️ No existe una reserva con ese id.");
+                return;
+            }
+
+            reserva.cancelarReserva();
+
+        }catch (Exception e){
+            System.out.println("Error al cancelar la reserva " + e.getMessage());
+        }
+
+    }
     private MetodoPago seleccionarMetodoPago() throws IllegalArgumentException, InputMismatchException
     {
         System.out.println("Seleccione el método de pago:");
@@ -1005,7 +1043,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             if (arrAlumnos.isEmpty())
             {
-                System.out.println("La clase ID " + idClase + " existe, pero no tiene alumnos inscriptos.");
+                System.out.println("La clase ID " + idClase + " existe, pero no tiene alumnos activos.");
             }
             else
             {

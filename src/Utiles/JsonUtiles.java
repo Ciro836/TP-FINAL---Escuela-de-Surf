@@ -244,6 +244,8 @@ public class JsonUtiles
                         instructor, TipoClase.valueOf(obj.getString("TipoDeClase")),
                         LocalDateTime.parse(obj.getString("fechaYhora"))
                 );
+                //seteo el atributo cupoOcupados desde el json para reconsturirlo
+                clase.setCuposOcupados(obj.getInt("cuposOcupados"));
                 repoClase.agregar(obj.getInt("idClase"), clase);
             }
             catch (Exception e)
