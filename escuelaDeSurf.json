@@ -34,16 +34,28 @@
         "fechaYhora": "2025-11-19T15:30",
         "cupoMax": 1
     }],
-    "repoAlumnos": [{
-        "idAlumno": 1,
-        "cantClasesTomadas": 40,
-        "numeroTel": "2235479165",
-        "apellido": "Schot",
-        "nombre": "Ciro",
-        "edad": 19,
-        "nivel": "AVANZADO",
-        "dni": "47559600"
-    }],
+    "repoAlumnos": [
+        {
+            "idAlumno": 1,
+            "cantClasesTomadas": 40,
+            "numeroTel": "2235479165",
+            "apellido": "Schot",
+            "nombre": "Ciro",
+            "edad": 19,
+            "nivel": "AVANZADO",
+            "dni": "47559600"
+        },
+        {
+            "idAlumno": 2,
+            "cantClasesTomadas": 14,
+            "numeroTel": "22373635",
+            "apellido": "Locura",
+            "nombre": "Facha",
+            "edad": 25,
+            "nivel": "INTERMEDIO",
+            "dni": "26739493"
+        }
+    ],
     "repoReservas": [{
         "idAlumno": 1,
         "idPago": 6,
