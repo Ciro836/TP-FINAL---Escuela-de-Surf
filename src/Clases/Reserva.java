@@ -158,7 +158,7 @@ public class Reserva implements InterfazJson
                     "\n─────────────────────────────\n"
             );
 
-        }
+    }
 
     public void calcularMontoTotal()
     {
