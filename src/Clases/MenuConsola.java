@@ -41,16 +41,18 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("5. Agregar Cliente.");
             System.out.println("6. Agregar Equipo.");
             System.out.println("7. Agregar Alquiler.");
-            System.out.println("8. Buscar alumno por su id.");
-            System.out.println("9. Mostrar reservas de un alumno.");
-            System.out.println("10. Mostrar alumnos inscriptos en una clase.");
-            System.out.println("11. Pagar una reserva de clase.");
-            System.out.println("12. Pagar un alquiler de equipo.");
-            System.out.println("13. Chequear morosidad de alumno.");
-            System.out.println("14. Chequear morosidad de cliente.");
-            System.out.println("15. Grabar repositorios a json.");
-            System.out.println("16. Leer e importar el archivo json de repositorios.");
-            System.out.println("17. Mostrar todos los repositorios.");
+            System.out.println("8. Cancelar Alquiler.");
+            System.out.println("9. Buscar alumno por su id.");
+            System.out.println("10. Mostrar reservas de un alumno.");
+            System.out.println("11. Mostrar alumnos inscriptos en una clase.");
+            System.out.println("12. Mostrar alquileres");
+            System.out.println("13. Pagar una reserva de clase.");
+            System.out.println("14. Pagar un alquiler de equipo.");
+            System.out.println("15. Chequear morosidad de alumno.");
+            System.out.println("16. Chequear morosidad de cliente.");
+            System.out.println("17. Grabar repositorios a json.");
+            System.out.println("18. Leer e importar el archivo json de repositorios.");
+            System.out.println("19. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -69,16 +71,18 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 5 -> agregarCliente();
                     case 6 -> agregarEquipo();
                     case 7 -> agregarAlquiler();
-                    case 8 -> buscarAlumnoPorId();
-                    case 9 -> mostrarReservasAlumno();
-                    case 10 -> mostrarAlumnosInscriptosEnClase();
-                    case 11 -> pagarUnaReserva();
-                    case 12 -> pagarUnAlquiler();
-                    case 13 -> chequearMorosidadAlumno();
-                    case 14 -> chequearMorosidadCliente();
-                    case 15 -> grabarRepositoriosAjson();
-                    case 16 -> leerJsonDeRepositorios();
-                    case 17 -> mostrarTodosLosRepositorios();
+                    case 8 -> cancelarAlquiler();
+                    case 9 -> buscarAlumnoPorId();
+                    case 10 -> mostrarReservasAlumno();
+                    case 11 -> mostrarAlumnosInscriptosEnClase();
+                    case 12 -> mostrarAlquileres();
+                    case 13 -> pagarUnaReserva();
+                    case 14 -> pagarUnAlquiler();
+                    case 15 -> chequearMorosidadAlumno();
+                    case 16 -> chequearMorosidadCliente();
+                    case 17 -> grabarRepositoriosAjson();
+                    case 18 -> leerJsonDeRepositorios();
+                    case 19 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
@@ -599,11 +603,19 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 //uso un catch para indicar si la fecha tiene formato incorrecto
                 LocalDate fechaFin = LocalDate.parse(fecha);
 
-                //CREO EL ALQUILER
-                Alquiler alquiler = new Alquiler(fechaFin);
-
                 //ASIGNAMOS UN CLIENTE
                 System.out.println("\nListado de Clientes:");
+                //VALIDO QUE YA EXISTA UN CLIENTE
+                if (escuela.getRepoClientes().getTodos().isEmpty()) {
+                    System.out.println("⚠ No hay cliente registrados.");
+
+                    if (deseaContinuar("¿Desea registrar un nuevo cliente?")) {
+                        agregarCliente();
+                    } else {
+                        System.out.println("❌ No es posible realizar un alquiler sin un cliente.");
+                    }
+                }
+
                 escuela.getRepoClientes().getTodos().forEach(System.out::println);
 
                 System.out.print("\nIngrese el ID del cliente que realiza el alquiler: ");
@@ -611,6 +623,19 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                 scanner.nextLine();
                 Cliente cliente = escuela.buscarClientePorId(idCliente);
 
+                //CREO EL ALQUILER
+                Alquiler alquiler = new Alquiler(fechaFin,cliente);
+
+                //VALIDACION DE EQUIPOS DISPONIBLES
+                if(escuela.getRepoEquipos().getTodos().stream().noneMatch(Equipo::isDisponible)){
+                    System.out.println("⚠ No hay equipos disponibles.");
+
+                    if (deseaContinuar("¿Desea registrar nuevos equipos?")){
+                        agregarEquipo();
+                    }else{
+                        System.out.println("❌ No es posible realizar un alquiler sin equipos.");
+                    }
+                }
                 boolean seguirAgregandoEquipos = true;
                 do
                 {
@@ -759,6 +784,72 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         }
     }
 
+    public void mostrarAlquileres()
+    {
+        if(escuela.getRepoAlquileres().getTodos().isEmpty()){
+            System.out.println("⚠️ No se encuentrar alquileres registrados.");
+            return;
+        }
+
+        System.out.println("════════════ MOSTRAR ALQUILERES ════════════");
+        System.out.println("1) MOSTRAR SOLO ACTIVOS");
+        System.out.println("2) MOSTRAR SOLO FINALIZADOS");
+        System.out.println("3) MOSTRAR TODOS");
+        System.out.println("Seleccione una opción: ");
+
+        int opcion;
+
+        try{
+            opcion = Integer.parseInt(scanner.nextLine());
+        }catch (NumberFormatException e){
+            System.out.println("⚠️ Debes ingresar un n{umero válido.");
+            return;
+        }
+
+        System.out.println("════════════ RESULTADO ════════════");
+        switch (opcion)
+        {
+            case 1:
+                System.out.println("ALQUILERES ACTIVOS: ");
+                escuela.getRepoAlquileres().getTodos().stream()
+                        .filter(Alquiler::isEstaActivo)
+                        .forEach(Alquiler::mostrarAlquiler);
+                break;
+
+            case 2:
+                System.out.println("ALQUILERES FINALIZADOS: ");
+                escuela.getRepoAlquileres().getTodos().stream()
+                        .filter(a -> !a.isEstaActivo())
+                        .forEach(Alquiler::mostrarAlquiler);
+                break;
+
+            case 3:
+                System.out.println("TODOS LOS ALQUILERES: ");
+                escuela.getRepoAlquileres().getTodos().forEach(Alquiler::mostrarAlquiler);
+                break;
+
+            default:
+                System.out.println("Opción no válida.");
+
+        }
+        System.out.println("═══════════════════════════════════════════════\n");
+    }
+
+    public void cancelarAlquiler()
+    {
+        try{
+            
+            System.out.println("Ingrese el ID del alquiler a cancelar: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+
+            Alquiler alquiler = escuela.getRepoAlquileres().buscarPorId(id);
+            alquiler.cancelarAlquiler();
+
+        }catch (Exception e){
+            System.out.println("⚠️ Error al cancelar el alquiler " + e.getMessage());
+        }
+    }
     private MetodoPago seleccionarMetodoPago() throws IllegalArgumentException, InputMismatchException
     {
         System.out.println("Seleccione el método de pago:");

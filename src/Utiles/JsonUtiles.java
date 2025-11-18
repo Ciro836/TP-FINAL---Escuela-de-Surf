@@ -260,7 +260,19 @@ public class JsonUtiles
         {
             JSONObject obj = jsonArray.getJSONObject(i);
 
-            Alquiler alquiler = new Alquiler(LocalDate.parse(obj.getString("fechaFin")));
+            //primero obtengo el cliente
+            Cliente cliente = repoCliente.buscarPorId(obj.getInt("idCliente"));
+
+            if (cliente == null)
+            {
+                System.out.println("No se enconetr{o el cliente. ");
+                continue; //no creo un alquiler sin un cliente
+            }
+
+            //CREO EL ALQUILER
+            LocalDate fechaFin =  LocalDate.parse(obj.getString("fechaFin"));
+            Alquiler alquiler = new Alquiler(fechaFin, cliente);
+
             alquiler.setFechaInicio(LocalDate.parse(obj.getString("fechaInicio")));
             alquiler.setEstaActivo(obj.getBoolean("estaActivo"));
 
@@ -275,13 +287,6 @@ public class JsonUtiles
                 }
             }
 
-            // Vinculamos al cliente
-            Cliente cliente = repoCliente.buscarPorId(obj.getInt("cliente"));
-            if (cliente != null)
-            {
-                cliente.agregarAlquiler(alquiler);
-            }
-
             // Vinculamos el pago
             if (!obj.isNull("idPago"))
             {
@@ -293,7 +298,14 @@ public class JsonUtiles
                 }
             }
 
+            //regsitro el alquiler en cliente
+            cliente.agregarAlquiler(alquiler);
+
+            //registro alquiler en el repositorio
             repoAlquiler.agregar(obj.getInt("idAlquiler"), alquiler);
+
+            //recalculo el monto
+            alquiler.calcularMontoTotal();
         }
     }
 

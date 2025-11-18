@@ -1,46 +1,72 @@
 {
-    "repoPagos": [{
-        "metodoPago": "TARJETA",
-        "monto": 200,
-        "fechaLimite": "2025-12-17",
-        "idPago": 1,
-        "estadoPago": "REALIZADO",
-        "fechaPago": "2025-11-17"
-    }],
-    "repoClases": [{
-        "valorClase": 200,
-        "TipoDeClase": "PARTICULAR",
-        "Instructor": 1,
-        "idClase": 1,
-        "fechaYhora": "2025-11-25T12:30",
-        "cupoMax": 1
-    }],
-    "repoAlumnos": [{
-        "idAlumno": 1,
-        "cantClasesTomadas": 5,
+    "repoPagos": [
+        {
+            "metodoPago": null,
+            "monto": 1300,
+            "fechaLimite": "2025-12-18",
+            "idPago": 1,
+            "estadoPago": "PENDIENTE",
+            "fechaPago": null
+        },
+        {
+            "metodoPago": null,
+            "monto": 950,
+            "fechaLimite": "2025-12-18",
+            "idPago": 3,
+            "estadoPago": "PENDIENTE",
+            "fechaPago": null
+        }
+    ],
+    "repoClases": [],
+    "repoAlumnos": [],
+    "repoReservas": [],
+    "repoAlquileres": [
+        {
+            "idCliente": 1,
+            "fechaInicio": "2025-11-18",
+            "idAlquiler": 1,
+            "idPago": 1,
+            "estaActivo": false,
+            "idEquiposAlquilados": [1],
+            "fechaFin": "2025-11-30",
+            "montoTotal": 0
+        },
+        {
+            "idCliente": 1,
+            "fechaInicio": "2025-11-18",
+            "idAlquiler": 2,
+            "idPago": 3,
+            "estaActivo": true,
+            "idEquiposAlquilados": [2],
+            "fechaFin": "2025-12-06",
+            "montoTotal": 950
+        }
+    ],
+    "repoClientes": [{
         "numeroTel": "2234496290",
-        "apellido": "Arozamena",
-        "nombre": "Zoe",
+        "idCliente": 1,
+        "apellido": "arozamena",
+        "idAlquileres": [
+            1,
+            2
+        ],
+        "nombre": "zoe",
         "edad": 23,
-        "nivel": "PRINCIPIANTE",
         "dni": "43851970"
     }],
-    "repoReservas": [{
-        "idAlumno": 1,
-        "idPago": 1,
-        "idClase": 1,
-        "idReserva": 1
-    }],
-    "repoAlquileres": [],
-    "repoClientes": [],
-    "repoEquipos": [],
-    "repoInstructores": [{
-        "numeroTel": "2236161847",
-        "aniosExperiencia": 10,
-        "idInstructor": 1,
-        "apellido": "Arias",
-        "nombre": "Soledad",
-        "edad": 50,
-        "dni": "24734142"
-    }]
+    "repoEquipos": [
+        {
+            "idEquipo": 1,
+            "precioPorDia": 100,
+            "nombre": "TABLA_DE_SURF",
+            "disponible": true
+        },
+        {
+            "idEquipo": 2,
+            "precioPorDia": 50,
+            "nombre": "BODYBOARD",
+            "disponible": false
+        }
+    ],
+    "repoInstructores": []
 }
