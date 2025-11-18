@@ -453,8 +453,15 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
 
             if (reserva != null)
             {
-                escuela.registrarNuevaReserva(reserva);
-                System.out.println("Reserva agregada correctamente.");
+                try
+                {
+                    escuela.registrarNuevaReserva(reserva);
+                    System.out.println("Reserva agregada correctamente.");
+                }
+                catch (CupoLlenoException | IdNoEncontradoException e)
+                {
+                    System.out.println("❌ Error al registrar: " + e.getMessage());
+                }
             }
             else
             {
@@ -583,10 +590,6 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             {
                 return new Reserva(alumno, clase);
             }
-            catch (CupoLlenoException e | IdNoEncontradoException e)
-            {
-                System.out.println("❌ Error: " + e.getMessage());
-            }
             catch (IllegalArgumentException e)
             {
                 System.out.println("❌ Error al crear la reserva: " + e.getMessage());
@@ -609,168 +612,195 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
     {
         do
         {
-            try
+            Cliente cliente = crearNuevoCliente();
+
+            if (cliente != null)
             {
-                System.out.println("CARGA DE DATOS DE CLIENTES\n");
-
-                System.out.print("Ingrese el numero de DNI: ");
-                String dni = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el nombre del cliente: ");
-                String nombre = scanner.nextLine().trim();
-
-                System.out.print("Ingrese el apellido del cliente: ");
-                String apellido = scanner.nextLine().trim();
-
-                System.out.print("Ingrese la edad del ciente: ");
-                int edad = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.print("Ingrese el numero de telefono: ");
-                String telefono = scanner.nextLine().trim();
-
-                Cliente cliente = new Cliente(dni, nombre, apellido, edad, telefono);
                 escuela.registrarNuevoCliente(cliente);
+                System.out.println("Cliente agregado correctamente.");
             }
-            catch (InputMismatchException e)
+            else
             {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos al crear el cliente: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado al procesar el cliente: " + e.getMessage());
+                System.out.println("Creación de cliente cancelada o fallida.");
             }
 
         } while (deseaContinuar("Desea seguir cargando clientes?"));
+    }
+
+    public Cliente crearNuevoCliente()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE CLIENTE\n");
+
+            System.out.print("Ingrese el numero de DNI: ");
+            String dni = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el nombre del cliente: ");
+            String nombre = scanner.nextLine().trim();
+
+            System.out.print("Ingrese el apellido del cliente: ");
+            String apellido = scanner.nextLine().trim();
+
+            System.out.print("Ingrese la edad del ciente: ");
+            int edad = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Ingrese el numero de telefono: ");
+            String telefono = scanner.nextLine().trim();
+
+            return new Cliente(dni, nombre, apellido, edad, telefono);
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos al crear el cliente: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado al procesar el cliente: " + e.getMessage());
+            return null;
+        }
     }
 
     public void agregarAlquiler()
     {
         do
         {
-            try
-            {
-                System.out.println("CARGA DE DATOS DE ALQUILERES\n");
 
-                System.out.println("Ingrese la fecha de fin del alquier (formato: YYYY-MM-DD): ");
-                String fecha = scanner.nextLine();
-                //uso un catch para indicar si la fecha tiene formato incorrecto
-                LocalDate fechaFin = LocalDate.parse(fecha);
 
-                //ASIGNAMOS UN CLIENTE
-                System.out.println("\nListado de Clientes:");
-                //VALIDO QUE YA EXISTA UN CLIENTE
-                if (escuela.getRepoClientes().getTodos().isEmpty())
-                {
-                    System.out.println("⚠ No hay cliente registrados.");
-
-                    if (deseaContinuar("¿Desea registrar un nuevo cliente?"))
-                    {
-                        agregarCliente();
-                    }
-                    else
-                    {
-                        System.out.println("❌ No es posible realizar un alquiler sin un cliente.");
-                    }
-                }
-
-                escuela.getRepoClientes().getTodos().forEach(System.out::println);
-
-                System.out.print("\nIngrese el ID del cliente que realiza el alquiler: ");
-                int idCliente = scanner.nextInt();
-                scanner.nextLine();
-                Cliente cliente = escuela.buscarClientePorId(idCliente);
-
-                //CREO EL ALQUILER
-                Alquiler alquiler = new Alquiler(fechaFin, cliente);
-
-                //VALIDACION DE EQUIPOS DISPONIBLES
-                if (escuela.getRepoEquipos().getTodos().stream().noneMatch(Equipo::isDisponible))
-                {
-                    System.out.println("⚠ No hay equipos disponibles.");
-
-                    if (deseaContinuar("¿Desea registrar nuevos equipos?"))
-                    {
-                        agregarEquipo();
-                    }
-                    else
-                    {
-                        System.out.println("❌ No es posible realizar un alquiler sin equipos.");
-                    }
-                }
-                boolean seguirAgregandoEquipos = true;
-                do
-                {
-                    System.out.println("\nEquipos Disponibles:");
-                    // Muestra solo equipos disponibles
-                    escuela.getRepoEquipos().getTodos().stream()
-                            .filter(Equipo::isDisponible) // Filtra solo los disponibles
-                            .forEach(System.out::println);
-
-                    System.out.print("\nIngrese el ID del equipo a agregar (o 0 para terminar): ");
-                    int idEquipo = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (idEquipo == 0)
-                    {
-                        seguirAgregandoEquipos = false;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Equipo equipo = escuela.buscarEquipoPorId(idEquipo);
-                            if (equipo.isDisponible())
-                            {
-                                alquiler.agregarEquipo(equipo);
-                                System.out.println("✅ Equipo agregado: " + equipo.getNombre());
-                            }
-                            else
-                            {
-                                System.out.println("Error: el equipo seleccionado no esta disponible.");
-                            }
-                        }
-                        catch (IdNoEncontradoException e)
-                        {
-                            System.out.println("Error: " + e.getMessage());
-                        }
-                    }
-                } while (seguirAgregandoEquipos);
-
-                if (alquiler.getEquiposAlquilados().isEmpty())
-                {
-                    System.out.println("No se seleccionó ningún equipo. Se cancela el alquiler.");
-                    continue; // Vuelve al inicio del bucle "desea continuar"
-                }
-
-                //AGREGAMOS EL ALQUILER AL REPO Y A LA LISTA DE ALQUILERES DEL CLIENTE
-                cliente.agregarAlquiler(alquiler);
-                escuela.registrarNuevoAlquiler(alquiler);
-                System.out.println("Alquiler regitrado correctamente");
-            }
-            catch (DateTimeParseException e)
-            {
-                System.out.println("❌ Error en el formato de fecha. Use YYYY-MM-DD");
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-                scanner.nextLine();
-            }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("❌ Error de datos: " + e.getMessage());
-            }
-            catch (Exception e)
-            {
-                System.out.println("⚠️ Error inesperado: " + e.getMessage());
-            }
         } while (deseaContinuar("Desea seguir cargando alquilers?"));
+    }
+
+    public Alquiler crearNuevoAlquiler()
+    {
+        try
+        {
+            System.out.println("CARGA DE DATOS DE ALQUILER\n");
+
+            System.out.println("Ingrese la fecha de fin del alquier (formato: YYYY-MM-DD): ");
+            String fecha = scanner.nextLine();
+            //uso un catch para indicar si la fecha tiene formato incorrecto
+            LocalDate fechaFin = LocalDate.parse(fecha);
+
+            //ASIGNAMOS UN CLIENTE
+            System.out.println("\nListado de Clientes:");
+            //VALIDO QUE YA EXISTA UN CLIENTE
+            if (escuela.getRepoClientes().getTodos().isEmpty())
+            {
+                System.out.println("⚠ No hay cliente registrados.");
+
+                if (deseaContinuar("¿Desea registrar un nuevo cliente?"))
+                {
+                    agregarCliente();
+                }
+                else
+                {
+                    System.out.println("❌ No es posible realizar un alquiler sin un cliente.");
+                }
+            }
+
+            escuela.getRepoClientes().getTodos().forEach(System.out::println);
+
+            System.out.print("\nIngrese el ID del cliente que realiza el alquiler: ");
+            int idCliente = scanner.nextInt();
+            scanner.nextLine();
+            Cliente cliente = escuela.buscarClientePorId(idCliente);
+
+            //CREO EL ALQUILER
+            Alquiler alquiler = new Alquiler(fechaFin, cliente);
+
+            //VALIDACION DE EQUIPOS DISPONIBLES
+            if (escuela.getRepoEquipos().getTodos().stream().noneMatch(Equipo::isDisponible))
+            {
+                System.out.println("⚠ No hay equipos disponibles.");
+
+                if (deseaContinuar("¿Desea registrar nuevos equipos?"))
+                {
+                    agregarEquipo();
+                }
+                else
+                {
+                    System.out.println("❌ No es posible realizar un alquiler sin equipos.");
+                }
+            }
+            boolean seguirAgregandoEquipos = true;
+            do
+            {
+                System.out.println("\nEquipos Disponibles:");
+                // Muestra solo equipos disponibles
+                escuela.getRepoEquipos().getTodos().stream()
+                        .filter(Equipo::isDisponible) // Filtra solo los disponibles
+                        .forEach(System.out::println);
+
+                System.out.print("\nIngrese el ID del equipo a agregar (o 0 para terminar): ");
+                int idEquipo = scanner.nextInt();
+                scanner.nextLine();
+
+                if (idEquipo == 0)
+                {
+                    seguirAgregandoEquipos = false;
+                }
+                else
+                {
+                    try
+                    {
+                        Equipo equipo = escuela.buscarEquipoPorId(idEquipo);
+                        if (equipo.isDisponible())
+                        {
+                            alquiler.agregarEquipo(equipo);
+                            System.out.println("✅ Equipo agregado: " + equipo.getNombre());
+                        }
+                        else
+                        {
+                            System.out.println("Error: el equipo seleccionado no esta disponible.");
+                        }
+                    }
+                    catch (IdNoEncontradoException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+            } while (seguirAgregandoEquipos);
+
+            if (alquiler.getEquiposAlquilados().isEmpty())
+            {
+                System.out.println("No se seleccionó ningún equipo. Se cancela el alquiler.");
+                continue; // Vuelve al inicio del bucle "desea continuar"
+            }
+
+            //AGREGAMOS EL ALQUILER AL REPO Y A LA LISTA DE ALQUILERES DEL CLIENTE
+            cliente.agregarAlquiler(alquiler);
+            escuela.registrarNuevoAlquiler(alquiler);
+            System.out.println("Alquiler regitrado correctamente");
+        }
+        catch (DateTimeParseException e)
+        {
+            System.out.println("❌ Error en el formato de fecha. Use YYYY-MM-DD");
+            return null;
+        }
+        catch (InputMismatchException e)
+        {
+            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            scanner.nextLine();
+            return null;
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("❌ Error de datos: " + e.getMessage());
+            return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println("⚠️ Error inesperado: " + e.getMessage());
+            return null;
+        }
     }
 
     public void buscarAlumnoPorId()
