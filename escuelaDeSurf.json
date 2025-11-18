@@ -1,0 +1,46 @@
+{
+    "repoPagos": [{
+        "metodoPago": "TARJETA",
+        "monto": 200,
+        "fechaLimite": "2025-12-17",
+        "idPago": 1,
+        "estadoPago": "REALIZADO",
+        "fechaPago": "2025-11-17"
+    }],
+    "repoClases": [{
+        "valorClase": 200,
+        "TipoDeClase": "PARTICULAR",
+        "Instructor": 1,
+        "idClase": 1,
+        "fechaYhora": "2025-11-25T12:30",
+        "cupoMax": 1
+    }],
+    "repoAlumnos": [{
+        "idAlumno": 1,
+        "cantClasesTomadas": 5,
+        "numeroTel": "2234496290",
+        "apellido": "Arozamena",
+        "nombre": "Zoe",
+        "edad": 23,
+        "nivel": "PRINCIPIANTE",
+        "dni": "43851970"
+    }],
+    "repoReservas": [{
+        "idAlumno": 1,
+        "idPago": 1,
+        "idClase": 1,
+        "idReserva": 1
+    }],
+    "repoAlquileres": [],
+    "repoClientes": [],
+    "repoEquipos": [],
+    "repoInstructores": [{
+        "numeroTel": "2236161847",
+        "aniosExperiencia": 10,
+        "idInstructor": 1,
+        "apellido": "Arias",
+        "nombre": "Soledad",
+        "edad": 50,
+        "dni": "24734142"
+    }]
+}
