@@ -937,7 +937,8 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
         }
 
         System.out.println("--- DEBUG: VERIFICANDO ESTADO INICIAL ---");
-        escuela.getRepoReservas().getTodos().forEach(reserva -> {
+        escuela.getRepoReservas().getTodos().forEach(reserva ->
+        {
             System.out.println("ID Reserva: " + reserva.getIdReserva() + " | Activa: " + reserva.isEstaActiva());
         });
         System.out.println("------------------------------------------");
@@ -948,7 +949,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             case 1:
                 System.out.println("RESERVAS ACTIVAS: ");
                 escuela.getRepoReservas().getTodos().stream()
-                        .filter(reserva-> reserva.isEstaActiva())
+                        .filter(reserva -> reserva.isEstaActiva())
                         .forEach(Reserva::mostrarReservaMejorada);
                 break;
 
