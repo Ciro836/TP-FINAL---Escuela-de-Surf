@@ -53,8 +53,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("17. Chequear morosidad de alumno.");
             System.out.println("18. Chequear morosidad de cliente.");
             System.out.println("19. Grabar repositorios a json.");
-            System.out.println("20. Leer e importar el archivo json de repositorios.");
-            System.out.println("21. Mostrar todos los repositorios.");
+            System.out.println("20. Mostrar todos los repositorios.");
 
             System.out.println("999. Salir.");
 
@@ -85,8 +84,7 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
                     case 17 -> chequearMorosidadAlumno();
                     case 18 -> chequearMorosidadCliente();
                     case 19 -> grabarRepositoriosAjson();
-                    case 20 -> leerJsonDeRepositorios();
-                    case 21 -> mostrarTodosLosRepositorios();
+                    case 20 -> mostrarTodosLosRepositorios();
                     case 999 -> System.out.println("\nSaliendo del programa...");
                     default -> System.out.println("\nIngrese una opción valida...");
                 }
