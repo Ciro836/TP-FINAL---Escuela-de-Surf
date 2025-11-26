@@ -1,59 +1,61 @@
-# 🏄‍♂️ Sistema de Gestión - Escuela de Surf
+# 🏄‍♂️ Management System - Surf School
 
-Este proyecto es una aplicación de consola en **Java** diseñada para administrar integralmente una escuela de surf. Permite gestionar alumnos, instructores, equipamiento, reservas de clases y alquileres, utilizando persistencia de datos a través de archivos **JSON**.
+This project is a console-based application built in **Java**, designed to comprehensively manage a surf school. It handles students, instructors, equipment, class reservations, and rentals, utilizing **JSON** files for data persistence.
 
-## 🚀 Funcionalidades Principales
+> **⚠️ Note:** The source code of this project (variable names, comments, class names, and console interface) is written in **Spanish**.
 
-El sistema permite realizar las siguientes operaciones a través de un menú interactivo:
+## 🚀 Key Features
 
-* **Gestión de Usuarios:** Alta y consulta de Alumnos, Instructores y Clientes.
-* **Clases de Surf:**
-    * Creación de clases (Grupales o Particulares).
-    * Asignación de instructores.
-    * Control de cupos (validación de disponibilidad).
-* **Reservas:** Inscripción de alumnos a clases con validación de fechas y pagos.
-* **Alquileres:** Gestión de alquiler de equipos (Tablas, Trajes de Neoprene, etc.) con cálculo de costos por día.
-* **Sistema de Pagos:**
-    * Registro de pagos por Efectivo, Tarjeta o Transferencia.
-    * Control de morosidad (verificación de pagos vencidos).
-* **Persistencia:** Guardado y carga automática de datos (Repositorios) en formato JSON (`escuelaDeSurf.json`).
+The system allows users to perform the following operations through an interactive menu:
 
-## 🛠️ Tecnologías Utilizadas
+* **User Management:** Registration and lookup of Students, Instructors, and Clients.
+* **Surf Classes:**
+    * Creation of classes (Group or Private).
+    * Instructor assignment.
+    * Capacity control (availability validation).
+* **Reservations:** Student enrollment in classes with date and payment validation.
+* **Rentals:** Equipment rental management (Surfboards, Wetsuits, etc.) with daily cost calculation.
+* **Payment System:**
+    * Payment registration via Cash, Card, or Bank Transfer.
+    * Delinquency control (verification of overdue payments).
+* **Persistence:** Automatic data saving and loading (Repositories) in JSON format (`escuelaDeSurf.json`).
 
-* **Lenguaje:** Java.
-* **Persistencia:** JSON (org.json).
-* **IDE Recomendado:** IntelliJ IDEA.
-* **Librerías:**
-    * `libreriaJSON.jar` (Incluida en el proyecto para el manejo de objetos JSON).
+## 🛠️ Technologies Used
 
-## 📋 Estructura del Proyecto
+* **Language:** Java.
+* **Persistence:** JSON (org.json).
+* **Recommended IDE:** IntelliJ IDEA.
+* **Libraries:**
+    * `libreriaJSON.jar` (Included in the project for handling JSON objects).
 
-El proyecto está organizado en paquetes para mantener una arquitectura limpia:
+## 📋 Project Structure
 
-* `Clases`: Contiene la lógica de negocio (Alumno, Instructor, Reserva, Pago, etc.).
-* `Enumeradores`: Define tipos estáticos (NivelDeSurf, TipoClase, MetodoPago, etc.).
-* `ExcepcionesPersonalizadas`: Manejo de errores específicos (CupoLleno, PagoPendiente, etc.).
-* `Interfaces`: Define comportamientos comunes (`InterfazJson`).
-* `Utiles`: Herramientas para lectura y escritura de archivos (`JsonUtiles`).
+The project is organized into packages to maintain a clean architecture:
 
-## ⚙️ Instalación y Ejecución
+* `Clases`: Contains the business logic (Student, Instructor, Reservation, Payment, etc.).
+* `Enumeradores`: Defines static types (SurfLevel, ClassType, PaymentMethod, etc.).
+* `ExcepcionesPersonalizadas`: Handles specific errors (FullCapacity, PendingPayment, etc.).
+* `Interfaces`: Defines common behaviors (`InterfazJson`).
+* `Utiles`: Tools for reading and writing files (`JsonUtiles`).
 
-1.  Clona este repositorio:
+## ⚙️ Installation and Execution
+
+1.  Clone this repository:
     ```bash
-    git clone https://github.com/Ciro836/TP-FINAL---Escuela-de-Surf.git
+    git clone [https://github.com/Ciro836/TP-FINAL---Escuela-de-Surf.git](https://github.com/Ciro836/TP-FINAL---Escuela-de-Surf.git)
     ```
-2.  Abre el proyecto en tu IDE (IntelliJ IDEA recomendado).
-3.  Asegúrate de agregar la librería `libreriaJSON.jar` al **Classpath** del proyecto (Project Structure -> Libraries).
-4.  Ejecuta el archivo `Main.java`.
+2.  Open the project in your IDE (IntelliJ IDEA is recommended).
+3.  Make sure to add the `libreriaJSON.jar` library to the project's **Classpath** (Project Structure -> Libraries).
+4.  Run the `Main.java` file.
 
-## 📄 Ejemplo de Uso
+## 📄 Usage Example
 
-Al iniciar, el sistema cargará la base de datos existente. Podrás navegar por opciones como:
+Upon starting, the system will load the existing database. You will be able to navigate through options such as:
 
-> 1. Agregar Alumno
-> 3. Agregar Clase de Surf
-> 7. Agregar Alquiler
-> 19. Grabar repositorios a JSON
+> 1. Add Student (Agregar Alumno)
+> 3. Add Surf Class (Agregar Clase de Surf)
+> 7. Add Rental (Agregar Alquiler)
+> 19. Save repositories to JSON (Grabar repositorios a JSON)
 
 ---
-*Trabajo Práctico Final - Programación II*
+*Final Project - Programming II*
