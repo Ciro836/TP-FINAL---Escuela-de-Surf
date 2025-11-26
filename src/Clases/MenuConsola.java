@@ -375,9 +375,24 @@ public class MenuConsola //Clase para encargarse de la gestión de la interfaz d
             System.out.println("CARGA DE DATOS DE UNA CLASE DE SURF\n");
 
             //INSTRUCTOR
-            System.out.print("Ingrese el id del instructor que dictará la clase: ");
-            int idInstructor = scanner.nextInt();
-            scanner.nextLine();
+            int idInstructor = -1;
+            boolean flag = true;
+            do
+            {
+                try
+                {
+                    System.out.print("Ingrese el id del instructor que dictará la clase: ");
+                    idInstructor = scanner.nextInt();
+                    scanner.nextLine();
+                    flag = true;
+                }
+                catch (InputMismatchException e)
+                {
+                    System.out.println("Error: debes ingresar un numero.");
+                    scanner.nextLine();
+                    flag = false;
+                }
+            } while (!flag);//mientras que sea false sigue.
 
             Instructor instructor = escuela.buscarInstructorPorId(idInstructor);
 
